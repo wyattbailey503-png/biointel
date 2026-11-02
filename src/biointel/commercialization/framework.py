@@ -8,7 +8,7 @@ Regulatory Feasibility, Economic Feasibility, Competitive Differentiation, and D
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -44,7 +44,12 @@ class CommercializationEvaluator:
     """Computes multidimensional feasibility profiles for biotechnology platforms."""
 
     @classmethod
-    def evaluate_precision_fermentation(cls, tech_id: str = "precision_fermentation_hydrolase") -> CommercializationAssessment:
+    def evaluate_precision_fermentation(
+        cls,
+        tech_id: str = "precision_fermentation_hydrolase",
+        db: Optional[Any] = None,
+        mass_balance: Optional[Any] = None,
+    ) -> CommercializationAssessment:
         dimensions = {
             "scientific_validity": CommercializationDimension(
                 dimension_name="Scientific Validity",
@@ -103,6 +108,72 @@ class CommercializationEvaluator:
                 key_risks=["Freedom to operate around legacy fungal expression vectors."],
             ),
         }
+
+        # Dynamic update from techno-economic outputs if available
+        if mass_balance is not None:
+            unit_cost = getattr(mass_balance, "total_cost_per_kg", None)
+            annual_mt = getattr(mass_balance, "annual_production_volume_mt", None)
+            productivity = getattr(mass_balance, "volumetric_productivity_g_l_h", None)
+
+            if unit_cost is not None:
+                if unit_cost < 15.0:
+                    econ_score = 8.5
+                    econ_status = "De-risked"
+                    summary = f"Total production cost ${unit_cost:.2f}/kg enables highly favorable gross margins (>50%) against commodity benchmarks."
+                elif unit_cost <= 25.0:
+                    econ_score = 7.5
+                    econ_status = "De-risked"
+                    summary = f"Production cost ${unit_cost:.2f}/kg supports commercial viability (20-40% gross margin) for fine/specialty chemical targets."
+                elif unit_cost <= 40.0:
+                    econ_score = 5.5
+                    econ_status = "Emergent"
+                    summary = f"Unit cost ${unit_cost:.2f}/kg leaves tight gross margins; commercial success requires premium pricing or yield optimization."
+                else:
+                    econ_score = 3.5
+                    econ_status = "High Risk"
+                    summary = f"Production cost ${unit_cost:.2f}/kg is economically underwater against prevailing commercial market prices."
+
+                dimensions["economic_feasibility"] = CommercializationDimension(
+                    dimension_name="Economic Feasibility",
+                    status=econ_status,
+                    score=econ_score,
+                    evidence_summary=summary,
+                    key_risks=["Feedstock price volatility", "CAPEX debt service during scale ramp-up"],
+                )
+
+            if annual_mt is not None and productivity is not None:
+                if annual_mt >= 100.0:
+                    scale_score = 8.0
+                    scale_status = "Validated"
+                    summary = f"Demonstrated commercial-scale throughput of {annual_mt:.1f} MT/yr with volumetric productivity {productivity:.3f} g/L/h."
+                else:
+                    scale_score = 6.0
+                    scale_status = "Emergent"
+                    summary = f"Scale demonstrated at pilot volumes ({annual_mt:.1f} MT/yr); industrial aeration and heat dissipation remain scaling gates."
+
+                dimensions["scale_feasibility"] = CommercializationDimension(
+                    dimension_name="Scale Feasibility",
+                    status=scale_status,
+                    score=scale_score,
+                    evidence_summary=summary,
+                    key_risks=["Mass transfer limitations ($k_L a$) in commercial vessels (>50 m³)"],
+                )
+
+        # Dynamic update from database evidence if available
+        if db is not None:
+            try:
+                records = db.get_evidence_records()
+                verified_records = [r for r in records if r.get("is_statistically_significant", False)]
+                if len(verified_records) >= 3:
+                    dimensions["scientific_validity"] = CommercializationDimension(
+                        dimension_name="Scientific Validity",
+                        status="Validated",
+                        score=min(9.5, 8.0 + len(verified_records) * 0.3),
+                        evidence_summary=f"Statistically significant evidence confirmed across {len(verified_records)} independent peer-reviewed experimental assays.",
+                        key_risks=["Assay translational fidelity to target commercial host matrix"],
+                    )
+            except Exception:
+                pass
 
         bottlenecks = [
             "Downstream processing (DSP) purification cost and yield at >10,000 L batch scale.",

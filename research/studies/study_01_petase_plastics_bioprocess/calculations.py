@@ -60,6 +60,25 @@ def run_study_calculations(study_dir: Path) -> dict:
         labor_overhead_tpa +
         capex_depreciation_tpa
     )
+
+    # 1b. Biocatalyst Recycling / Multi-Cycle Ultrafiltration Recovery
+    # Single-use pure enzyme: 0.003 kg/kg PET @ $25/kg = $0.1048/kg TPA
+    # 5-cycle ultrafiltration recycling with 80% recovery per cycle:
+    recycle_cycles = 5
+    recovery_per_cycle = 0.80
+    enzyme_recycle_factor = (1.0 + (recycle_cycles - 1) * (1.0 - recovery_per_cycle)) / recycle_cycles
+    effective_loading_recycled = enzyme_loading * enzyme_recycle_factor  # 0.00108 kg fresh enzyme / kg PET
+    enzyme_cost_tpa_recycled = (effective_loading_recycled * enzyme_cost_kg) / net_yield_tpa
+    membrane_cleaning_and_replacement_tpa = 0.012  # $/kg TPA for CIP and membrane amortization
+    effective_biocatalyst_cost_recycled_tpa = enzyme_cost_tpa_recycled + membrane_cleaning_and_replacement_tpa
+    total_cost_tpa_recycled = (
+        feedstock_cost_tpa +
+        pretreat_cost_tpa +
+        effective_biocatalyst_cost_recycled_tpa +
+        utilities_cost_tpa +
+        labor_overhead_tpa +
+        capex_depreciation_tpa
+    )
     
     # Non-Amorphized Post-Consumer Flake Scenario (Raw Bottle Flake, X_c = 34%)
     # Conversion drops dramatically: Lu et al. 2022 Fig 2d reports 4.6% conversion at 50 °C
@@ -134,6 +153,16 @@ def run_study_calculations(study_dir: Path) -> dict:
             "net_mass_yield_kg_tpa_per_kg_pet": round(net_yield_crystalline, 4),
             "total_production_cost_usd_per_kg_tpa": round(total_cost_tpa_crystalline, 4),
             "verdict": "CATASTROPHIC ECONOMIC FAILURE due to yield loss and CAPEX dilution"
+        },
+        "biocatalyst_recycling_analysis": {
+            "mode": "5-cycle ultrafiltration membrane recovery (80% retention/cycle)",
+            "single_use_enzyme_cost_usd_per_kg_tpa": round(enzyme_cost_tpa, 4),
+            "recycled_enzyme_cost_usd_per_kg_tpa": round(enzyme_cost_tpa_recycled, 4),
+            "membrane_filtration_capex_opex_tpa": round(membrane_cleaning_and_replacement_tpa, 4),
+            "effective_biocatalyst_cost_tpa": round(effective_biocatalyst_cost_recycled_tpa, 4),
+            "total_production_cost_with_recycling": round(total_cost_tpa_recycled, 4),
+            "cost_savings_usd_per_kg_tpa": round(total_cost_tpa_amorph - total_cost_tpa_recycled, 4),
+            "verdict": "Enzyme recycling recovers $0.055/kg TPA, but total cost ($1.54/kg) remains 47% above chemical glycolysis ($1.05/kg) due to unavoidable amorphization pretreatment."
         },
         "competitor_benchmarks_usd_per_kg_tpa": {
             "virgin_pet_tpa": virgin_tpa_price,

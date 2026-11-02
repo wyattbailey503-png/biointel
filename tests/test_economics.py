@@ -60,3 +60,49 @@ def test_sensitivity_analysis_dimensions() -> None:
     cost_20 = sens["sensitivity_matrix"][0]["cost_feedstock_0.30"]
     cost_60 = sens["sensitivity_matrix"][2]["cost_feedstock_0.30"]
     assert cost_60 < cost_20
+
+
+def test_dynamic_utilities_scaling_with_cell_density_and_our() -> None:
+    """Verifies that dynamic utility calculations scale with cell density and respiration heat."""
+    # Low titer / low cell density
+    inputs_low = FermentationInputs(
+        titer_g_per_l=10.0,
+        use_dynamic_utilities=True,
+    )
+    outputs_low = TechnoEconomicFermentationModel.calculate(inputs_low)
+
+    # High titer / high cell density (demands higher OUR, more aeration, more cooling)
+    inputs_high = FermentationInputs(
+        titer_g_per_l=80.0,
+        use_dynamic_utilities=True,
+    )
+    outputs_high = TechnoEconomicFermentationModel.calculate(inputs_high)
+
+    # Total batch electricity/utilities should be higher for high titer run
+    # (cost per kg might be lower due to mass dilution, but total batch utility cost is greater)
+    total_batch_utilities_low = outputs_low.utilities_cost_per_kg * outputs_low.product_mass_per_batch_kg
+    total_batch_utilities_high = outputs_high.utilities_cost_per_kg * outputs_high.product_mass_per_batch_kg
+
+    assert total_batch_utilities_high > total_batch_utilities_low
+    assert outputs_high.utilities_cost_per_kg > 0.0
+
+
+def test_greenfield_vs_brownfield_capex_amortization() -> None:
+    """Verifies that greenfield facility CAPEX properly reflects full installation depreciation."""
+    inputs_brownfield = FermentationInputs(
+        facility_type="brownfield",
+        annual_capex_depreciation_usd=850000.0,
+    )
+    outputs_brownfield = TechnoEconomicFermentationModel.calculate(inputs_brownfield)
+
+    inputs_greenfield = FermentationInputs(
+        facility_type="greenfield",
+        greenfield_capex_usd=35000000.0,
+        greenfield_depreciation_years=15.0,  # ~$2.33M / yr
+    )
+    outputs_greenfield = TechnoEconomicFermentationModel.calculate(inputs_greenfield)
+
+    assert outputs_greenfield.capex_depreciation_per_kg > outputs_brownfield.capex_depreciation_per_kg
+    # Greenfield depreciation should be ~2.7x brownfield ($2.33M vs $0.85M)
+    ratio = outputs_greenfield.capex_depreciation_per_kg / outputs_brownfield.capex_depreciation_per_kg
+    assert 2.5 < ratio < 3.0

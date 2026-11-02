@@ -26,6 +26,12 @@ class FermentationInputs:
     annual_labor_overhead_usd: float = 1200000.0
     annual_capex_depreciation_usd: float = 850000.0
     operating_hours_per_year: float = 7920.0  # 330 operating days
+    use_dynamic_utilities: bool = False
+    facility_type: str = "brownfield"  # "brownfield" or "greenfield"
+    electricity_usd_per_kwh: float = 0.08
+    biomass_yield_g_per_g: float = 0.50
+    greenfield_capex_usd: float = 35000000.0
+    greenfield_depreciation_years: float = 15.0
 
 
 @dataclass
@@ -77,10 +83,55 @@ class TechnoEconomicFermentationModel:
         substrate_kg_per_kg_product = 1.0 / (inputs.yield_product_per_substrate * inputs.recovery_efficiency)
         feedstock_cost_per_kg = substrate_kg_per_kg_product * inputs.feedstock_price_usd_per_kg
 
-        utilities_cost_per_kg = inputs.utilities_cost_usd_per_batch / recovered_product_batch_kg
+        # Utilities: Dynamic physics-based scaling or fixed lump sum
+        if inputs.use_dynamic_utilities:
+            # First-principles utility estimation:
+            # 1. Biomass & Oxygen Uptake
+            substrate_batch_kg = raw_product_kg / inputs.yield_product_per_substrate
+            biomass_batch_kg = substrate_batch_kg * inputs.biomass_yield_g_per_g
+            dcw_g_per_l = (biomass_batch_kg * 1000.0) / inputs.working_volume_liters
+            v_working_m3 = inputs.working_volume_liters / 1000.0
+            
+            # Respiration and OUR (mmol O2 / L broth / h)
+            avg_our = max(20.0, dcw_g_per_l * 1.5)
+            
+            # Agitation & Aeration power (P/V in kW/m3)
+            power_vol_kw_m3 = max(1.5, min(4.5, 1.5 + (avg_our / 60.0) * 1.0))
+            p_agitation_kw = v_working_m3 * power_vol_kw_m3
+            
+            # Metabolic heat dissipation (Q_met in kW)
+            # ~460 kJ/mol O2 consumed (Thornton's rule)
+            q_metabolic_kw = (avg_our * v_working_m3 * 460.0) / 3600.0
+            
+            # Chiller refrigeration duty (COP = 3.5)
+            q_cooling_total_kw = q_metabolic_kw + p_agitation_kw
+            p_chiller_kw = q_cooling_total_kw / 3.5
+            
+            # Plant electrical baseline (pumps, air compressor, instrumentation)
+            p_baseline_kw = 35.0
+            p_total_electrical_kw = p_agitation_kw + p_chiller_kw + p_baseline_kw
+            
+            electricity_kwh_per_batch = p_total_electrical_kw * inputs.duration_hours
+            electricity_cost_batch = electricity_kwh_per_batch * inputs.electricity_usd_per_kwh
+            
+            # Saturated steam sterilization (0.4 kg steam / L vessel @ $0.025/kg steam)
+            steam_cost_batch = inputs.working_volume_liters * 0.4 * 0.025
+            
+            effective_utilities_batch = electricity_cost_batch + steam_cost_batch
+        else:
+            effective_utilities_batch = inputs.utilities_cost_usd_per_batch
+
+        utilities_cost_per_kg = effective_utilities_batch / recovered_product_batch_kg
         dsp_cost_per_kg = inputs.dsp_consumables_usd_per_kg
         labor_cost_per_kg = inputs.annual_labor_overhead_usd / annual_kg
-        depreciation_cost_per_kg = inputs.annual_capex_depreciation_usd / annual_kg
+
+        # CAPEX Depreciation (Greenfield vs Brownfield)
+        if inputs.facility_type.lower() == "greenfield":
+            annual_depreciation = inputs.greenfield_capex_usd / inputs.greenfield_depreciation_years
+        else:
+            annual_depreciation = inputs.annual_capex_depreciation_usd
+
+        depreciation_cost_per_kg = annual_depreciation / annual_kg
 
         total_cost_per_kg = (
             feedstock_cost_per_kg

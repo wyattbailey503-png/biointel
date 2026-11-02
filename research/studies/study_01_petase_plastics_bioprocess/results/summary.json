@@ -25,6 +25,16 @@
     "total_production_cost_usd_per_kg_tpa": 5.5697,
     "verdict": "CATASTROPHIC ECONOMIC FAILURE due to yield loss and CAPEX dilution"
   },
+  "biocatalyst_recycling_analysis": {
+    "mode": "5-cycle ultrafiltration membrane recovery (80% retention/cycle)",
+    "single_use_enzyme_cost_usd_per_kg_tpa": 0.1048,
+    "recycled_enzyme_cost_usd_per_kg_tpa": 0.0377,
+    "membrane_filtration_capex_opex_tpa": 0.012,
+    "effective_biocatalyst_cost_tpa": 0.0497,
+    "total_production_cost_with_recycling": 1.5488,
+    "cost_savings_usd_per_kg_tpa": 0.0551,
+    "verdict": "Enzyme recycling recovers $0.055/kg TPA, but total cost ($1.54/kg) remains 47% above chemical glycolysis ($1.05/kg) due to unavoidable amorphization pretreatment."
+  },
   "competitor_benchmarks_usd_per_kg_tpa": {
     "virgin_pet_tpa": 1.15,
     "chemical_glycolysis_recycled_tpa": 1.05

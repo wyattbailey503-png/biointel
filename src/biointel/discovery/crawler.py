@@ -185,9 +185,9 @@ class DiscoveryCrawler:
             self.registry.record_attempt("europe_pmc", success=False, timestamp=datetime.now(timezone.utc).isoformat(), message=str(e))
 
         # 4. Ingest Seed Technologies and Experimental Evidence
-        self._seed_gene_editing_technologies_and_evidence()
-        new_techs += 2
-        new_exps += 3
+        seeded_techs, seeded_exps = self._seed_gene_editing_technologies_and_evidence()
+        new_techs += seeded_techs
+        new_exps += seeded_exps
 
         end_time = datetime.now(timezone.utc).isoformat()
 
@@ -196,8 +196,8 @@ class DiscoveryCrawler:
 - **Execution Mode:** `{mode.upper()}`
 - **Sources Audited:** {sources_checked}
 - **Documents Discovered:** {docs_discovered} (New: {docs_discovered}, Updated: {docs_updated}, Duplicates Prevented: {duplicates_prevented})
-- **New Technologies Indexed:** {new_techs}
-- **New Experimental Evidence Records:** {new_exps}
+- **New Technologies Indexed:** {new_techs} (Live: {new_techs - seeded_techs}, Seeded Benchmarks: {seeded_techs})
+- **New Experimental Evidence Records:** {new_exps} (Live: {new_exps - seeded_exps}, Seeded Benchmarks: {seeded_exps})
 - **Network Failures / Degraded Sources:** {failed_requests}
 - **Rate-Limit Events:** {rate_limits}
 - **Estimated Processing API Cost:** $0.00 (Local-First Open Architecture)
@@ -239,8 +239,19 @@ class DiscoveryCrawler:
             summary_markdown=summary_md,
         )
 
-    def _seed_gene_editing_technologies_and_evidence(self) -> None:
-        """Seeds canonical gene-editing platforms, experiments, and claims."""
+    def _seed_gene_editing_technologies_and_evidence(self) -> tuple[int, int]:
+        """Seeds canonical gene-editing platforms, experiments, and claims with duplicate prevention."""
+        created_techs = 0
+        created_exps = 0
+
+        try:
+            with self.db.get_connection() as conn:
+                existing_techs = {r["tech_id"] for r in conn.execute("SELECT tech_id FROM technologies").fetchall()}
+                existing_exps = {r["experiment_id"] for r in conn.execute("SELECT experiment_id FROM experiments").fetchall()}
+        except Exception:
+            existing_techs = set()
+            existing_exps = set()
+
         # 1. Technologies
         techs = [
             {
@@ -263,7 +274,9 @@ class DiscoveryCrawler:
             },
         ]
         for t in techs:
-            self.db.upsert_technology(t)
+            if t["tech_id"] not in existing_techs:
+                self.db.upsert_technology(t)
+                created_techs += 1
 
         # 2. Experiments and claims
         evidence_engine = EvidenceEngine(self.db)
@@ -306,7 +319,9 @@ class DiscoveryCrawler:
             claim_type="efficacy",
             mechanistic_assertion="Simultaneous generation of homologous 3' flaps promotes flap annealing and mismatch repair.",
         )
-        evidence_engine.record_experiment_with_result(exp1, res1, claim1, support_direction="supports")
+        if exp1.experiment_id not in existing_exps:
+            evidence_engine.record_experiment_with_result(exp1, res1, claim1, support_direction="supports")
+            created_exps += 1
 
         # Cas9 DSB Comparison Experiment
         exp2 = ExperimentRecord(
@@ -346,4 +361,8 @@ class DiscoveryCrawler:
             claim_type="efficacy",
             mechanistic_assertion="Double-strand break repair via error-prone NHEJ.",
         )
-        evidence_engine.record_experiment_with_result(exp2, res2, claim2, support_direction="supports")
+        if exp2.experiment_id not in existing_exps:
+            evidence_engine.record_experiment_with_result(exp2, res2, claim2, support_direction="supports")
+            created_exps += 1
+
+        return created_techs, created_exps
