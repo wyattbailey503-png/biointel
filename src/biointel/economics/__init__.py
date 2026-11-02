@@ -4,9 +4,16 @@ from biointel.economics.fermentation import (
     FermentationOutputs,
     TechnoEconomicFermentationModel,
 )
+from biointel.economics.extrusion import (
+    ExtrusionCostStack,
+    ExtrusionTechnoEconomicModel,
+)
 
 __all__ = [
     "FermentationInputs",
     "FermentationOutputs",
     "TechnoEconomicFermentationModel",
+    "ExtrusionCostStack",
+    "ExtrusionTechnoEconomicModel",
 ]
+

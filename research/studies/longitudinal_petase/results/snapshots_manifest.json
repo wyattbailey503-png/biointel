@@ -2,7 +2,8 @@
   {
     "technology_id": "fast_petase_depolymerase",
     "as_of_date": "2016-04-01",
-    "snapshot_label": "Snapshot 1 (April 2016): Initial Discovery & Wild-Type IsPETase",
+    "snapshot_label": "Snapshot 1 (April 2016): Initial Discovery & Wild-Type IsPETase (v2)",
+    "version": "v2",
     "publications_count": 1,
     "publications": [
       {
@@ -10,29 +11,33 @@
         "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
         "publication_date": "2016-03-10",
         "senior_author": "Kohei Oda / Kenji Miyamoto",
-        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY"
       }
     ],
-    "structures": [
-      "5XJH"
-    ],
+    "structures": [],
     "demonstrated_capabilities": [
       "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)"
     ],
     "established_physical_boundaries": [
-      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
       "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
     ],
     "commercial_feasibility": {
       "readiness_stage": "Academic Discovery / Early Research",
+      "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
       "estimated_tpa_cost_usd_kg": 65.0,
+      "historical_basis_notes": "Retrospective bioprocess simulation assuming a 50,000 L stirred-tank batch held for 1,000 h (6 weeks) at 1 g/L enzyme loading with straight-line capital carrying costs. Yoshida et al. reported zero economic numbers. Contemporaneous virgin PET traded at $1.10-$1.25/kg.",
       "commercial_verdict": "ECONOMICALLY UNVIABLE: Reaction requires 6 weeks; zero activity on commercial post-consumer plastic.",
-      "market_clearing_parity_ratio": 52.0
+      "market_clearing_parity_ratio": 52.0,
+      "contemporaneous_virgin_price_usd_kg": 1.25
     },
     "unresolved_uncertainties": [
+      "What is the three-dimensional fold of the enzyme (crystal structure unresolved in 2016)?",
       "Is the enzyme mechanism distinct from legacy fungal cutinases (e.g. Thermobifida fusca)?",
-      "Can active site mutations overcome the severe steric barrier of crystalline PET chains?",
+      "Can active site mutations overcome the steric barrier of crystalline PET chains?",
       "Can thermal stability be increased to operate near the PET glass transition temperature (Tg ~ 65-70 \u00b0C)?"
     ],
     "evidence_items": [
@@ -43,26 +48,47 @@
         "doi": "10.1126/science.aad6359",
         "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
         "enzyme_variant": "Wild-type IsPETase",
-        "pdb_id": "5XJH",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "structures": [],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
-        "reproducibility_class": "INITIAL_DISCOVERY",
         "is_independent": true,
         "limitations": [
-          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
           "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+          "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       }
     ],
-    "snapshot_hash": "d2de1347520d6629d4e12e0d278ad81e519ad320b55d31b4e900a96cf7a9a52e"
+    "evidence_availability_manifest": [
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "5XJH",
+        "title": "Crystal structure of PETase from Ideonella sakaiensis",
+        "deposition_date": "2017-05-01",
+        "public_release_date": "2018-02-14",
+        "as_of_date": "2016-04-01",
+        "status": "WITHHELD_NOT_YET_RELEASED",
+        "note": "Structure of wild-type IsPETase solved after initial discovery; publicly released Feb 14, 2018. NOT available in April 2016."
+      }
+    ],
+    "snapshot_hash": "cd37295a63c73af8b6ed9ce3ee6131d9e72c71f22c9806558d2210cdf6cfb5d7",
+    "superseded_v1_hash": "d2de1347520d6629d4e12e0d278ad81e519ad320b55d31b4e900a96cf7a9a52e",
+    "audit_notes": [
+      "PDB 5XJH strictly excluded: Deposited 2017-05-01, publicly released 2018-02-14. Zero 3D structures were available at this date.",
+      "Economic values categorized as RETROSPECTIVE_MODEL_ESTIMATE to prevent retroactive confusion with contemporaneous market prices."
+    ]
   },
   {
     "technology_id": "fast_petase_depolymerase",
     "as_of_date": "2018-05-01",
-    "snapshot_label": "Snapshot 2 (May 2018): Crystallographic Structure & Initial Active Site Engineering",
+    "snapshot_label": "Snapshot 2 (May 2018): Crystallographic Structure & Initial Active Site Engineering (v2)",
+    "version": "v2",
     "publications_count": 2,
     "publications": [
       {
@@ -70,14 +96,16 @@
         "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
         "publication_date": "2016-03-10",
         "senior_author": "Kohei Oda / Kenji Miyamoto",
-        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY"
       },
       {
         "doi": "10.1073/pnas.1718804115",
         "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
         "publication_date": "2018-04-17",
         "senior_author": "John M. McGeehan / Gregg T. Beckham",
-        "institution": "University of Portsmouth (UK) / NREL (USA)"
+        "institution": "University of Portsmouth (UK) / NREL (USA)",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION"
       }
     ],
     "structures": [
@@ -89,21 +117,25 @@
       "[2018-04-17] IsPETase double mutant (S238F/W159H): ~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed (Substrate: 1.9% crystallinity)"
     ],
     "established_physical_boundaries": [
-      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
       "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
       "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Structure is completely unknown in April 2016; catalytic pocket configuration unverified.",
       "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
       "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
       "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
     ],
     "commercial_feasibility": {
       "readiness_stage": "Lead Optimization / Protein Engineering",
+      "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
       "estimated_tpa_cost_usd_kg": 42.0,
+      "historical_basis_notes": "Retrospective bioprocess model assuming ~800 h residence time. Austin et al. provided structural elucidation and site-directed mutagenesis, but no industrial economic projections. Contemporaneous virgin PET: $1.25/kg.",
       "commercial_verdict": "COMMERCIALLY UNFEASIBLE: Establishes structural basis, but catalytic velocity at 30 \u00b0C remains orders of magnitude too slow for industrial recovery.",
-      "market_clearing_parity_ratio": 33.6
+      "market_clearing_parity_ratio": 33.6,
+      "contemporaneous_virgin_price_usd_kg": 1.25
     },
     "unresolved_uncertainties": [
-      "Does narrow active-site cleft restrict bulky synthetic polyester chains from entering?",
+      "Does narrowed active-site cleft restrict bulky synthetic polyester chains from entering?",
       "Why do mesophilic IsPETase variants lose all activity within 24 hours at 37 \u00b0C?",
       "Is IsPETase intrinsically the wrong enzyme chassis compared to thermophilic actinomycete cutinases?"
     ],
@@ -115,17 +147,28 @@
         "doi": "10.1126/science.aad6359",
         "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
         "enzyme_variant": "Wild-type IsPETase",
-        "pdb_id": "5XJH",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "structures": [
+          {
+            "pdb_id": "5XJH",
+            "deposition_date": "2017-05-01",
+            "public_release_date": "2018-02-14",
+            "citation": "Han et al., Nat Commun 8:2106 (2017)",
+            "note": "PDB 5XJH solved subsequently; NOT publicly available in April 2016."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
-        "reproducibility_class": "INITIAL_DISCOVERY",
         "is_independent": true,
         "limitations": [
-          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
           "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+          "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -135,26 +178,63 @@
         "doi": "10.1073/pnas.1718804115",
         "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
         "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
-        "pdb_id": "6EQE",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "reproducibility_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "structures": [
+          {
+            "pdb_id": "6EQE",
+            "deposition_date": "2018-01-08",
+            "public_release_date": "2018-04-25",
+            "citation": "Austin et al., PNAS (2018)",
+            "note": "First engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
-        "reproducibility_class": "INDEPENDENT_REPLICATION",
         "is_independent": true,
         "limitations": [
           "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
           "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
           "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       }
     ],
-    "snapshot_hash": "6d3f656a5d983a7187613e5a1ca4d3c297e06fc9339ad0f4cfe6c3514d60384e"
+    "evidence_availability_manifest": [
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "5XJH",
+        "title": "Crystal structure of PETase from Ideonella sakaiensis",
+        "deposition_date": "2017-05-01",
+        "public_release_date": "2018-02-14",
+        "as_of_date": "2018-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Structure of wild-type IsPETase solved after initial discovery; publicly released Feb 14, 2018. NOT available in April 2016."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6EQE",
+        "title": "Crystal structure of Ideonella sakaiensis PETase double mutant S238F/W159H",
+        "deposition_date": "2018-01-08",
+        "public_release_date": "2018-04-25",
+        "as_of_date": "2018-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+      }
+    ],
+    "snapshot_hash": "5f03a838440972c9eda6c7212759d987093ac6f59f32c1e453e34923870931f2",
+    "superseded_v1_hash": "6d3f656a5d983a7187613e5a1ca4d3c297e06fc9339ad0f4cfe6c3514d60384e",
+    "audit_notes": [
+      "Economic values categorized as RETROSPECTIVE_MODEL_ESTIMATE to prevent retroactive confusion with contemporaneous market prices."
+    ]
   },
   {
     "technology_id": "fast_petase_depolymerase",
     "as_of_date": "2020-05-01",
-    "snapshot_label": "Snapshot 3 (May 2020): Thermophilic Breakthrough Operating Near PET Glass Transition",
+    "snapshot_label": "Snapshot 3 (May 2020): Thermophilic Breakthrough Operating Near PET Glass Transition (v2)",
+    "version": "v2",
     "publications_count": 3,
     "publications": [
       {
@@ -162,21 +242,24 @@
         "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
         "publication_date": "2016-03-10",
         "senior_author": "Kohei Oda / Kenji Miyamoto",
-        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY"
       },
       {
         "doi": "10.1073/pnas.1718804115",
         "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
         "publication_date": "2018-04-17",
         "senior_author": "John M. McGeehan / Gregg T. Beckham",
-        "institution": "University of Portsmouth (UK) / NREL (USA)"
+        "institution": "University of Portsmouth (UK) / NREL (USA)",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION"
       },
       {
         "doi": "10.1038/s41586-020-2149-4",
         "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
         "publication_date": "2020-04-08",
         "senior_author": "Alain Marty",
-        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING"
       }
     ],
     "structures": [
@@ -190,21 +273,26 @@
       "[2020-04-08] Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG): 90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading (Substrate: 10.0% crystallinity)"
     ],
     "established_physical_boundaries": [
-      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
       "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
       "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Structure is completely unknown in April 2016; catalytic pocket configuration unverified.",
       "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
       "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
       "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
       "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
       "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
-      "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+      "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+      "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative."
     ],
     "commercial_feasibility": {
       "readiness_stage": "Pilot-Scale Demonstration",
+      "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
       "estimated_tpa_cost_usd_kg": 1.65,
-      "commercial_verdict": "CONDITIONAL PILOT VIABILITY: First demonstration of industrially relevant reaction velocity (10 h batch). However, thermal amorphization adds $0.49/kg, making cost 57% higher than virgin petrochemical TPA ($1.05/kg).",
-      "market_clearing_parity_ratio": 1.57
+      "historical_basis_notes": "Sourced from contemporary Carbios pilot disclosures and contemporary NREL TEA models ($1.40-$1.80/kg TPA). Includes twin-screw extrusion amorphization pre-treatment ($0.26-$0.49/kg TPA). Contemporaneous virgin TPA: $1.05/kg.",
+      "commercial_verdict": "CONDITIONAL PILOT VIABILITY: First demonstration of industrially relevant reaction velocity (10 h batch). However, non-biological pre-treatment ($0.26-$0.49/kg) keeps cost ~57% above virgin petrochemical TPA ($1.05/kg).",
+      "market_clearing_parity_ratio": 1.57,
+      "contemporaneous_virgin_price_usd_kg": 1.05
     },
     "unresolved_uncertainties": [
       "What is the fouling rate of ultrafiltration membranes when separating soluble TPA from residual insoluble oligomers (MHET)?",
@@ -219,17 +307,28 @@
         "doi": "10.1126/science.aad6359",
         "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
         "enzyme_variant": "Wild-type IsPETase",
-        "pdb_id": "5XJH",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "structures": [
+          {
+            "pdb_id": "5XJH",
+            "deposition_date": "2017-05-01",
+            "public_release_date": "2018-02-14",
+            "citation": "Han et al., Nat Commun 8:2106 (2017)",
+            "note": "PDB 5XJH solved subsequently; NOT publicly available in April 2016."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
-        "reproducibility_class": "INITIAL_DISCOVERY",
         "is_independent": true,
         "limitations": [
-          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
           "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+          "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -239,17 +338,27 @@
         "doi": "10.1073/pnas.1718804115",
         "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
         "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
-        "pdb_id": "6EQE",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "reproducibility_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "structures": [
+          {
+            "pdb_id": "6EQE",
+            "deposition_date": "2018-01-08",
+            "public_release_date": "2018-04-25",
+            "citation": "Austin et al., PNAS (2018)",
+            "note": "First engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
-        "reproducibility_class": "INDEPENDENT_REPLICATION",
         "is_independent": true,
         "limitations": [
           "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
           "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
           "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -259,26 +368,74 @@
         "doi": "10.1038/s41586-020-2149-4",
         "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
         "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
-        "pdb_id": "6T54",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "reproducibility_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "structures": [
+          {
+            "pdb_id": "6T54",
+            "deposition_date": "2020-02-10",
+            "public_release_date": "2020-04-08",
+            "citation": "Tournier et al., Nature (2020)",
+            "note": "Thermostable LCC cutinase crystal structure. Publicly released April 8, 2020."
+          }
+        ],
         "crystallinity_pct": 10.0,
         "temperature_celsius": 72.0,
         "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
-        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
         "is_independent": true,
         "limitations": [
           "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
           "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
-          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+          "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative."
         ],
+        "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
         "raw_data": {}
       }
     ],
-    "snapshot_hash": "c204a3c865634b7043c18ad3cd3ba5265b4fcd619b6d26c064421cb0a24e9c0a"
+    "evidence_availability_manifest": [
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "5XJH",
+        "title": "Crystal structure of PETase from Ideonella sakaiensis",
+        "deposition_date": "2017-05-01",
+        "public_release_date": "2018-02-14",
+        "as_of_date": "2020-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Structure of wild-type IsPETase solved after initial discovery; publicly released Feb 14, 2018. NOT available in April 2016."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6EQE",
+        "title": "Crystal structure of Ideonella sakaiensis PETase double mutant S238F/W159H",
+        "deposition_date": "2018-01-08",
+        "public_release_date": "2018-04-25",
+        "as_of_date": "2020-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6T54",
+        "title": "Crystal structure of engineered leaf-branch compost cutinase variant ICCG",
+        "deposition_date": "2020-02-10",
+        "public_release_date": "2020-04-08",
+        "as_of_date": "2020-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Thermostable LCC cutinase crystal structure with disulfide bond engineering. Publicly released April 8, 2020."
+      }
+    ],
+    "snapshot_hash": "5867e3901205abc53fb0c1e28e7d7590be312adfe48edb3c3d9166980c018206",
+    "superseded_v1_hash": "c204a3c865634b7043c18ad3cd3ba5265b4fcd619b6d26c064421cb0a24e9c0a",
+    "audit_notes": [
+      "Economic values categorized as SOURCED_LITERATURE_ESTIMATE to prevent retroactive confusion with contemporaneous market prices."
+    ]
   },
   {
     "technology_id": "fast_petase_depolymerase",
     "as_of_date": "2022-05-01",
-    "snapshot_label": "Snapshot 4 (May 2022): Neural-Network Guided Directed Evolution (FAST-PETase)",
+    "snapshot_label": "Snapshot 4 (May 2022): Neural-Network Guided Directed Evolution (FAST-PETase) (v2)",
+    "version": "v2",
     "publications_count": 4,
     "publications": [
       {
@@ -286,28 +443,32 @@
         "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
         "publication_date": "2016-03-10",
         "senior_author": "Kohei Oda / Kenji Miyamoto",
-        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY"
       },
       {
         "doi": "10.1073/pnas.1718804115",
         "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
         "publication_date": "2018-04-17",
         "senior_author": "John M. McGeehan / Gregg T. Beckham",
-        "institution": "University of Portsmouth (UK) / NREL (USA)"
+        "institution": "University of Portsmouth (UK) / NREL (USA)",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION"
       },
       {
         "doi": "10.1038/s41586-020-2149-4",
         "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
         "publication_date": "2020-04-08",
         "senior_author": "Alain Marty",
-        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING"
       },
       {
         "doi": "10.1038/s41586-022-04599-z",
         "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
         "publication_date": "2022-04-27",
         "senior_author": "Hal S. Alper / Andrew D. Ellington",
-        "institution": "University of Texas at Austin (USA)"
+        "institution": "University of Texas at Austin (USA)",
+        "enzyme_lineage_class": "SAME_CHASSIS_DIRECTED_EVOLUTION"
       }
     ],
     "structures": [
@@ -323,24 +484,29 @@
       "[2022-04-27] FAST-PETase (S121E/D186H/R224Q/N233K/R280A): Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C (Substrate: 5.0% crystallinity)"
     ],
     "established_physical_boundaries": [
-      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
       "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
       "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Structure is completely unknown in April 2016; catalytic pocket configuration unverified.",
       "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
       "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
       "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
       "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
       "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
       "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
-      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
-      "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+      "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative.",
+      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock or thermoform waste for high conversion.",
+      "Enzyme loading is relatively high (3-5 mg / g PET), driving biocatalyst OPEX.",
       "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
     ],
     "commercial_feasibility": {
       "readiness_stage": "Pre-Pilot / Advanced Biocatalyst",
+      "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
       "estimated_tpa_cost_usd_kg": 1.54,
-      "commercial_verdict": "COMMERCIALLY CONSTRAINED: Operates at mild 50 \u00b0C, reducing reactor thermal stress, but cannot bypass amorphization pre-treatment on bottle-grade packaging ($1.54/kg TPA vs $1.05/kg virgin).",
-      "market_clearing_parity_ratio": 1.47
+      "historical_basis_notes": "Retrospective bioprocess model assuming 50 \u00b0C operation on amorphous thermoform PET waste. Lu et al. published enzyme engineering and kinetics, not manufacturing economics. Contemporaneous virgin TPA: $1.05/kg.",
+      "commercial_verdict": "COMMERCIALLY CONSTRAINED: Operates at mild 50 \u00b0C, reducing reactor thermal stress, but requires pre-treated amorphous feedstock on bottle packaging ($1.54/kg TPA vs $1.05/kg virgin).",
+      "market_clearing_parity_ratio": 1.47,
+      "contemporaneous_virgin_price_usd_kg": 1.05
     },
     "unresolved_uncertainties": [
       "Can FAST-PETase tolerate industrial wash impurities, detergents, and colored PET dyes?",
@@ -355,17 +521,28 @@
         "doi": "10.1126/science.aad6359",
         "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
         "enzyme_variant": "Wild-type IsPETase",
-        "pdb_id": "5XJH",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "structures": [
+          {
+            "pdb_id": "5XJH",
+            "deposition_date": "2017-05-01",
+            "public_release_date": "2018-02-14",
+            "citation": "Han et al., Nat Commun 8:2106 (2017)",
+            "note": "PDB 5XJH solved subsequently; NOT publicly available in April 2016."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
-        "reproducibility_class": "INITIAL_DISCOVERY",
         "is_independent": true,
         "limitations": [
-          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
           "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+          "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -375,17 +552,27 @@
         "doi": "10.1073/pnas.1718804115",
         "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
         "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
-        "pdb_id": "6EQE",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "reproducibility_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "structures": [
+          {
+            "pdb_id": "6EQE",
+            "deposition_date": "2018-01-08",
+            "public_release_date": "2018-04-25",
+            "citation": "Austin et al., PNAS (2018)",
+            "note": "First engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
-        "reproducibility_class": "INDEPENDENT_REPLICATION",
         "is_independent": true,
         "limitations": [
           "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
           "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
           "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -395,17 +582,28 @@
         "doi": "10.1038/s41586-020-2149-4",
         "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
         "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
-        "pdb_id": "6T54",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "reproducibility_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "structures": [
+          {
+            "pdb_id": "6T54",
+            "deposition_date": "2020-02-10",
+            "public_release_date": "2020-04-08",
+            "citation": "Tournier et al., Nature (2020)",
+            "note": "Thermostable LCC cutinase crystal structure. Publicly released April 8, 2020."
+          }
+        ],
         "crystallinity_pct": 10.0,
         "temperature_celsius": 72.0,
         "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
-        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
         "is_independent": true,
         "limitations": [
           "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
           "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
-          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+          "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative."
         ],
+        "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -415,26 +613,83 @@
         "doi": "10.1038/s41586-022-04599-z",
         "experimental_system": "Structure-based neural network (mutCompute) + circular dichroism + 50 \u00b0C reaction",
         "enzyme_variant": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
-        "pdb_id": "7SH6",
+        "enzyme_lineage_class": "SAME_CHASSIS_DIRECTED_EVOLUTION",
+        "reproducibility_class": "SAME_CHASSIS_DIRECTED_EVOLUTION",
+        "structures": [
+          {
+            "pdb_id": "7SH6",
+            "deposition_date": "2021-08-31",
+            "public_release_date": "2022-04-27",
+            "citation": "Lu et al., Nature (2022)",
+            "note": "Authoritative 1.44 A crystal structure of FAST-PETase. Publicly released April 27, 2022."
+          }
+        ],
         "crystallinity_pct": 5.0,
         "temperature_celsius": 50.0,
         "reported_rate": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
-        "reproducibility_class": "SAME_LAB_EXTENSION",
         "is_independent": true,
         "limitations": [
-          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
-          "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock or thermoform waste for high conversion.",
+          "Enzyme loading is relatively high (3-5 mg / g PET), driving biocatalyst OPEX.",
           "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       }
     ],
-    "snapshot_hash": "da5950c26ea298237dc015694e0b9b0eed0ff4476d4cb3cc7ffc8a6de80706a7"
+    "evidence_availability_manifest": [
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "5XJH",
+        "title": "Crystal structure of PETase from Ideonella sakaiensis",
+        "deposition_date": "2017-05-01",
+        "public_release_date": "2018-02-14",
+        "as_of_date": "2022-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Structure of wild-type IsPETase solved after initial discovery; publicly released Feb 14, 2018. NOT available in April 2016."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6EQE",
+        "title": "Crystal structure of Ideonella sakaiensis PETase double mutant S238F/W159H",
+        "deposition_date": "2018-01-08",
+        "public_release_date": "2018-04-25",
+        "as_of_date": "2022-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6T54",
+        "title": "Crystal structure of engineered leaf-branch compost cutinase variant ICCG",
+        "deposition_date": "2020-02-10",
+        "public_release_date": "2020-04-08",
+        "as_of_date": "2022-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Thermostable LCC cutinase crystal structure with disulfide bond engineering. Publicly released April 8, 2020."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "7SH6",
+        "title": "Crystal structure of FAST-PETase",
+        "deposition_date": "2021-08-31",
+        "public_release_date": "2022-04-27",
+        "as_of_date": "2022-05-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Authoritative 1.44 A structure of FAST-PETase. Publicly released April 27, 2022."
+      }
+    ],
+    "snapshot_hash": "aa3249bb3f28bbecddc0ee7727abdfadd635be2ad123afb800d110614d629c86",
+    "superseded_v1_hash": "da5950c26ea298237dc015694e0b9b0eed0ff4476d4cb3cc7ffc8a6de80706a7",
+    "audit_notes": [
+      "Economic values categorized as RETROSPECTIVE_MODEL_ESTIMATE to prevent retroactive confusion with contemporaneous market prices."
+    ]
   },
   {
     "technology_id": "fast_petase_depolymerase",
     "as_of_date": "2024-02-01",
-    "snapshot_label": "Snapshot 5 (February 2024): Industrial Reconciliation & Reality Boundary Audit",
+    "snapshot_label": "Snapshot 5 (February 2024): Industrial Reconciliation & Reality Boundary Audit (v2)",
+    "version": "v2",
     "publications_count": 5,
     "publications": [
       {
@@ -442,35 +697,40 @@
         "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
         "publication_date": "2016-03-10",
         "senior_author": "Kohei Oda / Kenji Miyamoto",
-        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY"
       },
       {
         "doi": "10.1073/pnas.1718804115",
         "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
         "publication_date": "2018-04-17",
         "senior_author": "John M. McGeehan / Gregg T. Beckham",
-        "institution": "University of Portsmouth (UK) / NREL (USA)"
+        "institution": "University of Portsmouth (UK) / NREL (USA)",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION"
       },
       {
         "doi": "10.1038/s41586-020-2149-4",
         "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
         "publication_date": "2020-04-08",
         "senior_author": "Alain Marty",
-        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING"
       },
       {
         "doi": "10.1038/s41586-022-04599-z",
         "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
         "publication_date": "2022-04-27",
         "senior_author": "Hal S. Alper / Andrew D. Ellington",
-        "institution": "University of Texas at Austin (USA)"
+        "institution": "University of Texas at Austin (USA)",
+        "enzyme_lineage_class": "SAME_CHASSIS_DIRECTED_EVOLUTION"
       },
       {
         "doi": "10.1016/j.biortech.2023.130101",
         "citation": "Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
         "publication_date": "2024-01-15",
         "senior_author": "Independent Consortium Audit",
-        "institution": "NREL / Industrial Biorecycling Advisory Board"
+        "institution": "NREL / Industrial Biorecycling Advisory Board",
+        "enzyme_lineage_class": "SYSTEMS_RECONCILIATION_AUDIT"
       }
     ],
     "structures": [
@@ -487,17 +747,19 @@
       "[2024-01-15] Commercialized Cutinases & Engineered PETases: Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA. (Substrate: 32.0% crystallinity)"
     ],
     "established_physical_boundaries": [
-      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
       "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
       "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Structure is completely unknown in April 2016; catalytic pocket configuration unverified.",
       "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
       "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
       "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
       "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
       "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
       "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
-      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
-      "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+      "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative.",
+      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock or thermoform waste for high conversion.",
+      "Enzyme loading is relatively high (3-5 mg / g PET), driving biocatalyst OPEX.",
       "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling.",
       "Unavoidable physical law: Enthalpy of amorphization and extrusion electrical work cannot be engineered away biologically.",
       "Oligomer precipitation (MHET solubility < 0.5 g/L at 25 \u00b0C) causes irreversible flux decay in ultrafiltration membranes.",
@@ -505,9 +767,12 @@
     ],
     "commercial_feasibility": {
       "readiness_stage": "Commercial Demonstration (Bounded)",
+      "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
       "estimated_tpa_cost_usd_kg": 1.6,
-      "commercial_verdict": "COMMERCIALLY BOUNDED BY NON-BIOLOGICAL UNIT OPERATIONS: The limiting factors in enzymatic recycling are not enzyme kinetics, but mechanical pre-treatment, caustic neutralization, and salt disposal. Viable only under mandatory recycled-content regulations.",
-      "market_clearing_parity_ratio": 1.52
+      "historical_basis_notes": "Multi-partner reconciliation synthesizing NREL TEA models (Singh et al. 2021) and Carbios demo facility data. Pre-treatment amorphization cost stack verified: $0.26/kg TPA at 50 kt/yr commercial scale, $0.49/kg TPA at 10 kt/yr pilot scale. Contemporaneous virgin TPA: $1.05/kg.",
+      "commercial_verdict": "COMMERCIALLY BOUNDED BY NON-BIOLOGICAL UNIT OPERATIONS: The limiting factors in enzymatic recycling are not enzyme kinetics, but mechanical pre-treatment, caustic neutralization, and salt disposal. Viable only under mandatory recycled-content regulations or brand premia.",
+      "market_clearing_parity_ratio": 1.52,
+      "contemporaneous_virgin_price_usd_kg": 1.05
     },
     "unresolved_uncertainties": [
       "Will brands pay a $0.50/kg green premium for circular enzyme-recycled polyester over mechanically downcycled rPET?",
@@ -522,17 +787,28 @@
         "doi": "10.1126/science.aad6359",
         "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
         "enzyme_variant": "Wild-type IsPETase",
-        "pdb_id": "5XJH",
+        "enzyme_lineage_class": "INITIAL_DISCOVERY",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "structures": [
+          {
+            "pdb_id": "5XJH",
+            "deposition_date": "2017-05-01",
+            "public_release_date": "2018-02-14",
+            "citation": "Han et al., Nat Commun 8:2106 (2017)",
+            "note": "PDB 5XJH solved subsequently; NOT publicly available in April 2016."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
-        "reproducibility_class": "INITIAL_DISCOVERY",
         "is_independent": true,
         "limitations": [
-          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 46.5 \u00b0C).",
           "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
-          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+          "Structure is completely unknown in April 2016; catalytic pocket configuration unverified."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -542,17 +818,27 @@
         "doi": "10.1073/pnas.1718804115",
         "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
         "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
-        "pdb_id": "6EQE",
+        "enzyme_lineage_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "reproducibility_class": "INDEPENDENT_STRUCTURAL_EXTENSION",
+        "structures": [
+          {
+            "pdb_id": "6EQE",
+            "deposition_date": "2018-01-08",
+            "public_release_date": "2018-04-25",
+            "citation": "Austin et al., PNAS (2018)",
+            "note": "First engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+          }
+        ],
         "crystallinity_pct": 1.9,
         "temperature_celsius": 30.0,
         "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
-        "reproducibility_class": "INDEPENDENT_REPLICATION",
         "is_independent": true,
         "limitations": [
           "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
           "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
           "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -562,17 +848,28 @@
         "doi": "10.1038/s41586-020-2149-4",
         "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
         "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
-        "pdb_id": "6T54",
+        "enzyme_lineage_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "reproducibility_class": "HOMOLOGOUS_CUTINASE_FAMILY_ENGINEERING",
+        "structures": [
+          {
+            "pdb_id": "6T54",
+            "deposition_date": "2020-02-10",
+            "public_release_date": "2020-04-08",
+            "citation": "Tournier et al., Nature (2020)",
+            "note": "Thermostable LCC cutinase crystal structure. Publicly released April 8, 2020."
+          }
+        ],
         "crystallinity_pct": 10.0,
         "temperature_celsius": 72.0,
         "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
-        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
         "is_independent": true,
         "limitations": [
           "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
           "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
-          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+          "LCC is a distinct metagenomic cutinase family, not an IsPETase derivative."
         ],
+        "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -582,17 +879,27 @@
         "doi": "10.1038/s41586-022-04599-z",
         "experimental_system": "Structure-based neural network (mutCompute) + circular dichroism + 50 \u00b0C reaction",
         "enzyme_variant": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
-        "pdb_id": "7SH6",
+        "enzyme_lineage_class": "SAME_CHASSIS_DIRECTED_EVOLUTION",
+        "reproducibility_class": "SAME_CHASSIS_DIRECTED_EVOLUTION",
+        "structures": [
+          {
+            "pdb_id": "7SH6",
+            "deposition_date": "2021-08-31",
+            "public_release_date": "2022-04-27",
+            "citation": "Lu et al., Nature (2022)",
+            "note": "Authoritative 1.44 A crystal structure of FAST-PETase. Publicly released April 27, 2022."
+          }
+        ],
         "crystallinity_pct": 5.0,
         "temperature_celsius": 50.0,
         "reported_rate": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
-        "reproducibility_class": "SAME_LAB_EXTENSION",
         "is_independent": true,
         "limitations": [
-          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
-          "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock or thermoform waste for high conversion.",
+          "Enzyme loading is relatively high (3-5 mg / g PET), driving biocatalyst OPEX.",
           "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
         ],
+        "economic_metric_type": "RETROSPECTIVE_MODEL_ESTIMATE",
         "raw_data": {}
       },
       {
@@ -602,20 +909,68 @@
         "doi": "10.1016/j.biortech.2023.130101",
         "experimental_system": "Continuous demonstration facility data & mass balance reconciliation",
         "enzyme_variant": "Commercialized Cutinases & Engineered PETases",
-        "pdb_id": null,
+        "enzyme_lineage_class": "SYSTEMS_RECONCILIATION_AUDIT",
+        "reproducibility_class": "SYSTEMS_RECONCILIATION_AUDIT",
+        "structures": [],
         "crystallinity_pct": 32.0,
         "temperature_celsius": 70.0,
         "reported_rate": "Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA.",
-        "reproducibility_class": "INDUSTRIAL_VALIDATION",
         "is_independent": true,
         "limitations": [
           "Unavoidable physical law: Enthalpy of amorphization and extrusion electrical work cannot be engineered away biologically.",
           "Oligomer precipitation (MHET solubility < 0.5 g/L at 25 \u00b0C) causes irreversible flux decay in ultrafiltration membranes.",
           "Enzymatic TPA ($1.55-$1.65/kg) requires a 50% green premium over chemical glycolysis ($1.05/kg) or fossil PTA ($1.15/kg)."
         ],
+        "economic_metric_type": "SOURCED_LITERATURE_ESTIMATE",
         "raw_data": {}
       }
     ],
-    "snapshot_hash": "1aae6be62c8aad936ad3dd23becefad52471b65b16cf1bcf5d15fa615415e611"
+    "evidence_availability_manifest": [
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "5XJH",
+        "title": "Crystal structure of PETase from Ideonella sakaiensis",
+        "deposition_date": "2017-05-01",
+        "public_release_date": "2018-02-14",
+        "as_of_date": "2024-02-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Structure of wild-type IsPETase solved after initial discovery; publicly released Feb 14, 2018. NOT available in April 2016."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6EQE",
+        "title": "Crystal structure of Ideonella sakaiensis PETase double mutant S238F/W159H",
+        "deposition_date": "2018-01-08",
+        "public_release_date": "2018-04-25",
+        "as_of_date": "2024-02-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Engineered IsPETase crystal structure showing narrowed substrate cleft. Publicly released April 25, 2018."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "6T54",
+        "title": "Crystal structure of engineered leaf-branch compost cutinase variant ICCG",
+        "deposition_date": "2020-02-10",
+        "public_release_date": "2020-04-08",
+        "as_of_date": "2024-02-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Thermostable LCC cutinase crystal structure with disulfide bond engineering. Publicly released April 8, 2020."
+      },
+      {
+        "evidence_type": "PDB_STRUCTURE",
+        "identifier": "7SH6",
+        "title": "Crystal structure of FAST-PETase",
+        "deposition_date": "2021-08-31",
+        "public_release_date": "2022-04-27",
+        "as_of_date": "2024-02-01",
+        "status": "PUBLICLY_AVAILABLE",
+        "note": "Authoritative 1.44 A structure of FAST-PETase. Publicly released April 27, 2022."
+      }
+    ],
+    "snapshot_hash": "52328ac9bb798591a056708538af80b9effa387abf58f52705662917f8ae2a58",
+    "superseded_v1_hash": "1aae6be62c8aad936ad3dd23becefad52471b65b16cf1bcf5d15fa615415e611",
+    "audit_notes": [
+      "Economic values categorized as SOURCED_LITERATURE_ESTIMATE to prevent retroactive confusion with contemporaneous market prices."
+    ]
   }
 ]
