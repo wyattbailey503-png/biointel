@@ -1,0 +1,85 @@
+{
+  "study_id": "study_01_petase_plastics_bioprocess",
+  "status": "CALCULATION_CHECKED",
+  "annual_pet_throughput_mt": 50000.0,
+  "net_annual_tpa_production_mt": 35790.1,
+  "baseline_amorphized_scenario": {
+    "conversion_efficiency_percent": 90.0,
+    "dsp_recovery_percent": 92.0,
+    "net_mass_yield_kg_tpa_per_kg_pet": 0.7158,
+    "cost_stack_usd_per_kg_tpa": {
+      "feedstock_pet": 0.6287,
+      "amorphization_pretreatment": 0.489,
+      "enzyme_biocatalyst": 0.1048,
+      "utilities_power_steam": 0.12,
+      "labor_and_overhead": 0.14,
+      "capex_depreciation": 0.1215,
+      "total_production_cost": 1.6039
+    },
+    "economic_margin_vs_virgin_pet": -0.4539,
+    "competitiveness_vs_chemical_glycolysis": "UNFAVORABLE (+$0.55/kg premium)"
+  },
+  "raw_crystalline_bottle_flake_scenario": {
+    "conversion_efficiency_percent": 15.0,
+    "net_mass_yield_kg_tpa_per_kg_pet": 0.1193,
+    "total_production_cost_usd_per_kg_tpa": 5.5697,
+    "verdict": "CATASTROPHIC ECONOMIC FAILURE due to yield loss and CAPEX dilution"
+  },
+  "competitor_benchmarks_usd_per_kg_tpa": {
+    "virgin_pet_tpa": 1.15,
+    "chemical_glycolysis_recycled_tpa": 1.05
+  },
+  "crystallinity_sensitivity": [
+    {
+      "crystallinity_fraction": 0.03,
+      "crystallinity_percent": 3.0,
+      "conversion_efficiency": 85.3,
+      "requires_amorphization": false,
+      "unit_cost_tpa_usd_kg": 1.162
+    },
+    {
+      "crystallinity_fraction": 0.08,
+      "crystallinity_percent": 8.0,
+      "conversion_efficiency": 72.0,
+      "requires_amorphization": false,
+      "unit_cost_tpa_usd_kg": 1.329
+    },
+    {
+      "crystallinity_fraction": 0.15,
+      "crystallinity_percent": 15.0,
+      "conversion_efficiency": 55.9,
+      "requires_amorphization": true,
+      "unit_cost_tpa_usd_kg": 2.424
+    },
+    {
+      "crystallinity_fraction": 0.22,
+      "crystallinity_percent": 22.0,
+      "conversion_efficiency": 42.4,
+      "requires_amorphization": true,
+      "unit_cost_tpa_usd_kg": 3.11
+    },
+    {
+      "crystallinity_fraction": 0.3,
+      "crystallinity_percent": 30.0,
+      "conversion_efficiency": 30.0,
+      "requires_amorphization": true,
+      "unit_cost_tpa_usd_kg": 4.289
+    },
+    {
+      "crystallinity_fraction": 0.38,
+      "crystallinity_percent": 38.0,
+      "conversion_efficiency": 20.4,
+      "requires_amorphization": true,
+      "unit_cost_tpa_usd_kg": 6.201
+    }
+  ],
+  "strategic_recommendation": {
+    "verdict": "REJECT PILOT FUNDING / CONDITIONAL HOLD",
+    "justification": "FAST-PETase activity at 50 \u00b0C is insufficient to overcome PET glass transition barrier (Tg = 65-70 \u00b0C). Pre-treatment amorphization adds $0.49/kg TPA, making total enzymatic recycling ($1.60/kg TPA) 52% more expensive than chemical glycolysis ($1.05/kg TPA).",
+    "kill_criteria_for_future_reconsideration": [
+      "Enzyme thermostability Tm must exceed 75 \u00b0C to operate at 72 \u00b0C where PET chains are mobile.",
+      "Enzyme production cost must fall below $10.00/kg pure protein.",
+      "Direct depolymerization of 30% crystalline PET must achieve >80% yield without amorphization extrusion."
+    ]
+  }
+}

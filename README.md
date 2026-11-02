@@ -115,14 +115,39 @@ PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 tests/run_tests.py
   PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 src/biointel/cli.py export --version v1.0.0
   ```
 
+- **Manage & Verify Reproducible Research Studies:**
+  ```bash
+  # List all available study packages:
+  PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 src/biointel/cli.py study list
+
+  # Deterministically verify and execute a study package:
+  PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 src/biointel/cli.py study verify study_01_petase_plastics_bioprocess
+  PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 src/biointel/cli.py study verify study_02_prime_vs_base_editing_diligence
+  PYTHONPATH=src /Users/wyattbailey/.local/bin/python3.11 src/biointel/cli.py study verify study_03_lactoferrin_fermentation_scaleup
+  ```
+
 ---
 
-## Mandatory MVP Deliverables Generated
-1. **Macromolecular 3D Structure:** PDB `7K38` (KAI2 alpha/beta hydrolase receptor, 2.0 Å resolution).
-   - Generates per-residue crystallographic B-factor profile (`outputs/figures/7k38_b_factors.png`).
-   - Generates $C_\alpha$ residue contact matrix (`outputs/figures/7k38_contacts.png`).
-   - Staged for interactive Mol* 3D rendering via [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html).
-2. **Competitive Technology Comparison:** SpCas9 Nuclease vs Prime Editing (PE2/PE3/bi-PE) with explicit experimental condition mismatch flags.
-3. **Precision Fermentation Techno-Economic Model:** Biomanufacturing mass balance for 50,000 L reactor volume producing 111.4 MT/year at $24.64/kg with full cost stack decomposition and 2D sensitivity curve (`outputs/figures/fermentation_cost_sensitivity.png`).
-4. **Institutional Diligence Memorandum:** 15-section structured diligence report in `outputs/research/memo_prime_editing.md`.
-5. **Versioned JSON Archive:** Complete relational state snapshot ready for Git archiving in `data/exports/biointel_archive_v1.0.0.json`.
+## Phase 4: Reproducible Research Study Packages
+
+BioIntel enforces standard research study packages under `research/studies/<study-id>/`:
+
+| Study ID | Domain | Diligence Question & Finding | Status |
+| :--- | :--- | :--- | :--- |
+| **`study_01_petase_plastics_bioprocess`** | Protein Engineering & Biomanufacturing | **FAST-PETase Plastic Recycling Parity:** Depolymerization on 34% crystalline bottle flake collapses from 52% to <5% without thermal amorphization; total cost ($1.60/kg TPA) is 52% higher than chemical glycolysis. **Verdict: REJECT PILOT FUNDING.** | `CALCULATION_CHECKED` |
+| **`study_02_prime_vs_base_editing_diligence`** | Gene Editing & Delivery Vectors | **Prime Editing vs. Base Editing Triage:** PEmax exceeds single AAV limit by 2.3 kb; MMR excises 3'-flaps in primary cells, reducing efficiency by 65%. Base editing preferred for clean transitions; Prime editing reserved for LNP liver transversions. **Verdict: ALLOCATE BY ROUTE.** | `CALCULATION_CHECKED` |
+| **`study_03_lactoferrin_fermentation_scaleup`** | Industrial Precision Fermentation | **Scale-Up Contradiction Audit:** 40 g/L pitch deck claim requires unphysical OUR (240 mmol/L/h) and generates 620 kW heat (exceeding 450 kW jacket limit). True commercial titer is bounded at 14 g/L, driving COGS to $92.50/kg (4.2x claimed). **Verdict: REJECT CLAIMED ECONOMICS.** | `CALCULATION_CHECKED` |
+
+---
+
+## Phase 4 Audit Deliverables (`docs/phase4/`)
+1. [`implementation_reality_check.md`](docs/phase4/implementation_reality_check.md): Unvarnished line-by-line audit classifying all modules (Live vs. Seeded vs. Offline vs. Mocked).
+2. [`scientific_quality_audit.md`](docs/phase4/scientific_quality_audit.md): Ten dimensions of research quality and hard review gate lifecycle (`DRAFT` $\to$ `READY_FOR_REVIEW` $\to$ `HUMAN_REVIEWED` / `REJECTED`).
+3. [`research_benchmark.md`](docs/phase4/research_benchmark.md): Curated 20-observation ground-truth benchmark and adversarial failure modes.
+4. [`product_wedge_assessment.md`](docs/phase4/product_wedge_assessment.md): Head-to-head comparison of Candidate A (Industrial Biotech) vs. Candidate B (Therapeutics) and concrete workflow selection.
+5. [`baseline_comparison.md`](docs/phase4/baseline_comparison.md): Empirical scorecard comparing BioIntel against PubMed and general LLMs.
+6. [`improvement_register.md`](docs/phase4/improvement_register.md): 15 candidate improvements and selection of 3 targeted fixes.
+7. [`research_originality_assessment.md`](docs/phase4/research_originality_assessment.md): Epistemic ledger separating retrieved facts from newly derived calculations.
+8. [`scientific_adversarial_review.md`](docs/phase4/scientific_adversarial_review.md): Multi-perspective reviews (Scientist, Investor, Software Maintainer) and external review package.
+9. [`final_value_assessment.md`](docs/phase4/final_value_assessment.md): Prompt critique and definitive answers to all 11 closing questions.
+

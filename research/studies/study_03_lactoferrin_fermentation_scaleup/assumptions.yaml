@@ -1,0 +1,51 @@
+study_id: study_03_lactoferrin_fermentation_scaleup
+version: 1.0.0
+
+vessel_engineering:
+  vessel_nominal_volume_l:
+    value: 50000.0
+    unit: liters
+    classification: User Assumption
+  working_volume_fraction:
+    value: 0.80
+    unit: fraction
+    classification: Independently Estimated
+  working_volume_l:
+    value: 40000.0
+    unit: liters
+    classification: Independently Estimated
+  kla_maximum_air_sparged:
+    value: 140.0
+    unit: 1/h
+    classification: Experimentally Measured
+    basis: Industrial Rushton impeller hydrodynamics (Garcia-Ortega 2019)
+  do_saturation_solubility_mmol_l:
+    value: 0.25
+    unit: mmol/L
+    classification: Experimentally Measured
+  heat_transfer_area_m2:
+    value: 75.0
+    unit: m^2
+    classification: Independently Estimated
+  overall_heat_transfer_coeff_w_m2_k:
+    value: 500.0
+    unit: W/(m^2*K)
+    classification: Independently Estimated
+  max_jacket_cooling_kw:
+    value: 450.0
+    unit: kW
+    classification: Independently Estimated
+
+claimed_vs_realistic_parameters:
+  startup_claim:
+    titer_g_l: 40.0
+    dsp_recovery: 0.85
+    batch_time_h: 120.0
+    cogs_usd_per_kg: 22.0
+    classification: Unverified Pitch Deck
+  realistic_physical_limit:
+    titer_g_l: 14.0
+    dsp_recovery: 0.68
+    batch_time_h: 130.0
+    cogs_usd_per_kg: 92.50
+    classification: Independently Estimated (Physics Bounded)

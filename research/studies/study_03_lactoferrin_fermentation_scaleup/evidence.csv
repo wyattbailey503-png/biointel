@@ -1,0 +1,4 @@
+observation_id,technology,source_doi_or_key,vessel_scale_liters,reported_titer_g_l,dsp_recovery_pct,oxygen_enrichment,heat_removal_status,verification_verdict
+OBS-15,Pichia pastoris rhLF,10.1016/j.biortech.2020.123012,5.0,4.8,82.0,None (air),Controlled (jacket),VERIFIED_PEER_REVIEWED
+OBS-15B,Pichia pastoris rhLF,10.1186/s12934-019-1191-2,1000.0,12.0,74.0,Pure O2 supplement (35%),Controlled (external HX),VERIFIED_PILOT
+OBS-15C,Commercial Startup Claim,unverified_commercial_claim,50000.0,40.0,85.0,None reported (standard air claimed),Claimed standard jacket,REJECTED_PHYSICALLY_UNFEASIBLE

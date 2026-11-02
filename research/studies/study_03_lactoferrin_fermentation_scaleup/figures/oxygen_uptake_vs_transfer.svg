@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="40" y="45" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="bold" fill="#0f172a">Oxygen Uptake Rate (OUR) vs. 50,000 L Air Transfer Limit</text>
+<text x="40" y="70" font-family="-apple-system,system-ui,sans-serif" font-size="13" fill="#64748b">Exceeding 28 mmol/L/h requires pure O2 enrichment, escalating methanol explosion risks</text>
+<line x1="100" y1="360" x2="700" y2="360" stroke="#cbd5e1" stroke-width="1.5" />
+<line x1="100" y1="360" x2="100" y2="110" stroke="#cbd5e1" stroke-width="1.5" />
+<line x1="100" y1="332.0" x2="700" y2="332.0" stroke="#059669" stroke-width="2" stroke-dasharray="6,4" />
+<text x="690" y="326.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#059669" text-anchor="end">Standard Air Sparging Limit (OTR = 28 mmol/L/h)</text>
+<path d="M 172.0 292.5 L 250.0 260.0 L 310.0 235.0 L 400.0 197.5 L 550.0 135.0 L 700.0 72.5" fill="none" stroke="#dc2626" stroke-width="3" />
+<circle cx="172.0" cy="292.5" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="172.0" y="282.5" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">68</text>
+<text x="172.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">4.8 g/L</text>
+<circle cx="250.0" cy="260.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="250.0" y="250.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">100</text>
+<text x="250.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">10.0 g/L</text>
+<circle cx="310.0" cy="235.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="310.0" y="225.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">125</text>
+<text x="310.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">14.0 g/L</text>
+<circle cx="400.0" cy="197.5" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="400.0" y="187.5" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">162</text>
+<text x="400.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">20.0 g/L</text>
+<circle cx="550.0" cy="135.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="550.0" y="125.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">225</text>
+<text x="550.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">30.0 g/L</text>
+<circle cx="700.0" cy="72.5" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="700.0" y="62.5" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">288</text>
+<text x="700.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">40.0 g/L</text>
+<text x="400.0" y="405" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" text-anchor="middle">Fermentation Titer (g / L)</text>
+<text x="45" y="235.0" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" transform="rotate(-90 45 235.0)" text-anchor="middle">OUR (mmol O2 / L / h)</text>
+</svg>

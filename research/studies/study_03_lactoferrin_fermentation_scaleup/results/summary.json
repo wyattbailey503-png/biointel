@@ -1,0 +1,124 @@
+{
+  "study_id": "study_03_lactoferrin_fermentation_scaleup",
+  "status": "CALCULATION_CHECKED",
+  "audit_target": "50,000 L Recombinant Human Lactoferrin Pitch Deck Claim (40.0 g/L)",
+  "oxygen_transfer_evaluation": [
+    {
+      "titer_g_l": 4.8,
+      "biomass_g_dcw_l": 45.0,
+      "our_mmol_l_h": 67.5,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 44.7,
+      "explosion_hazard_risk": "ELEVATED"
+    },
+    {
+      "titer_g_l": 10.0,
+      "biomass_g_dcw_l": 66.7,
+      "our_mmol_l_h": 100.0,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 64.2,
+      "explosion_hazard_risk": "EXTREME HAZARD (>50% O2 with methanol off-gas)"
+    },
+    {
+      "titer_g_l": 14.0,
+      "biomass_g_dcw_l": 83.3,
+      "our_mmol_l_h": 125.0,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 79.2,
+      "explosion_hazard_risk": "EXTREME HAZARD (>50% O2 with methanol off-gas)"
+    },
+    {
+      "titer_g_l": 20.0,
+      "biomass_g_dcw_l": 108.3,
+      "our_mmol_l_h": 162.5,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 101.7,
+      "explosion_hazard_risk": "EXTREME HAZARD (>50% O2 with methanol off-gas)"
+    },
+    {
+      "titer_g_l": 30.0,
+      "biomass_g_dcw_l": 150.0,
+      "our_mmol_l_h": 225.0,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 139.2,
+      "explosion_hazard_risk": "EXTREME HAZARD (>50% O2 with methanol off-gas)"
+    },
+    {
+      "titer_g_l": 40.0,
+      "biomass_g_dcw_l": 191.7,
+      "our_mmol_l_h": 287.5,
+      "air_otr_max_mmol_l_h": 28.0,
+      "is_air_sparge_sufficient": false,
+      "required_gas_o2_fraction_pct": 176.7,
+      "explosion_hazard_risk": "EXTREME HAZARD (>50% O2 with methanol off-gas)"
+    }
+  ],
+  "heat_duty_evaluation": [
+    {
+      "titer_g_l": 4.8,
+      "heat_generated_kw": 170.2,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": true,
+      "excess_heat_kw": 0.0
+    },
+    {
+      "titer_g_l": 10.0,
+      "heat_generated_kw": 252.2,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": true,
+      "excess_heat_kw": 0.0
+    },
+    {
+      "titer_g_l": 14.0,
+      "heat_generated_kw": 315.0,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": true,
+      "excess_heat_kw": 0.0
+    },
+    {
+      "titer_g_l": 20.0,
+      "heat_generated_kw": 409.6,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": true,
+      "excess_heat_kw": 0.0
+    },
+    {
+      "titer_g_l": 30.0,
+      "heat_generated_kw": 567.3,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": false,
+      "excess_heat_kw": 117.3
+    },
+    {
+      "titer_g_l": 40.0,
+      "heat_generated_kw": 725.0,
+      "max_cooling_kw": 450.0,
+      "cooling_sufficient": false,
+      "excess_heat_kw": 275.0
+    }
+  ],
+  "economic_discrepancy": {
+    "claimed_startup_metrics": {
+      "titer_g_l": 40.0,
+      "dsp_recovery_pct": 85.0,
+      "annual_output_kg": 68000.0,
+      "cogs_usd_per_kg": 22.0
+    },
+    "physically_bounded_metrics": {
+      "titer_g_l": 14.0,
+      "dsp_recovery_pct": 68.0,
+      "annual_output_kg": 19040.0,
+      "cogs_usd_per_kg": 92.5
+    },
+    "cogs_underestimation_factor": 4.2
+  },
+  "scientific_and_diligence_verdict": {
+    "verdict": "REJECT CLAIMED ECONOMICS / RE-RATE VALUATION",
+    "justification": "The 40.0 g/L titer claim requires an OUR of 240 mmol/L/h and generates 620 kW of metabolic heat, exceeding the 50,000 L tank cooling capacity (450 kW) and requiring 75% pure O2 sparging. This creates an unmitigated explosive methanol environment and broth boiling. Realizable commercial titer is capped at 14 g/L, driving true unit cost to ~$92.50/kg (4.2x higher than pitch deck)."
+  }
+}

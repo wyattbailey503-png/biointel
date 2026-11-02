@@ -252,6 +252,33 @@ def cmd_run_all(args: argparse.Namespace) -> None:
     print("=================================================================\n")
 
 
+def cmd_study(args: argparse.Namespace) -> None:
+    from biointel.reports.study_runner import StudyPackageRunner
+    runner = StudyPackageRunner()
+
+    if args.action == "list":
+        studies = runner.list_studies()
+        print("\n=== BIOINTEL REPRODUCIBLE RESEARCH STUDIES ===")
+        for s in studies:
+            print(f"  - {s}")
+        print()
+    elif args.action in ["verify", "run"]:
+        if not args.study_id:
+            print("Error: Specify a study_id (e.g. study_01_petase_plastics_bioprocess)")
+            sys.exit(1)
+        print(f"[*] Executing verification for study: '{args.study_id}'...")
+        res = runner.verify_study(args.study_id)
+        if not res["verified"]:
+            print(f"[!] FAILED: {res.get('error')}")
+            sys.exit(1)
+        print(f"[+] Status: {res['status']}")
+        print(f"[+] Primary Sources Verified: {res['num_primary_sources']}")
+        print(f"[+] Figures Generated: {', '.join(res['figures_generated'])}")
+        print(f"[+] Recommendation / Verdict: {res['calculations_summary']}")
+        print(f"[+] Verification completed successfully.")
+
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="biointel",
@@ -297,7 +324,10 @@ def main() -> None:
     p_exp.add_argument("--version", default="v1.0.0", help="Version tag for exported package")
 
     # run-all
-    subparsers.add_parser("run-all", help="Execute full vertical slice end-to-end")
+    # study
+    p_study = subparsers.add_parser("study", help="Manage and verify reproducible research study packages")
+    p_study.add_argument("action", choices=["list", "verify", "run"], help="Action to execute")
+    p_study.add_argument("study_id", nargs="?", default="", help="Study identifier (e.g. study_01_petase_plastics_bioprocess)")
 
     args = parser.parse_args()
     if not args.command:
@@ -314,6 +344,7 @@ def main() -> None:
         "change-feed": cmd_change_feed,
         "export": cmd_export,
         "run-all": cmd_run_all,
+        "study": cmd_study,
     }
 
     cmd_fn = cmds.get(args.command)
@@ -325,3 +356,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

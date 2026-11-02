@@ -1,0 +1,28 @@
+{
+  "study_id": "study_01_petase_plastics_bioprocess",
+  "title": "Techno-Economic & Biophysical Feasibility of Engineered PETase for Industrial Plastic Depolymerization",
+  "primary_sources": [
+    {
+      "key": "lu_2022_fast_petase",
+      "citation": "Lu, H., Diaz, D. J., Czarnecki, N. J. et al. Machine learning-aided engineering of hydrolases for PET depolymerization. Nature 604, 662–667 (2022).",
+      "doi": "10.1038/s41586-022-04599-z",
+      "pmid": "35477969",
+      "pdb_accessions": ["7SH6", "7VVE"],
+      "relevance": "Primary disclosure of FAST-PETase mutations, melting temperature (67.8 °C), and 50 °C depolymerization kinetics."
+    },
+    {
+      "key": "tournier_2020_lcc_cutinase",
+      "citation": "Tournier, V., Topham, C. M., Gilles, A. et al. An engineered PET depolymerase to break down and recycle plastic bottles. Nature 580, 216–219 (2020).",
+      "doi": "10.1038/s41586-020-2149-4",
+      "pmid": "32269349",
+      "pdb_accessions": ["4EB0", "6TFS"],
+      "relevance": "Benchmark thermophilic PET depolymerase operating at 72 °C (above PET glass transition temperature)."
+    },
+    {
+      "key": "singh_2021_pet_review",
+      "citation": "Singh, A., Rorrer, N. A., Nicholson, S. R. et al. Techno-economic analysis and life-cycle assessment of enzymatic recycling of post-consumer PET. Joule 5, 2479–2498 (2021).",
+      "doi": "10.1016/j.joule.2021.06.015",
+      "relevance": "National Renewable Energy Laboratory (NREL) baseline cost stack for chemical vs enzymatic recycling."
+    }
+  ]
+}

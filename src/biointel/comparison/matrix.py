@@ -2,12 +2,13 @@
 
 Enforces the Fundamental Comparison Rule: never compare figures measured
 under incompatible conditions without explicit flags and experimental context.
+Includes MultiFactorAssayBoundaryEngine for multi-factor incompatibility checks.
 """
 
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 from biointel.entities.models import CompetitorComparison
 from biointel.storage.database import Database
@@ -22,6 +23,109 @@ class ComparisonDimension:
     tech_b_context: str
     is_condition_compatible: bool
     warning_note: Optional[str] = None
+
+
+@dataclass
+class BoundaryCondition:
+    assay_type: str
+    substrate_or_target: str
+    temperature_c: Optional[float] = None
+    cell_model_or_host: Optional[str] = None
+    delivery_system: Optional[str] = None
+    replicate_type: str = "biological"  # biological or technical
+
+
+@dataclass
+class CompatibilityVerdict:
+    is_comparable: bool
+    compatibility_score: float  # 0.0 to 1.0
+    mismatch_types: List[str]
+    audit_warning: str
+    reconciliation_guidance: str
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "is_comparable": self.is_comparable,
+            "compatibility_score": round(self.compatibility_score, 2),
+            "mismatch_types": self.mismatch_types,
+            "audit_warning": self.audit_warning,
+            "reconciliation_guidance": self.reconciliation_guidance,
+        }
+
+
+class MultiFactorAssayBoundaryEngine:
+    """Evaluates multi-factor boundary incompatibilities between two experimental measurements."""
+
+    @classmethod
+    def evaluate_boundary(
+        cls,
+        cond_a: BoundaryCondition,
+        cond_b: BoundaryCondition,
+    ) -> CompatibilityVerdict:
+        mismatches: List[str] = []
+        score = 1.0
+
+        # 1. Assay Method Mismatch (e.g. In vitro cleavage vs Intracellular targeted HTS)
+        assay_a = cond_a.assay_type.lower()
+        assay_b = cond_b.assay_type.lower()
+        if ("in_vitro" in assay_a and "in_vivo" in assay_b) or ("in_vitro" in assay_b and "in_vivo" in assay_a):
+            mismatches.append("ASSAY_TRANSLATIONAL_MISMATCH: In vitro cell-free assay compared directly against in vivo organism.")
+            score -= 0.50
+        elif ("t7e1" in assay_a or "tide" in assay_a) and ("hts" in assay_b or "ngs" in assay_b):
+            mismatches.append("ASSAY_RESOLUTION_MISMATCH: Enzymatic mismatch cleavage (T7E1/TIDE) lacks sensitivity of high-throughput deep sequencing (HTS).")
+            score -= 0.35
+
+        # 2. Substrate State Mismatch (e.g. Amorphous PET film vs Crystalline PET bottle flake)
+        sub_a = cond_a.substrate_or_target.lower()
+        sub_b = cond_b.substrate_or_target.lower()
+        if ("amorphous" in sub_a and "crystalline" in sub_b) or ("amorphous" in sub_b and "crystalline" in sub_a):
+            mismatches.append("SUBSTRATE_CRYSTALLINITY_MISMATCH: Amorphous substrate (Xc < 5%) compared to crystalline material (Xc > 30%).")
+            score -= 0.40
+
+        # 3. Temperature Mismatch (e.g. 50 °C vs 72 °C)
+        if cond_a.temperature_c is not None and cond_b.temperature_c is not None:
+            delta_t = abs(cond_a.temperature_c - cond_b.temperature_c)
+            if delta_t >= 15.0:
+                mismatches.append(f"TEMPERATURE_REGIME_MISMATCH: Operating temperature delta is {delta_t:.1f} °C (different kinetic regimes).")
+                score -= 0.30
+
+        # 4. Host Cell / Organism Mismatch (e.g. HEK293T vs Primary Stem Cells or Neurons)
+        host_a = (cond_a.cell_model_or_host or "").lower()
+        host_b = (cond_b.cell_model_or_host or "").lower()
+        if ("hek293" in host_a and "primary" in host_b) or ("hek293" in host_b and "primary" in host_a):
+            mismatches.append("HOST_PHYSIOLOGY_MISMATCH: Transformed hypotriploid cell line (HEK293T) compared to primary human cells.")
+            score -= 0.35
+
+        # 5. Delivery System Mismatch (e.g. Plasmid Lipofection vs RNP Electroporation vs AAV)
+        del_a = (cond_a.delivery_system or "").lower()
+        del_b = (cond_b.delivery_system or "").lower()
+        if del_a and del_b and del_a != del_b:
+            if ("plasmid" in del_a and "rnp" in del_b) or ("plasmid" in del_b and "rnp" in del_a):
+                mismatches.append("DELIVERY_MODALITY_MISMATCH: Plasmid overexpression has persistent expression and delayed kinetics vs transient RNP.")
+                score -= 0.25
+
+        # 6. Replicate Mismatch
+        if cond_a.replicate_type != cond_b.replicate_type:
+            mismatches.append(f"REPLICATE_TYPE_MISMATCH: Comparing {cond_a.replicate_type} replicates with {cond_b.replicate_type} replicates.")
+            score -= 0.20
+
+        comp_score = max(0.0, score)
+        is_comp = len(mismatches) == 0
+
+        if is_comp:
+            audit_warn = "COMPATIBLE: Experimental parameters are within comparable physical and biological regimes."
+            guidance = "Direct quantitative comparison justified."
+        else:
+            audit_warn = f"INCOMPATIBLE COMPARISON (CONDITION MISMATCH, {len(mismatches)} incompatibilities detected): " + "; ".join(mismatches)
+            guidance = "Do not rank technologies directly. Present side-by-side with explicit condition caveats or produce a comparison-gap report."
+
+        return CompatibilityVerdict(
+            is_comparable=is_comp,
+            compatibility_score=comp_score,
+            mismatch_types=mismatches,
+            audit_warning=audit_warn,
+            reconciliation_guidance=guidance,
+        )
 
 
 class TechnologyComparator:
@@ -40,6 +144,23 @@ class TechnologyComparator:
         Builds a verified comparison between two gene editing platforms.
         Default: SpCas9 DSB Nuclease vs Prime Editing (PE2/PE3/bi-PE).
         """
+        # Run boundary engine on the key efficiency metric
+        cond_cas9 = BoundaryCondition(
+            assay_type="T7E1/TIDE Indel Cleavage",
+            substrate_or_target="HEK3 indel knockout",
+            cell_model_or_host="HEK293T",
+            delivery_system="Plasmid Transfection",
+            replicate_type="biological",
+        )
+        cond_pe = BoundaryCondition(
+            assay_type="Targeted HTS Deep Sequencing",
+            substrate_or_target="HEK3 precise C->T transversion",
+            cell_model_or_host="HEK293T",
+            delivery_system="Plasmid Transfection",
+            replicate_type="biological",
+        )
+        boundary_check = MultiFactorAssayBoundaryEngine.evaluate_boundary(cond_cas9, cond_pe)
+
         dimensions: List[ComparisonDimension] = [
             ComparisonDimension(
                 dimension_name="Targeting Mechanism",
@@ -63,8 +184,8 @@ class TechnologyComparator:
                 tech_b_value="15% – 55% precise installation (bi-PE improves to 40% – 60%)",
                 tech_a_context="HEK293T plasmid transfection (standard gene disruption)",
                 tech_b_context="HEK293T plasmid/RNP with engineered dual-prime guides (precise transversion/insertion)",
-                is_condition_compatible=False,
-                warning_note="INCOMPATIBLE COMPARISON: Cas9 measured for simple indel knockout; Prime Editing measured for precise nucleotide transversion and micro-insertion.",
+                is_condition_compatible=boundary_check.is_comparable,
+                warning_note=boundary_check.audit_warning,
             ),
             ComparisonDimension(
                 dimension_name="Off-Target Cleavage & Indels",

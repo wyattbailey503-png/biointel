@@ -2,13 +2,49 @@
 
 Evaluates evidence across multiple explainable dimensions without
 relying on arbitrary universal single-number 'truth scores'.
+Enforces Hard Quality Gates and Claim Provenance tracking.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Dict, List
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Dict, List, Optional
 from biointel.entities.models import ExperimentRecord, ResultRecord
+
+
+class ReviewStatus(str, Enum):
+    DRAFT = "DRAFT"
+    SOURCE_CHECKED = "SOURCE_CHECKED"
+    CALCULATION_CHECKED = "CALCULATION_CHECKED"
+    READY_FOR_REVIEW = "READY_FOR_REVIEW"
+    HUMAN_REVIEWED = "HUMAN_REVIEWED"
+    EXTERNALLY_REVIEWED = "EXTERNALLY_REVIEWED"
+    REJECTED = "REJECTED"
+
+
+@dataclass
+class ClaimProvenance:
+    claim_id: str
+    doi: str
+    source_title: str
+    figure_or_table: str
+    quoted_passage: str
+    char_offset: Optional[int] = None
+    is_verified: bool = False
+    verification_notes: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "claim_id": self.claim_id,
+            "doi": self.doi,
+            "source_title": self.source_title,
+            "figure_or_table": self.figure_or_table,
+            "quoted_passage": self.quoted_passage,
+            "char_offset": self.char_offset,
+            "is_verified": self.is_verified,
+            "verification_notes": self.verification_notes,
+        }
 
 
 @dataclass
@@ -81,7 +117,7 @@ class EvidenceQualityEvaluator:
             flags.append("UNREPLICATED: Study reporting lacks independent replication numbers.")
 
         # 4. Statistical Reporting
-        stat_points = 0
+        stat_points = 0.0
         if result.p_value is not None:
             stat_points += 0.35
             if result.p_value > 0.05:
@@ -124,3 +160,86 @@ class EvidenceQualityEvaluator:
             flags=flags,
             rationale=rationale,
         )
+
+
+class HardQualityGateEngine:
+    """Enforces non-negotiable review gate rules and provenance validation."""
+
+    @classmethod
+    def validate_gate_transition(
+        cls,
+        current_status: ReviewStatus,
+        target_status: ReviewStatus,
+        provenance_claims: List[ClaimProvenance],
+        calculations_verified: bool = False,
+        diligence_questions_answered: int = 0,
+        is_human_actor: bool = False,
+    ) -> Dict[str, Any]:
+        violations: List[str] = []
+
+        # Rule 1: Human review statuses can NEVER be set by software agents
+        if target_status in [ReviewStatus.HUMAN_REVIEWED, ReviewStatus.EXTERNALLY_REVIEWED]:
+            if not is_human_actor:
+                violations.append(
+                    f"GOVERNANCE_VIOLATION: Automated system cannot assign {target_status}. "
+                    "Only documented human action by a verified reviewer may set this status."
+                )
+
+        # Rule 2: Promotion to SOURCE_CHECKED or higher requires 100% verified claims
+        if target_status in [
+            ReviewStatus.SOURCE_CHECKED,
+            ReviewStatus.CALCULATION_CHECKED,
+            ReviewStatus.READY_FOR_REVIEW,
+            ReviewStatus.HUMAN_REVIEWED,
+            ReviewStatus.EXTERNALLY_REVIEWED,
+        ]:
+            if not provenance_claims:
+                violations.append("NO_CLAIMS_ATTACHED: Report contains zero provenance claims.")
+            else:
+                unverified = [c for c in provenance_claims if not c.is_verified]
+                if unverified:
+                    violations.append(
+                        f"UNVERIFIED_CLAIMS_PRESENT: {len(unverified)} / {len(provenance_claims)} "
+                        f"claims lack verified DOI quotations (e.g. {unverified[0].claim_id})."
+                    )
+                missing_quotes = [c for c in provenance_claims if not c.quoted_passage or len(c.quoted_passage.strip()) < 10]
+                if missing_quotes:
+                    violations.append(
+                        f"MISSING_SOURCE_QUOTES: {len(missing_quotes)} claims lack verifiable quotation excerpts."
+                    )
+
+        # Rule 3: Promotion to CALCULATION_CHECKED requires deterministic math verification
+        if target_status in [
+            ReviewStatus.CALCULATION_CHECKED,
+            ReviewStatus.READY_FOR_REVIEW,
+            ReviewStatus.HUMAN_REVIEWED,
+            ReviewStatus.EXTERNALLY_REVIEWED,
+        ]:
+            if not calculations_verified:
+                violations.append(
+                    "CALCULATION_VERIFICATION_MISSING: Quantitative mass balances or financial models "
+                    "have not been verified deterministically."
+                )
+
+        # Rule 4: Promotion to READY_FOR_REVIEW requires all 8 diligence questions
+        if target_status in [
+            ReviewStatus.READY_FOR_REVIEW,
+            ReviewStatus.HUMAN_REVIEWED,
+            ReviewStatus.EXTERNALLY_REVIEWED,
+        ]:
+            if diligence_questions_answered < 8:
+                violations.append(
+                    f"INCOMPLETE_DILIGENCE_FRAMEWORK: Only {diligence_questions_answered}/8 core diligence "
+                    "questions answered. Reports without all 8 questions remain DESCRIPTIVE, not ANALYTICAL."
+                )
+
+        allowed = len(violations) == 0
+        new_status = target_status if allowed else ReviewStatus.REJECTED if target_status != ReviewStatus.DRAFT else current_status
+
+        return {
+            "allowed": allowed,
+            "current_status": current_status.value,
+            "target_status": target_status.value,
+            "resulting_status": new_status.value,
+            "violations": violations,
+        }

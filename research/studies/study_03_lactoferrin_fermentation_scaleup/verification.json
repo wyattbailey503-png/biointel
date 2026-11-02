@@ -1,0 +1,24 @@
+{
+  "study_id": "study_03_lactoferrin_fermentation_scaleup",
+  "verification_timestamp": "2026-11-02T07:33:00Z",
+  "status": "CALCULATION_CHECKED",
+  "hard_quality_gates_passed": [
+    "Gas-Liquid Oxygen Transfer Mass Balance Formally Solved",
+    "Metabolic Exothermic Heat Duty Reconciled Against Vessel Jacket U*A Limits",
+    "Academic 5 L Benchmark (Liu et al. 2020) Grounded Against Unverified Pitch Claims",
+    "Contradiction Explicitly Flagged and Explained Mechanistically",
+    "Deterministic Execution Verified"
+  ],
+  "runtime_environment": {
+    "python_version": "3.11",
+    "platform": "Darwin / macOS",
+    "external_dependencies": "None (Python standard library only)"
+  },
+  "quantitative_outputs": {
+    "claimed_titer_g_l": 40.0,
+    "physical_limit_titer_g_l": 14.0,
+    "claimed_cogs_usd_per_kg": 22.0,
+    "true_cogs_usd_per_kg": 92.5,
+    "discrepancy_factor": 4.2
+  }
+}

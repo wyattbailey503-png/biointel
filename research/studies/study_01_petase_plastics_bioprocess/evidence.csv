@@ -1,0 +1,6 @@
+observation_id,technology,source_doi,figure_location,parameter,reported_value,reported_unit,uncertainty,experimental_system,crystallinity_pct,temperature_c
+OBS-01,FAST-PETase,10.1038/s41586-022-04599-z,"Fig 2b, p. 664",depolymerization_conversion,52.3,%,2.8,Amorphous PET film in 100 mM phosphate buffer,3.5,50.0
+OBS-02,FAST-PETase,10.1038/s41586-022-04599-z,"Fig 1d, p. 663",melting_temperature,67.8,deg_C,0.4,Purified protein in buffer (DSF),0.0,25.0
+OBS-03,LCC-ICCG,10.1038/s41586-020-2149-4,"Fig 3a, p. 218",depolymerization_conversion,90.0,%,1.5,Micronized amorphized PET in 3 L bioreactor,8.0,72.0
+OBS-03B,Wild-type IsPETase,10.1038/s41586-022-04599-z,"Fig 2b, p. 664",depolymerization_conversion,8.2,%,1.1,Amorphous PET film,3.5,50.0
+OBS-01C,FAST-PETase,10.1038/s41586-022-04599-z,"Fig 2d, p. 664",depolymerization_conversion,4.6,%,0.8,Post-consumer bottle flake (untreated),34.0,50.0

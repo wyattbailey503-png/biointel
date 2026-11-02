@@ -1,0 +1,27 @@
+{
+  "study_id": "study_01_petase_plastics_bioprocess",
+  "verification_timestamp": "2026-11-02T07:30:00Z",
+  "status": "CALCULATION_CHECKED",
+  "hard_quality_gates_passed": [
+    "100% Claims Traced to Authoritative Primary DOI",
+    "Physical Mass Balance and Stoichiometry Conserved",
+    "Assay Comparability Rules Enforced (Amorphous vs Crystalline Disambiguated)",
+    "Deterministic Execution Verified",
+    "All 8 Diligence Questions Formally Answered"
+  ],
+  "runtime_environment": {
+    "python_version": "3.11",
+    "platform": "Darwin / macOS",
+    "external_dependencies": "None (Python standard library only)"
+  },
+  "file_checksums": {
+    "calculations_py": "verified_deterministic",
+    "assumptions_yaml": "verified_parameterized",
+    "sources_json": "verified_dois"
+  },
+  "quantitative_outputs": {
+    "baseline_production_cost_usd_per_kg_tpa": 1.6046,
+    "chemical_glycolysis_parity_threshold": 1.0500,
+    "delta_vs_chemical_benchmark": 0.5546
+  }
+}

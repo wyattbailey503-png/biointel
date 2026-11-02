@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="40" y="45" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="bold" fill="#0f172a">FAST-PETase Bioprocess Cost Stack vs. Commercial Benchmarks</text>
+<text x="40" y="70" font-family="-apple-system,system-ui,sans-serif" font-size="13" fill="#64748b">Basis: 50,000 MT/yr plant, 90% conversion, 92% recovery | Units: $ / kg recycled TPA</text>
+<rect x="120" y="266.8" width="160" height="113.2" fill="#3b82f6" rx="2" />
+<text x="200.0" y="327.4" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.63</text>
+<rect x="120" y="178.8" width="160" height="88.0" fill="#ef4444" rx="2" />
+<text x="200.0" y="226.8" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.49</text>
+<rect x="120" y="160.0" width="160" height="18.9" fill="#8b5cf6" rx="2" />
+<text x="200.0" y="173.4" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.10</text>
+<rect x="120" y="138.4" width="160" height="21.6" fill="#f59e0b" rx="2" />
+<text x="200.0" y="153.2" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.12</text>
+<rect x="120" y="113.2" width="160" height="25.2" fill="#10b981" rx="2" />
+<text x="200.0" y="129.8" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.14</text>
+<rect x="120" y="91.3" width="160" height="21.9" fill="#64748b" rx="2" />
+<text x="200.0" y="106.2" font-family="sans-serif" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">$0.12</text>
+<text x="200.0" y="79.3" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">Enzymatic: $1.60/kg</text>
+<text x="200.0" y="405" font-family="sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">FAST-PETase</text>
+<rect x="340" y="191.0" width="160" height="189.0" fill="#0284c7" rx="3" />
+<text x="420.0" y="289.5" font-family="sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">$1.05</text>
+<text x="420.0" y="179.0" font-family="sans-serif" font-size="14" font-weight="bold" fill="#0284c7" text-anchor="middle">Chemical Glycolysis</text>
+<text x="420.0" y="405" font-family="sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">Industrial Chem</text>
+<rect x="560" y="173.0" width="160" height="207.0" fill="#475569" rx="3" />
+<text x="640.0" y="280.5" font-family="sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">$1.15</text>
+<text x="640.0" y="161.0" font-family="sans-serif" font-size="14" font-weight="bold" fill="#475569" text-anchor="middle">Virgin Fossil TPA</text>
+<text x="640.0" y="405" font-family="sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">Commodity Market</text>
+<line x1="80" y1="380" x2="750" y2="380" stroke="#94a3b8" stroke-width="1.5" />
+<rect x="80" y="440" width="12" height="12" fill="#3b82f6" rx="2" />
+<text x="98" y="450" font-family="sans-serif" font-size="11" fill="#475569">Feedstock (Bale PET)</text>
+<rect x="245.0" y="440" width="12" height="12" fill="#ef4444" rx="2" />
+<text x="263.0" y="450" font-family="sans-serif" font-size="11" fill="#475569">Amorphization Pre-treat</text>
+<rect x="429.5" y="440" width="12" height="12" fill="#8b5cf6" rx="2" />
+<text x="447.5" y="450" font-family="sans-serif" font-size="11" fill="#475569">Enzyme Biocatalyst</text>
+<rect x="581.5" y="440" width="12" height="12" fill="#f59e0b" rx="2" />
+<text x="599.5" y="450" font-family="sans-serif" font-size="11" fill="#475569">Utilities (Power/Steam)</text>
+<rect x="80" y="458" width="12" height="12" fill="#10b981" rx="2" />
+<text x="98" y="468" font-family="sans-serif" font-size="11" fill="#475569">Labor & Overhead</text>
+<rect x="219.0" y="458" width="12" height="12" fill="#64748b" rx="2" />
+<text x="237.0" y="468" font-family="sans-serif" font-size="11" fill="#475569">CAPEX Depreciation</text>
+</svg>
