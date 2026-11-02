@@ -1,0 +1,105 @@
+study_id: study_01_petase_plastics_bioprocess
+version: 1.0.0
+currency: USD
+year: 2026
+
+plant_scale:
+  annual_pet_throughput_mt:
+    value: 50000.0
+    unit: metric_tons_per_year
+    classification: User Assumption
+    basis: Typical commercial-scale recycling facility (NREL baseline)
+  operating_hours_per_year:
+    value: 8000.0
+    unit: hours
+    classification: Independently Estimated
+    basis: 333 operating days per year with 32 days maintenance
+
+stoichiometry_and_yields:
+  molecular_weight_pet_monomer:
+    value: 192.17
+    unit: g/mol
+    classification: Experimentally Measured
+  molecular_weight_tpa:
+    value: 166.13
+    unit: g/mol
+    classification: Experimentally Measured
+  molecular_weight_eg:
+    value: 62.07
+    unit: g/mol
+    classification: Experimentally Measured
+  theoretical_tpa_mass_yield:
+    value: 0.8645
+    unit: kg_tpa_per_kg_pet
+    classification: Experimentally Measured
+    basis: Stoichiometric ratio 166.13 / 192.17
+  hydrolysis_reaction_conversion:
+    value: 0.90
+    unit: fraction
+    classification: Publicly Reported
+    basis: Tournier et al. 2020 at 72 °C; Lu et al. 2022 achieves 52% at 24 h
+  tpa_crystallization_dsp_recovery:
+    value: 0.92
+    unit: fraction
+    classification: Publicly Reported
+    basis: Hot filtration and acid crystallization recovery (Singh et al. 2021)
+
+feedstock_and_biocatalyst:
+  bale_post_consumer_pet_price:
+    value: 0.45
+    unit: $/kg_pet
+    classification: Publicly Reported
+    basis: Historical sorted post-consumer PET bale pricing ($0.35 - $0.65/kg)
+  pre_treatment_amorphization_cost:
+    value: 0.35
+    unit: $/kg_pet
+    classification: Independently Estimated
+    basis: Extrusion melting, rapid water quenching, and cryogenic milling (NREL Joule 2021)
+  enzyme_loading:
+    value: 0.003
+    unit: kg_enzyme_per_kg_pet
+    classification: Publicly Reported
+    basis: 3.0 mg enzyme per g PET (Tournier et al. 2020)
+  enzyme_production_cost:
+    value: 25.0
+    unit: $/kg_pure_enzyme
+    classification: Independently Estimated
+    basis: BioIntel Phase 2 audited E. coli fermentation model ($24.64/kg)
+
+utilities_and_capex:
+  steam_and_electricity_cost:
+    value: 0.12
+    unit: $/kg_tpa
+    classification: Independently Estimated
+    basis: Bioreactor heating (50-72 °C), agitation of 20% solids slurry, cooling
+  labor_and_plant_overhead:
+    value: 0.14
+    unit: $/kg_tpa
+    classification: Independently Estimated
+    basis: 4 shifts of 6 technicians, environmental compliance, analytical QA/QC
+  capex_total_installed:
+    value: 65000000.0
+    unit: $
+    classification: Independently Estimated
+    basis: 50,000 MT/year facility with 6 x 150,000 L reactors and DSP trains
+  capex_depreciation_period_years:
+    value: 15.0
+    unit: years
+    classification: User Assumption
+  capex_depreciation_per_kg_tpa:
+    value: 0.12
+    unit: $/kg_tpa
+    classification: Independently Estimated
+    basis: Straight-line depreciation over 15 years on 35,790 MT/year net TPA output
+
+benchmark_competitors:
+  virgin_pet_tpa_equivalent_price:
+    value: 1.15
+    unit: $/kg_tpa
+    classification: Publicly Reported
+    basis: S&P Global commodity TPA price index
+  chemical_glycolysis_recycled_tpa_cost:
+    value: 1.05
+    unit: $/kg_tpa
+    classification: Publicly Reported
+    basis: Industrial glycolysis and methanolysis cost estimates

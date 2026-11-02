@@ -1,0 +1,55 @@
+study_id: study_02_prime_vs_base_editing_diligence
+version: 1.0.0
+
+vector_packaging_ceilings:
+  aav_genome_limit_kb:
+    value: 4.7
+    unit: kilobases
+    classification: Experimentally Measured
+    basis: Parvoviridae capsid structural packaging ceiling
+  aav_itr_total_bp:
+    value: 290
+    unit: base_pairs
+    classification: Experimentally Measured
+  minimal_promoter_poly_a_bp:
+    value: 350
+    unit: base_pairs
+    classification: Independently Estimated
+  max_single_aav_orf_bp:
+    value: 3920
+    unit: base_pairs
+    classification: Independently Estimated
+
+editor_coding_sizes:
+  spcas9_wt_bp:
+    value: 4104
+    unit: base_pairs
+    classification: Experimentally Measured
+  sacas9_compact_bp:
+    value: 3159
+    unit: base_pairs
+    classification: Experimentally Measured
+  abe8e_spcas9_bp:
+    value: 4650
+    unit: base_pairs
+    classification: Experimentally Measured
+  abe8e_sacas9_bp:
+    value: 3705
+    unit: base_pairs
+    classification: Experimentally Measured
+  pemax_spcas9_bp:
+    value: 6335
+    unit: base_pairs
+    classification: Experimentally Measured
+
+biophysical_efficiencies:
+  solid_phase_coupling_efficiency_per_cycle:
+    value: 0.995
+    unit: fraction
+    classification: Experimentally Measured
+    basis: Industrial phosphoramidite synthesizer specifications
+  mmr_suppression_factor_in_primary_cells:
+    value: 3.8
+    unit: fold_reduction
+    classification: Publicly Reported
+    basis: Chen et al. 2021 Cell (2.5 - 7.7 fold suppression across loci)

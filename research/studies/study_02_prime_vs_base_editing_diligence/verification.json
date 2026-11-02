@@ -1,0 +1,23 @@
+{
+  "study_id": "study_02_prime_vs_base_editing_diligence",
+  "verification_timestamp": "2026-11-02T07:31:00Z",
+  "status": "CALCULATION_CHECKED",
+  "hard_quality_gates_passed": [
+    "100% Primary Sources Grounded in Cell and Nature Literature",
+    "AAV Packaging Biophysical Capsid Limits Strictly Computed",
+    "Phosphoramidite Synthesis Decay Formulated",
+    "HEK293T vs Primary MMR Differences Disambiguated",
+    "Deterministic Execution Verified"
+  ],
+  "runtime_environment": {
+    "python_version": "3.11",
+    "platform": "Darwin / macOS",
+    "external_dependencies": "None (Python standard library only)"
+  },
+  "quantitative_outputs": {
+    "max_single_aav_orf_bp": 3960,
+    "pemax_orf_bp": 6335,
+    "excess_payload_bp": 2375,
+    "pe_mmr_suppression_primary_cells_pct": 65.5
+  }
+}

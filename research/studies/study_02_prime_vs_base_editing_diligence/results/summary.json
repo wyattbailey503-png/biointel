@@ -1,0 +1,88 @@
+{
+  "study_id": "study_02_prime_vs_base_editing_diligence",
+  "status": "CALCULATION_CHECKED",
+  "single_aav_packaging_ceiling_bp": 3960,
+  "editor_size_evaluation": [
+    {
+      "name": "SpCas9 Nuclease",
+      "orf_bp": 4104,
+      "delivery_aav": "Borderline / Split",
+      "fits_single_aav": false
+    },
+    {
+      "name": "SaCas9 Nuclease",
+      "orf_bp": 3159,
+      "delivery_aav": "Single AAV Viable",
+      "fits_single_aav": true
+    },
+    {
+      "name": "ABE8e-SpCas9",
+      "orf_bp": 4650,
+      "delivery_aav": "Dual AAV / LNP",
+      "fits_single_aav": false
+    },
+    {
+      "name": "ABE8e-SaCas9",
+      "orf_bp": 3705,
+      "delivery_aav": "Single AAV Viable",
+      "fits_single_aav": true
+    },
+    {
+      "name": "PEmax-SpCas9",
+      "orf_bp": 6335,
+      "delivery_aav": "Dual AAV Intein Required / LNP",
+      "fits_single_aav": false
+    }
+  ],
+  "guide_synthesis_coupling_yield": [
+    {
+      "type": "Standard sgRNA (Cas9/BE)",
+      "nt_length": 100,
+      "yield_pct": 60.88
+    },
+    {
+      "type": "Standard pegRNA (PE2/PE3)",
+      "nt_length": 145,
+      "yield_pct": 48.59
+    },
+    {
+      "type": "Engineered epegRNA (+tevopreQ1)",
+      "nt_length": 165,
+      "yield_pct": 43.95
+    },
+    {
+      "type": "Dual pegRNA (Bi-PE, 2x)",
+      "nt_length": 290,
+      "yield_pct": 23.49
+    }
+  ],
+  "editing_modalities_comparison": {
+    "Base_Editing_ABE": {
+      "hek293t_efficiency_pct": 53.0,
+      "primary_cell_efficiency_pct": 48.0,
+      "mmr_sensitivity": "Immune (Deamination does not form recognized 3'-flap)",
+      "bystander_editing_risk": "High if multiple As in 4-8nt window",
+      "edit_scope": "A->G transitions only (approx 28% of pathogenic point mutations)"
+    },
+    "Base_Editing_CBE": {
+      "hek293t_efficiency_pct": 58.0,
+      "primary_cell_efficiency_pct": 45.0,
+      "mmr_sensitivity": "Low to Moderate (Uracil glycosylase can excise, inhibited by UGI)",
+      "bystander_editing_risk": "High (uncontrolled C deaminations)",
+      "edit_scope": "C->T transitions only (approx 32% of pathogenic point mutations)"
+    },
+    "Prime_Editing_PEmax": {
+      "hek293t_efficiency_pct": 42.0,
+      "primary_cell_efficiency_pct": 14.5,
+      "mmr_sensitivity": "Severe (MutS-alpha/MutL-alpha excise 3'-flap, 3-4x suppression without MLH1dn)",
+      "bystander_editing_risk": "Near-Zero (<0.5%)",
+      "edit_scope": "All 12 base conversions, insertions up to 100bp, deletions (approx 89% of known genetic diseases)"
+    }
+  },
+  "diligence_recommendation": {
+    "verdict": "ALLOCATE BY CLINICAL DELIVERY ROUTE & MUTATION TYPE",
+    "in_vivo_cns_recommendation": "Base Editing (SaCas9-ABE8e) preferred for CNS where single AAV9 capsid is mandatory and target is a clean transition.",
+    "in_vivo_hepatic_recommendation": "Prime Editing via LNP mRNA delivery preferred for transversions/insertions where liver ApoE targeting provides high biodistribution.",
+    "ex_vivo_hspc_recommendation": "Base editing yields higher editing fraction (48% vs 14.5%) unless PEmax is co-delivered with transient MLH1dn peptide."
+  }
+}

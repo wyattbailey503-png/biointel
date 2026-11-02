@@ -1,0 +1,30 @@
+{
+  "study_id": "study_02_prime_vs_base_editing_diligence",
+  "title": "Platform Diligence & Trade-Off Analysis: Prime Editing vs. Base Editing",
+  "primary_sources": [
+    {
+      "key": "anzalone_2019_pe",
+      "citation": "Anzalone, A. V. et al. Search-and-replace genome editing without double-strand breaks or donor DNA. Nature 576, 149–157 (2019).",
+      "doi": "10.1038/s41586-019-1711-4",
+      "pmid": "31634902"
+    },
+    {
+      "key": "chen_2021_pemax",
+      "citation": "Chen, P. J. et al. Enhanced prime editing systems by manipulating cellular determinants of editing outcomes. Cell 184, 5635–5652 (2021).",
+      "doi": "10.1016/j.cell.2021.09.018",
+      "pmid": "34653350"
+    },
+    {
+      "key": "komor_2016_cbe",
+      "citation": "Komor, A. C. et al. Programmable editing of a target base in genomic DNA without double-stranded DNA cleavage. Nature 533, 420–424 (2016).",
+      "doi": "10.1038/nature17946",
+      "pmid": "27096365"
+    },
+    {
+      "key": "gaudelli_2017_abe",
+      "citation": "Gaudelli, N. M. et al. Programmable base editing of A*T to G*C in genomic DNA without DNA cleavage. Nature 551, 464–471 (2017).",
+      "doi": "10.1038/nature24644",
+      "pmid": "29160308"
+    }
+  ]
+}

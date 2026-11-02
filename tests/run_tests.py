@@ -10,7 +10,9 @@ import inspect
 import sys
 import time
 import traceback
+import unittest
 from pathlib import Path
+
 
 
 def main() -> int:
@@ -43,6 +45,31 @@ def main() -> int:
             for name, fn in inspect.getmembers(mod, inspect.isfunction)
             if name.startswith("test_")
         ]
+
+        # Also find unittest.TestCase classes
+        test_classes = [
+            (cname, cls)
+            for cname, cls in inspect.getmembers(mod, inspect.isclass)
+            if issubclass(cls, unittest.TestCase) and cls != unittest.TestCase
+        ]
+
+        for cname, cls in test_classes:
+            suite = unittest.defaultTestLoader.loadTestsFromTestCase(cls)
+            for test in suite:
+                total += 1
+                t0 = time.time()
+                result = unittest.TestResult()
+                test.run(result)
+                dt = (time.time() - t0) * 1000
+                test_name = test._testMethodName
+                if result.wasSuccessful():
+                    print(f" [PASS] {mod_name}::{cname}::{test_name} ({dt:.1f}ms)")
+                    passed += 1
+                else:
+                    print(f" [FAIL] {mod_name}::{cname}::{test_name} ({dt:.1f}ms)")
+                    for err in result.errors + result.failures:
+                        print(f"        {err[1]}")
+                    failed += 1
 
         for name, fn in test_funcs:
             total += 1

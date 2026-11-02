@@ -1,0 +1,8 @@
+observation_id,technology,source_doi,figure_location,parameter,reported_value,reported_unit,uncertainty,cell_model,mmr_status,delivery_system
+OBS-05,Prime Editing (PE2),10.1038/s41586-019-1711-4,"Fig 2b, p. 151",on_target_efficiency,33.2,%,2.1,HEK293T,Deficient/Atypical,Plasmid Transfection
+OBS-06,Prime Editing (PE3),10.1038/s41586-019-1711-4,"Fig 3b, p. 152",on_target_efficiency,55.4,%,3.4,HEK293T,Deficient/Atypical,Plasmid Transfection
+OBS-08,Cytidine Base Editor (BE3),10.1038/nature17946,"Fig 3a, p. 422",on_target_efficiency,58.0,%,4.2,HEK293T,Deficient/Atypical,Plasmid Transfection
+OBS-08B,Cytidine Base Editor (BE3),10.1038/nature17946,"Fig 3c, p. 423",indel_byproducts,0.08,%,0.02,HEK293T,Deficient/Atypical,Plasmid Transfection
+OBS-09,Adenine Base Editor (ABE7.10),10.1038/nature24644,"Fig 2a, p. 466",on_target_efficiency,53.0,%,4.5,HEK293T,Deficient/Atypical,Plasmid Transfection
+OBS-10,Engineered PEmax,10.1016/j.cell.2021.09.018,"Fig 1d, p. 5638",relative_fold_improvement,2.8,fold,0.4,HEK293T / U2OS,Proficient (tested with MLH1dn),Plasmid Transfection
+OBS-10B,Engineered PEmax,10.1016/j.cell.2021.09.018,"Fig 3e, p. 5641",primary_cell_efficiency,14.5,%,2.1,Primary human CD34+ HSPCs,Proficient (no MLH1dn),RNP Electroporation

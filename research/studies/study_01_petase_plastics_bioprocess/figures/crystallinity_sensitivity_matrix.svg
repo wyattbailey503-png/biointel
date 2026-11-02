@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+<rect width="100%" height="100%" fill="#ffffff" />
+<text x="40" y="45" font-family="-apple-system,system-ui,sans-serif" font-size="20" font-weight="bold" fill="#0f172a">Substrate Crystallinity vs. Production Cost</text>
+<text x="40" y="70" font-family="-apple-system,system-ui,sans-serif" font-size="13" fill="#64748b">Impact of PET molecular order (amorphous film vs bottle flake) on unit economics ($/kg TPA)</text>
+<line x1="100" y1="360" x2="740" y2="360" stroke="#cbd5e1" stroke-width="1.5" />
+<line x1="100" y1="360" x2="100" y2="110" stroke="#cbd5e1" stroke-width="1.5" />
+<line x1="100" y1="272.5" x2="740" y2="272.5" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,4" />
+<text x="730" y="266.5" font-family="sans-serif" font-size="11" fill="#0284c7" text-anchor="end" font-weight="bold">Chemical Glycolysis Parity ($1.05/kg)</text>
+<path d="M 148.0 263.2 L 228.0 249.2 L 340.0 158.0 L 452.0 110.0 L 580.0 110.0 L 708.0 110.0" fill="none" stroke="#dc2626" stroke-width="3" />
+<circle cx="148.0" cy="263.2" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="148.0" y="251.2" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$1.16</text>
+<text x="148.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">3%</text>
+<circle cx="228.0" cy="249.2" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="228.0" y="237.2" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$1.33</text>
+<text x="228.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">8%</text>
+<circle cx="340.0" cy="158.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="340.0" y="146.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$2.42</text>
+<text x="340.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">15%</text>
+<circle cx="452.0" cy="110.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="452.0" y="98.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$3.11</text>
+<text x="452.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">22%</text>
+<circle cx="580.0" cy="110.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="580.0" y="98.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$4.29</text>
+<text x="580.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">30%</text>
+<circle cx="708.0" cy="110.0" r="5" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
+<text x="708.0" y="98.0" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">$6.20</text>
+<text x="708.0" y="380" font-family="sans-serif" font-size="11" fill="#64748b" text-anchor="middle">38%</text>
+<text x="420.0" y="405" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" text-anchor="middle">PET Substrate Crystallinity (%)</text>
+<text x="45" y="235.0" font-family="sans-serif" font-size="13" font-weight="bold" fill="#334155" transform="rotate(-90 45 235.0)" text-anchor="middle">Cost ($/kg TPA)</text>
+</svg>

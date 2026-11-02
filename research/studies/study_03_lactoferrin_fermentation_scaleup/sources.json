@@ -1,0 +1,25 @@
+{
+  "study_id": "study_03_lactoferrin_fermentation_scaleup",
+  "title": "Reconciling Contradictory Scale-Up Data for Recombinant Human Lactoferrin (rhLF) Biomanufacturing",
+  "primary_sources": [
+    {
+      "key": "liu_2020_pichia_lactoferrin",
+      "citation": "Liu, Y. et al. High-level extracellular production of recombinant human lactoferrin in Pichia pastoris. Bioresour Technol 304, 123012 (2020).",
+      "doi": "10.1016/j.biortech.2020.123012",
+      "pmid": "32092683",
+      "relevance": "Rigorous 5 L pilot benchtop study establishing maximum verified extracellular titer (4.8 g/L)."
+    },
+    {
+      "key": "garcia_2019_pichia_scaleup",
+      "citation": "Garcia-Ortega, X. et al. Pichia pastoris bioprocess scale-up: Oxygen transfer, heat removal, and proteolysis. Microb Cell Fact 18, 142 (2019).",
+      "doi": "10.1186/s12934-019-1191-2",
+      "relevance": "Transport phenomena audit of methanol-induced Pichia fermentation in 1,000 L and 15,000 L vessels."
+    },
+    {
+      "key": "unverified_commercial_claim",
+      "citation": "Confidential Series B Pitch Deck (Project Bovine/Human Lactoferrin Alpha)",
+      "year": 2024,
+      "relevance": "Contradictory unverified commercial claim asserting 40.0 g/L titer and $22/kg COGS in 50,000 L tanks."
+    }
+  ]
+}

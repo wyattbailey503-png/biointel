@@ -12,4 +12,6 @@ htmlcov/
 *.sqlite3
 biointel.db
 outputs/figures/*.tmp
+outputs/figures/4oo8_contacts.svg
 .DS_Store
+
