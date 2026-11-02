@@ -103,3 +103,24 @@ benchmark_competitors:
     unit: $/kg_tpa
     classification: Publicly Reported
     basis: Industrial glycolysis and methanolysis cost estimates
+
+biocatalyst_recycling_theoretical_model:
+  ultrafiltration_membrane_recovery_rate:
+    value: 0.80
+    unit: fraction_per_cycle
+    classification: Theoretical Projection
+    basis: Assumed PES 10 kDa cut-off membrane retention without accounting for microplastic/oligomer fouling
+  enzyme_reuse_cycles:
+    value: 5
+    unit: cycles
+    classification: Theoretical Projection
+    basis: Hypothetical re-use before complete thermal/shear denaturation
+  membrane_cip_and_replacement_cost:
+    value: 0.012
+    unit: $/kg_tpa
+    classification: Independently Estimated
+    basis: Clean-in-place caustic wash and annualized module replacement
+  industrial_demonstration_status:
+    value: "UNVERIFIED AT COMMERCIAL SCALE"
+    classification: Operational Fact
+    basis: "No industrial PET biorecycling plant operates with membrane enzyme recovery due to insoluble microplastic fouling and TPA crystallization clogging."

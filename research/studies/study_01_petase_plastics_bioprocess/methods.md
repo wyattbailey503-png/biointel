@@ -30,3 +30,20 @@ Where:
 - $C_{feedstock} = \frac{P_{PET}}{Y_{TPA/PET}^{theo} \cdot \eta_{conv} \cdot \eta_{rec}}$
 - $C_{enzyme} = \frac{L_{enz} \cdot P_{enz}}{\eta_{rec}}$ ($L_{enz}$ = enzyme loading, $g\text{ enzyme}/g\text{ PET}$; $P_{enz}$ = enzyme production cost, $\$/kg$)
 - $C_{pretreat}$ = Amorphization extrusion and micronization cost ($\$0.35/kg$ PET).
+
+## 4. Authoritative Macromolecular Structure Identification
+The authoritative crystal structure for the engineered FAST-PETase variant (N233K/R224Q/S121E/D186H/R280A) is:
+- **PDB ID:** `7SH6` (Lu et al. *Nature* 604, 662–667, 2022)
+- **Title:** Crystal structure of a PET hydrolase mutant from *Ideonella sakaiensis*
+- **Resolution:** 1.44 Å (X-ray diffraction)
+- **Wild-Type Reference:** PDB `5XG0` / `6EQU`
+- *Disambiguation Note:* Earlier drafts conflated PDB `7K38` with FAST-PETase; PDB `7K38` is the plant Karrikin receptor KAI2 from *Pisum sativum* (Guercio et al. *Commun Biol* 2022) and must not be used for PETase analyses.
+
+## 5. Separation of Demonstrated Outcomes vs. Theoretical Projections
+- **Experimentally Demonstrated in Literature:**
+  - FAST-PETase achieves $52.3 \pm 2.8\%$ depolymerization on amorphous PET film at 50 °C within 24 hours (Lu et al. 2022).
+  - On crystalline post-consumer bottle flake ($X_c \approx 34\%$), depolymerization collapses to $<5\%$.
+  - High-temperature extrusion amorphization is mandatory to achieve industrial conversions, adding $\$0.49/\text{kg TPA}$.
+- **Theoretical Techno-Economic Projection (Unverified Industrially):**
+  - 5-cycle ultrafiltration membrane recovery (80% retention) is modeled as an exploratory bioprocess scenario.
+  - In practice, severe membrane fouling by hydrophobic oligomers (MHET, BHET) and insolubility of TPA at non-alkaline pH present major unmitigated industrial engineering barriers.

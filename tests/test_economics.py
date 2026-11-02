@@ -106,3 +106,61 @@ def test_greenfield_vs_brownfield_capex_amortization() -> None:
     # Greenfield depreciation should be ~2.7x brownfield ($2.33M vs $0.85M)
     ratio = outputs_greenfield.capex_depreciation_per_kg / outputs_brownfield.capex_depreciation_per_kg
     assert 2.5 < ratio < 3.0
+
+
+def test_fermentation_dimensional_units_and_power_separation() -> None:
+    """Independently verifies dimensional consistency and physical vs financial separation in utilities.
+
+    Units:
+      - OUR: mmol/(L*h) == mol/(m^3*h)
+      - Working Volume: 50,000 L == 50 m^3
+      - Molar oxygen uptake rate: 60 mmol/(L*h) * 50 m^3 = 3,000 mol O2 / h
+      - Thornton's rule heat: (3,000 mol/h * 460 kJ/mol) / 3600 s/h = 383.33 kW
+      - Agitation power (heuristic): (1.5 + 60/60) kW/m^3 * 50 m^3 = 125.0 kW
+      - Total electrical power = P_agit + P_comp + P_chill (kW)
+      - Batch electrical energy = P_total * duration (kWh)
+    """
+    inputs = FermentationInputs(
+        working_volume_liters=50000.0,
+        duration_hours=120.0,
+        use_dynamic_utilities=True,
+        electricity_usd_per_kwh=0.08,
+    )
+
+    outputs = TechnoEconomicFermentationModel.calculate(inputs)
+
+    # Physical rates must be strictly positive and distinct from costs
+    assert outputs.metabolic_heat_kw > 0.0
+    assert outputs.agitation_power_kw > 0.0
+    assert outputs.compressor_power_kw > 0.0
+    assert outputs.chiller_power_kw > 0.0
+    assert outputs.total_electrical_power_kw > 0.0
+    assert outputs.batch_electrical_energy_kwh > 0.0
+
+    # Total electrical power must equal sum of agitator + compressor + chiller + auxiliary (allowing for rounding)
+    expected_p_elec = (
+        outputs.agitation_power_kw
+        + outputs.compressor_power_kw
+        + outputs.chiller_power_kw
+        + (outputs.auxiliary_power_kw or 0.0)
+    )
+    assert abs(outputs.total_electrical_power_kw - expected_p_elec) < 0.05
+
+
+
+    # Energy in kWh = kW * duration_hours (allowing for 1-decimal rounding)
+    expected_kwh = outputs.total_electrical_power_kw * inputs.duration_hours
+    assert abs(outputs.batch_electrical_energy_kwh - expected_kwh) < 1.0
+
+    # Financial electricity cost = kWh * $/kWh (allowing for rounding)
+    expected_elec_cost = outputs.batch_electrical_energy_kwh * 0.08
+    assert abs(outputs.electricity_cost_batch_usd - expected_elec_cost) < 0.50
+
+
+    # Verify Thornton's rule scaling:
+    # At 50 m^3, 45 g/L titer -> DCW = 59.21 g/L -> OUR = 88.82 mol/(m3*h)
+    # Molar rate = 88.816 * 50 = 4,440.79 mol O2 / h
+    # Q_met = 4,440.79 * 460 / 3600 = 567.43 kW
+    assert abs(outputs.metabolic_heat_kw - 567.43) < 1.0
+
+

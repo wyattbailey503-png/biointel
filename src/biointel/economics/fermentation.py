@@ -51,6 +51,17 @@ class FermentationOutputs:
     total_cost_per_kg: float
     break_even_price_20pct_margin: float
     cost_stack_breakdown_pct: Dict[str, float]
+    # Rigorous Dimensional Energy & Power Breakdown
+    metabolic_heat_kw: Optional[float] = None
+    agitation_power_kw: Optional[float] = None
+    compressor_power_kw: Optional[float] = None
+    chiller_power_kw: Optional[float] = None
+    auxiliary_power_kw: Optional[float] = None
+    total_electrical_power_kw: Optional[float] = None
+    batch_electrical_energy_kwh: Optional[float] = None
+
+    electricity_cost_batch_usd: Optional[float] = None
+    steam_cost_batch_usd: Optional[float] = None
 
 
 class TechnoEconomicFermentationModel:
@@ -84,40 +95,80 @@ class TechnoEconomicFermentationModel:
         feedstock_cost_per_kg = substrate_kg_per_kg_product * inputs.feedstock_price_usd_per_kg
 
         # Utilities: Dynamic physics-based scaling or fixed lump sum
+        p_agit_kw = None
+        q_met_kw = None
+        p_comp_kw = None
+        p_chill_kw = None
+        p_tot_elec_kw = None
+        e_elec_kwh = None
+        cost_elec_batch = None
+        cost_steam_batch = None
+        p_aux_kw = None
+
         if inputs.use_dynamic_utilities:
-            # First-principles utility estimation:
-            # 1. Biomass & Oxygen Uptake
+
+            # -----------------------------------------------------------------
+            # RIGOROUS DIMENSIONAL BIOPROCESS UTILITIES DERIVATION
+            # -----------------------------------------------------------------
+            # Substrate & Biomass Stoichiometry:
             substrate_batch_kg = raw_product_kg / inputs.yield_product_per_substrate
             biomass_batch_kg = substrate_batch_kg * inputs.biomass_yield_g_per_g
             dcw_g_per_l = (biomass_batch_kg * 1000.0) / inputs.working_volume_liters
-            v_working_m3 = inputs.working_volume_liters / 1000.0
-            
-            # Respiration and OUR (mmol O2 / L broth / h)
-            avg_our = max(20.0, dcw_g_per_l * 1.5)
-            
-            # Agitation & Aeration power (P/V in kW/m3)
+            v_working_m3 = inputs.working_volume_liters / 1000.0  # 1 m3 = 1,000 L
+
+            # Respiration & Oxygen Uptake Rate (OUR):
+            # Units: mmol O2 / (L * h) = mol O2 / (m3 * h)
+            avg_our = max(20.0, dcw_g_per_l * 1.5)  # mol O2 / (m3 * h)
+            mol_o2_per_hour = avg_our * v_working_m3  # mol O2 / h
+
+            # 1. Metabolic Heat Generation (Q_metabolic in kW) [FIRST PRINCIPLES]
+            # Thornton's Rule for aerobic microbial combustion:
+            # Delta_H_O2 = 460.0 kJ per mol O2 consumed
+            # Dimensional derivation:
+            # (mol O2 / h) * (460.0 kJ / mol O2) / (3600 s / h) = kJ / s = kW
+            q_met_kw = (mol_o2_per_hour * 460.0) / 3600.0
+
+            # 2. Impeller Agitation Dissipation (P_agitation in kW) [EMPIRICAL HEURISTIC]
+            # Assumed empirical correlation for turbulent Rushton / pitched-blade gas dispersion:
+            # Power per unit volume (P/V) scales from 1.5 kW/m3 (low density) to 4.5 kW/m3 (aerobic high density)
             power_vol_kw_m3 = max(1.5, min(4.5, 1.5 + (avg_our / 60.0) * 1.0))
-            p_agitation_kw = v_working_m3 * power_vol_kw_m3
-            
-            # Metabolic heat dissipation (Q_met in kW)
-            # ~460 kJ/mol O2 consumed (Thornton's rule)
-            q_metabolic_kw = (avg_our * v_working_m3 * 460.0) / 3600.0
-            
-            # Chiller refrigeration duty (COP = 3.5)
-            q_cooling_total_kw = q_metabolic_kw + p_agitation_kw
-            p_chiller_kw = q_cooling_total_kw / 3.5
-            
-            # Plant electrical baseline (pumps, air compressor, instrumentation)
-            p_baseline_kw = 35.0
-            p_total_electrical_kw = p_agitation_kw + p_chiller_kw + p_baseline_kw
-            
-            electricity_kwh_per_batch = p_total_electrical_kw * inputs.duration_hours
-            electricity_cost_batch = electricity_kwh_per_batch * inputs.electricity_usd_per_kwh
-            
-            # Saturated steam sterilization (0.4 kg steam / L vessel @ $0.025/kg steam)
-            steam_cost_batch = inputs.working_volume_liters * 0.4 * 0.025
-            
-            effective_utilities_batch = electricity_cost_batch + steam_cost_batch
+            p_agit_kw = v_working_m3 * power_vol_kw_m3
+
+            # 3. Aeration Air Compressor Power (P_compressor in kW) [FIRST PRINCIPLES THERMODYNAMICS]
+            # Isentropic adiabatic compression of sparged air:
+            # Flow rate Q_air = 1.0 vvm = v_working_m3 / 60 [m3/s]
+            # P1 = 101.325 kPa (1 atm), P2 = 200.0 kPa (2.0 bar head pressure to overcome hydrostatic broth + sparger)
+            # Gamma (ratio of specific heats for air) = 1.40, (gamma - 1) / gamma = 0.2857
+            # Compressor isentropic efficiency eta = 0.72
+            # P_comp = [P1 * Q_air / eta] * [gamma / (gamma - 1)] * [(P2 / P1)^0.2857 - 1]
+            q_air_m3_s = v_working_m3 / 60.0
+            p1_kpa = 101.325
+            pr_factor = (200.0 / p1_kpa) ** 0.2857 - 1.0
+            p_comp_kw = (p1_kpa * q_air_m3_s / 0.72) * 3.5 * pr_factor
+
+            # 4. Cooling Chiller Refrigeration Input (P_chiller in kW) [THERMODYNAMIC BALANCE]
+            # All agitation mechanical dissipation converts to broth thermal heat:
+            # Total cooling duty Q_cooling = Q_metabolic + P_agitation [kW]
+            # Industrial chiller Coefficient of Performance (COP) = 3.5
+            q_cooling_total_kw = q_met_kw + p_agit_kw
+            p_chill_kw = q_cooling_total_kw / 3.5
+
+            # 5. Plant Auxiliary Electrical Baseline (P_aux in kW) [EMPIRICAL ASSUMPTION]
+            # Broth transfer pumps, feed pumps, instrumentation, CIP:
+            p_aux_kw = 25.0
+
+            # 6. Total Electrical Power & Batch Energy
+            p_tot_elec_kw = p_agit_kw + p_comp_kw + p_chill_kw + p_aux_kw
+            e_elec_kwh = p_tot_elec_kw * inputs.duration_hours
+
+            # 7. Utilities Dollar Expenditures [SEPARATED FROM PHYSICAL UNITS]
+            cost_elec_batch = e_elec_kwh * inputs.electricity_usd_per_kwh
+
+            # Saturated steam sterilization (SIP):
+            # Consumption: 0.4 kg steam per liter nominal vessel volume @ $0.025 / kg steam
+            cost_steam_batch = inputs.working_volume_liters * 0.4 * 0.025
+
+            effective_utilities_batch = cost_elec_batch + cost_steam_batch
         else:
             effective_utilities_batch = inputs.utilities_cost_usd_per_batch
 
@@ -167,6 +218,16 @@ class TechnoEconomicFermentationModel:
             total_cost_per_kg=round(total_cost_per_kg, 2),
             break_even_price_20pct_margin=round(break_even_20, 2),
             cost_stack_breakdown_pct=pcts,
+            metabolic_heat_kw=round(q_met_kw, 2) if q_met_kw is not None else None,
+            agitation_power_kw=round(p_agit_kw, 2) if p_agit_kw is not None else None,
+            compressor_power_kw=round(p_comp_kw, 2) if p_comp_kw is not None else None,
+            chiller_power_kw=round(p_chill_kw, 2) if p_chill_kw is not None else None,
+            auxiliary_power_kw=round(p_aux_kw, 2) if p_aux_kw is not None else None,
+            total_electrical_power_kw=round(p_tot_elec_kw, 2) if p_tot_elec_kw is not None else None,
+            batch_electrical_energy_kwh=round(e_elec_kwh, 1) if e_elec_kwh is not None else None,
+
+            electricity_cost_batch_usd=round(cost_elec_batch, 2) if cost_elec_batch is not None else None,
+            steam_cost_batch_usd=round(cost_steam_batch, 2) if cost_steam_batch is not None else None,
         )
 
     @classmethod

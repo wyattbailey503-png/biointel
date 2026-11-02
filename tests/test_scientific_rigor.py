@@ -204,3 +204,34 @@ def test_statistical_uncertainty_and_contradiction() -> None:
     report_discordant = ContradictionDetector.compare_experiments(exp1, res1, exp2, res3)
     assert report_discordant.has_conflict is True
     assert report_discordant.severity == "high"
+
+
+def test_anti_structure_misidentification_regression() -> None:
+    """REGRESSION TEST: Prevents misidentified structures from entering validated research outputs.
+
+    Specifically guards against the conflation where PDB 7K38 (pea KAI2 hydrolase receptor)
+    was erroneously claimed to be FAST-PETase (authoritative PDB is 7SH6).
+    """
+    # 7K38 is Pisum sativum KAI2; claiming it is FAST-PETase MUST be rejected
+    valid_7k38_petase, msg_7k38_petase = EntityResolver.validate_structure_identity("7K38", "FAST-PETase")
+    assert valid_7k38_petase is False
+    assert "SCIENTIFIC IDENTITY MISMATCH" in msg_7k38_petase
+    assert "Pisum sativum" in msg_7k38_petase
+    assert "7SH6" in msg_7k38_petase
+
+    # 7SH6 is authoritative FAST-PETase; must be accepted
+    valid_7sh6_petase, msg_7sh6 = EntityResolver.validate_structure_identity("7SH6", "FAST-PETase")
+    assert valid_7sh6_petase is True
+    assert "Verified" in msg_7sh6 and "FAST-PETase" in msg_7sh6
+
+
+    # 7K38 claiming KAI2 or karrikin receptor must be accepted
+    valid_7k38_kai2, msg_kai2 = EntityResolver.validate_structure_identity("7K38", "KAI2")
+    assert valid_7k38_kai2 is True
+
+    # 4OO8 is Cas9; claiming FAST-PETase must be rejected
+    valid_cas9_petase, msg_cas9 = EntityResolver.validate_structure_identity("4OO8", "FAST-PETase")
+    assert valid_cas9_petase is False
+    assert "Cas9" in msg_cas9 and "Streptococcus pyogenes" in msg_cas9
+
+

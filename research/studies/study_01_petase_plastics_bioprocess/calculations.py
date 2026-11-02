@@ -154,15 +154,29 @@ def run_study_calculations(study_dir: Path) -> dict:
             "total_production_cost_usd_per_kg_tpa": round(total_cost_tpa_crystalline, 4),
             "verdict": "CATASTROPHIC ECONOMIC FAILURE due to yield loss and CAPEX dilution"
         },
+        "authoritative_structure": {
+            "pdb_id": "7SH6",
+            "title": "Crystal structure of a PET hydrolase mutant from Ideonella Sakaiensis",
+            "organism": "Ideonella sakaiensis",
+            "resolution_angstrom": 1.44,
+            "engineered_mutations": ["S121E", "D186H", "R224Q", "N233K", "R280A"]
+        },
         "biocatalyst_recycling_analysis": {
             "mode": "5-cycle ultrafiltration membrane recovery (80% retention/cycle)",
+            "classification": "Theoretical Techno-Economic Scenario (Unverified Industrially)",
             "single_use_enzyme_cost_usd_per_kg_tpa": round(enzyme_cost_tpa, 4),
             "recycled_enzyme_cost_usd_per_kg_tpa": round(enzyme_cost_tpa_recycled, 4),
             "membrane_filtration_capex_opex_tpa": round(membrane_cleaning_and_replacement_tpa, 4),
             "effective_biocatalyst_cost_tpa": round(effective_biocatalyst_cost_recycled_tpa, 4),
             "total_production_cost_with_recycling": round(total_cost_tpa_recycled, 4),
             "cost_savings_usd_per_kg_tpa": round(total_cost_tpa_amorph - total_cost_tpa_recycled, 4),
-            "verdict": "Enzyme recycling recovers $0.055/kg TPA, but total cost ($1.54/kg) remains 47% above chemical glycolysis ($1.05/kg) due to unavoidable amorphization pretreatment."
+            "membrane_fouling_and_operability_risks": [
+                "Severe ultrafiltration membrane fouling by insoluble PET microparticles and hydrophobic oligomers (MHET, BHET).",
+                "TPA crystallization: Terephthalic acid has low aqueous solubility (<0.02 g/L at 25 °C), precipitating on membranes unless operated at alkaline pH (>8.0).",
+                "Alkaline pH operation requires acid neutralizing titration for TPA recovery, generating 1.2 kg sodium sulfate salt waste per kg TPA.",
+                "Enzyme thermal denaturation at 50 °C during filtration concentration reduces actual re-usable activity by 15-25% per cycle."
+            ],
+            "verdict": "Enzyme recycling recovers $0.055/kg TPA, but total cost ($1.55/kg) remains 47% above chemical glycolysis ($1.05/kg) due to unavoidable amorphization pretreatment."
         },
         "competitor_benchmarks_usd_per_kg_tpa": {
             "virgin_pet_tpa": virgin_tpa_price,

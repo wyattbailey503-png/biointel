@@ -85,24 +85,35 @@ def test_dynamic_commercialization_scoring_from_margin_and_evidence() -> None:
     from biointel.commercialization.framework import CommercializationEvaluator
     from biointel.economics.fermentation import FermentationInputs, TechnoEconomicFermentationModel
 
-    # High-cost scenario: Low titer (10 g/L) -> high unit cost (> $40/kg)
+    # High-cost scenario: Low titer (10 g/L) -> high unit cost (> $40/kg) vs $35/kg target price
     inputs_unfavorable = FermentationInputs(titer_g_per_l=10.0)
     outputs_unfavorable = TechnoEconomicFermentationModel.calculate(inputs_unfavorable)
 
     assessment_unfavorable = CommercializationEvaluator.evaluate_precision_fermentation(
-        mass_balance=outputs_unfavorable
+        mass_balance=outputs_unfavorable,
+        target_market_price_usd_kg=35.0,
     )
     econ_dim_bad = assessment_unfavorable.dimensions["economic_feasibility"]
     assert econ_dim_bad.score <= 5.5
     assert econ_dim_bad.status in ("Emergent", "High Risk")
 
-    # Favorable scenario: High titer (80 g/L) -> low unit cost (< $20/kg)
+    # Favorable scenario: High titer (80 g/L) -> low unit cost (< $20/kg) vs $35/kg target price
     inputs_favorable = FermentationInputs(titer_g_per_l=80.0)
     outputs_favorable = TechnoEconomicFermentationModel.calculate(inputs_favorable)
 
     assessment_favorable = CommercializationEvaluator.evaluate_precision_fermentation(
-        mass_balance=outputs_favorable
+        mass_balance=outputs_favorable,
+        target_market_price_usd_kg=35.0,
     )
     econ_dim_good = assessment_favorable.dimensions["economic_feasibility"]
     assert econ_dim_good.score >= 7.5
     assert econ_dim_good.status == "De-risked"
+
+    # Qualitative Fallback: No target price or incumbent cost provided -> must not invent arbitrary threshold
+    assessment_qualitative = CommercializationEvaluator.evaluate_precision_fermentation(
+        mass_balance=outputs_favorable
+    )
+    econ_dim_qual = assessment_qualitative.dimensions["economic_feasibility"]
+    assert econ_dim_qual.status == "Qualitative / Context-Dependent"
+    assert "Commercial de-risking cannot be assigned without product-specific selling price" in econ_dim_qual.evidence_summary
+

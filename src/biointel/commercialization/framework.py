@@ -49,6 +49,9 @@ class CommercializationEvaluator:
         tech_id: str = "precision_fermentation_hydrolase",
         db: Optional[Any] = None,
         mass_balance: Optional[Any] = None,
+        target_market_price_usd_kg: Optional[float] = None,
+        incumbent_cost_usd_kg: Optional[float] = None,
+        product_grade: str = "specialty_chemical",
     ) -> CommercializationAssessment:
         dimensions = {
             "scientific_validity": CommercializationDimension(
@@ -116,22 +119,59 @@ class CommercializationEvaluator:
             productivity = getattr(mass_balance, "volumetric_productivity_g_l_h", None)
 
             if unit_cost is not None:
-                if unit_cost < 15.0:
-                    econ_score = 8.5
-                    econ_status = "De-risked"
-                    summary = f"Total production cost ${unit_cost:.2f}/kg enables highly favorable gross margins (>50%) against commodity benchmarks."
-                elif unit_cost <= 25.0:
-                    econ_score = 7.5
-                    econ_status = "De-risked"
-                    summary = f"Production cost ${unit_cost:.2f}/kg supports commercial viability (20-40% gross margin) for fine/specialty chemical targets."
-                elif unit_cost <= 40.0:
-                    econ_score = 5.5
-                    econ_status = "Emergent"
-                    summary = f"Unit cost ${unit_cost:.2f}/kg leaves tight gross margins; commercial success requires premium pricing or yield optimization."
+                # Rigorous Product-Specific Scoring based on Gross Margin or Parity
+                if target_market_price_usd_kg is not None and target_market_price_usd_kg > 0:
+                    gross_margin = (target_market_price_usd_kg - unit_cost) / target_market_price_usd_kg
+                    if gross_margin >= 0.60:
+                        econ_score = 9.0
+                        econ_status = "De-risked"
+                        summary = (
+                            f"Unit cost ${unit_cost:.2f}/kg yields a robust {gross_margin*100:.1f}% gross margin "
+                            f"against target market price of ${target_market_price_usd_kg:.2f}/kg ({product_grade})."
+                        )
+                    elif gross_margin >= 0.40:
+                        econ_score = 7.5
+                        econ_status = "De-risked"
+                        summary = (
+                            f"Unit cost ${unit_cost:.2f}/kg yields a commercially viable {gross_margin*100:.1f}% gross margin "
+                            f"against target market price of ${target_market_price_usd_kg:.2f}/kg ({product_grade})."
+                        )
+                    elif gross_margin >= 0.15:
+                        econ_score = 5.5
+                        econ_status = "Emergent"
+                        summary = (
+                            f"Unit cost ${unit_cost:.2f}/kg yields a narrow {gross_margin*100:.1f}% gross margin; "
+                            f"remains vulnerable to feedstock and energy price volatility."
+                        )
+                    else:
+                        econ_score = 2.5
+                        econ_status = "High Risk"
+                        summary = (
+                            f"Unit cost ${unit_cost:.2f}/kg is economically underwater ({gross_margin*100:.1f}% margin) "
+                            f"against market clearing price of ${target_market_price_usd_kg:.2f}/kg."
+                        )
+                elif incumbent_cost_usd_kg is not None and incumbent_cost_usd_kg > 0:
+                    parity_ratio = unit_cost / incumbent_cost_usd_kg
+                    if parity_ratio <= 0.80:
+                        econ_score = 8.5
+                        econ_status = "De-risked"
+                        summary = f"Production cost ${unit_cost:.2f}/kg achieves >20% cost advantage over incumbent chemical process (${incumbent_cost_usd_kg:.2f}/kg)."
+                    elif parity_ratio <= 1.05:
+                        econ_score = 6.0
+                        econ_status = "Emergent"
+                        summary = f"Production cost ${unit_cost:.2f}/kg is cost-neutral with incumbent process (${incumbent_cost_usd_kg:.2f}/kg); market entry requires green premium."
+                    else:
+                        econ_score = 3.0
+                        econ_status = "High Risk"
+                        summary = f"Production cost ${unit_cost:.2f}/kg is at a {(parity_ratio - 1.0)*100:.1f}% cost disadvantage vs incumbent process (${incumbent_cost_usd_kg:.2f}/kg)."
                 else:
-                    econ_score = 3.5
-                    econ_status = "High Risk"
-                    summary = f"Production cost ${unit_cost:.2f}/kg is economically underwater against prevailing commercial market prices."
+                    # PRESERVE QUALITATIVE ASSESSMENT: Do NOT invent arbitrary dollar thresholds
+                    econ_score = 6.0
+                    econ_status = "Qualitative / Context-Dependent"
+                    summary = (
+                        f"Calculated unit production cost is ${unit_cost:.2f}/kg. "
+                        f"Commercial de-risking cannot be assigned without product-specific selling price or incumbent benchmark."
+                    )
 
                 dimensions["economic_feasibility"] = CommercializationDimension(
                     dimension_name="Economic Feasibility",

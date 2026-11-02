@@ -82,6 +82,77 @@ class EntityResolver:
 
         return canonical_id, norm_doi, norm_pmid, norm_pmcid
 
+    AUTHORITATIVE_STRUCTURE_REGISTRY: Dict[str, Dict[str, Any]] = {
+        "7SH6": {
+            "canonical_name": "FAST-PETase",
+            "full_title": "Crystal structure of a PET hydrolase mutant from Ideonella Sakaiensis",
+            "organism": "Ideonella sakaiensis",
+            "family": "alpha/beta hydrolase (PETase)",
+            "engineered_mutations": ["S121E", "D186H", "R224Q", "N233K", "R280A"],
+            "primary_doi": "10.1038/s41586-022-04599-z",
+            "disallowed_aliases": ["kai2", "karrikin", "pea receptor"],
+        },
+        "7K38": {
+            "canonical_name": "KAI2 (Karrikin Insensitive 2)",
+            "full_title": "Crystal structure of Pisum sativum KAI2 in complex with GR24-ent5DS product",
+            "organism": "Pisum sativum",
+            "family": "alpha/beta hydrolase receptor (karrikin/strigolactone)",
+            "engineered_mutations": [],
+            "primary_doi": "10.1038/s42003-022-03085-6",
+            "disallowed_aliases": ["fast-petase", "petase", "pet hydrolase", "plastic recycling"],
+        },
+        "4OO8": {
+            "canonical_name": "Cas9-sgRNA-DNA complex",
+            "full_title": "Crystal structure of Cas9 in complex with guide RNA and target DNA",
+            "organism": "Streptococcus pyogenes",
+            "family": "CRISPR-associated endonuclease",
+            "engineered_mutations": [],
+            "primary_doi": "10.1038/nature13079",
+            "disallowed_aliases": ["petase", "kai2", "prime editor"],
+        },
+        "1CRN": {
+            "canonical_name": "Crambin",
+            "full_title": "Structure of crambin at 0.54 A resolution",
+            "organism": "Crambe hispanica",
+            "family": "plant thionin seed storage protein",
+            "engineered_mutations": [],
+            "primary_doi": "10.1073/pnas.81.18.6014",
+            "disallowed_aliases": ["petase", "cas9", "kai2"],
+        },
+    }
+
+    @classmethod
+    def validate_structure_identity(cls, pdb_id: str, claimed_name: str) -> Tuple[bool, str]:
+        """
+        Validates claimed biological identity against authoritative structure registry.
+        Guarantees structures like 7K38 (pea KAI2) cannot be falsely labeled as FAST-PETase.
+        """
+        norm_id = cls.normalize_pdb_id(pdb_id)
+        if not norm_id:
+            return False, f"Invalid PDB ID format: '{pdb_id}'"
+
+        if norm_id not in cls.AUTHORITATIVE_STRUCTURE_REGISTRY:
+            return True, f"PDB ID {norm_id} is not in authoritative registry; requires manual provenance review."
+
+        info = cls.AUTHORITATIVE_STRUCTURE_REGISTRY[norm_id]
+        claimed_lower = claimed_name.lower().strip()
+
+        # Check disallowed aliases
+        for bad_alias in info["disallowed_aliases"]:
+            if bad_alias in claimed_lower:
+                alt_note = ""
+                if "petase" in bad_alias:
+                    alt_note = " Authoritative PDB structure for FAST-PETase is 7SH6."
+                return False, (
+                    f"SCIENTIFIC IDENTITY MISMATCH: PDB {norm_id} is '{info['full_title']}' "
+                    f"from organism '{info['organism']}', NOT '{claimed_name}'. "
+                    f"Authoritative canonical name: '{info['canonical_name']}'.{alt_note}"
+                )
+
+
+
+        return True, f"Verified: PDB {norm_id} matches '{info['canonical_name']}' ({info['organism']})."
+
     @classmethod
     def resolve_technology_canonical_name(cls, name: str) -> str:
         """Create a slugified canonical identifier for technologies."""

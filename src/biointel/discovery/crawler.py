@@ -80,63 +80,87 @@ class DiscoveryCrawler:
         failed_requests = 0
         rate_limits = 0
 
-        # 2. Ingest Example A: Macromolecular Structure (PDB 7K38)
-        try:
-            struct_file = self.fixtures_dir / "rcsb_7k38.json"
-            coord_file = self.fixtures_dir.parent / "structures" / "7k38.pdb"
+        # 2. Ingest Macromolecular Structures: 7SH6 (FAST-PETase) and 7K38 (Pea KAI2)
+        structures_to_ingest = [
+            {
+                "pdb_id": "7SH6",
+                "tech_id": "fast_petase_depolymerase",
+                "tech_name": "FAST-PETase Plastic Depolymerase",
+                "category": "biocatalytic_depolymerization",
+                "desc": "Engineered Ideonella sakaiensis PET hydrolase with 5 machine-learning directed mutations (S121E/D186H/R224Q/N233K/R280A) for plastic recycling.",
+            },
+            {
+                "pdb_id": "7K38",
+                "tech_id": "engineered_hydrolase_kai2",
+                "tech_name": "Pisum sativum KAI2 Plant Receptor Hydrolase",
+                "category": "engineered_enzymes",
+                "desc": "Plant-derived alpha/beta hydrolase receptor from Pisum sativum in complex with GR24-ent5DS strigolactone analog.",
+            },
+        ]
 
-            raw_struct_meta = {}
-            if mode == "live":
-                try:
-                    adapter = RCSBPDBAdapter()
-                    raw_struct_meta = adapter.fetch_entry_metadata("7K38")
-                    coord_file = adapter.download_coordinates("7K38")
-                except Exception:
-                    failed_requests += 1
+        for s_cfg in structures_to_ingest:
+            pdb_id = s_cfg["pdb_id"]
+            try:
+                struct_file = self.fixtures_dir / f"rcsb_{pdb_id.lower()}.json"
+                coord_file = self.fixtures_dir.parent / "structures" / f"{pdb_id.lower()}.pdb"
 
-            if not raw_struct_meta and struct_file.exists():
-                raw_struct_meta = json.loads(struct_file.read_text(encoding="utf-8"))
+                raw_struct_meta = {}
+                if mode == "live":
+                    try:
+                        adapter = RCSBPDBAdapter()
+                        raw_struct_meta = adapter.fetch_entry_metadata(pdb_id)
+                        coord_file = adapter.download_coordinates(pdb_id)
+                    except Exception:
+                        failed_requests += 1
 
-            if raw_struct_meta:
-                content_hash = hashlib.sha256(json.dumps(raw_struct_meta, sort_keys=True).encode("utf-8")).hexdigest()
-                doc_dict = {
-                    "document_id": "rcsb:7K38",
-                    "source_id": "rcsb_pdb",
-                    "external_id": "7K38",
-                    "title": raw_struct_meta.get("struct", {}).get("title", "Pisum sativum KAI2 hydrolase"),
-                    "url": "https://www.rcsb.org/structure/7K38",
-                    "content_hash": content_hash,
-                    "format": "json",
-                    "ingestion_status": "processed",
-                }
-                is_new = self.db.upsert_document(doc_dict, raw_payload=json.dumps(raw_struct_meta))
-                if is_new:
-                    docs_discovered += 1
-                else:
-                    duplicates_prevented += 1
+                if not raw_struct_meta and struct_file.exists():
+                    raw_struct_meta = json.loads(struct_file.read_text(encoding="utf-8"))
 
-                # Parse and upsert structure
-                rcsb_adapter = RCSBPDBAdapter()
-                struct_record = rcsb_adapter.parse_entry_to_record(raw_struct_meta, coord_path=str(coord_file))
-                self.db.upsert_structure(struct_record.to_dict())
+                if raw_struct_meta:
+                    content_hash = hashlib.sha256(json.dumps(raw_struct_meta, sort_keys=True).encode("utf-8")).hexdigest()
+                    doc_dict = {
+                        "document_id": f"rcsb:{pdb_id}",
+                        "source_id": "rcsb_pdb",
+                        "external_id": pdb_id,
+                        "title": raw_struct_meta.get("struct", {}).get("title", s_cfg["tech_name"]),
+                        "url": f"https://www.rcsb.org/structure/{pdb_id}",
+                        "content_hash": content_hash,
+                        "format": "json",
+                        "ingestion_status": "processed",
+                    }
+                    is_new = self.db.upsert_document(doc_dict, raw_payload=json.dumps(raw_struct_meta))
+                    if is_new:
+                        docs_discovered += 1
+                    else:
+                        duplicates_prevented += 1
 
-                # Associate technology
-                tech_dict = {
-                    "tech_id": "engineered_hydrolase_kai2",
-                    "name": "Engineered Stereoselective Hydrolase",
-                    "canonical_name": "engineered_stereoselective_hydrolase",
-                    "domain": "molecular_and_cellular_engineering",
-                    "category": "engineered_enzymes",
-                    "maturity_stage": "preclinical",
-                    "description": "Plant-derived alpha/beta hydrolase engineered for stereoselective catalysis during signaling and industrial substrate conversion.",
-                }
-                self.db.upsert_technology(tech_dict)
-                new_techs += 1
-                self.registry.record_attempt("rcsb_pdb", success=True, timestamp=datetime.now(timezone.utc).isoformat())
+                    # Parse and upsert structure
+                    rcsb_adapter = RCSBPDBAdapter()
+                    struct_record = rcsb_adapter.parse_entry_to_record(raw_struct_meta, coord_path=str(coord_file))
+                    self.db.upsert_structure(struct_record.to_dict())
 
-        except Exception as e:
-            failed_requests += 1
-            self.registry.record_attempt("rcsb_pdb", success=False, timestamp=datetime.now(timezone.utc).isoformat(), message=str(e))
+                    # Check and upsert technology
+                    with self.db.get_connection() as conn:
+                        existing_techs = {r["tech_id"] for r in conn.execute("SELECT tech_id FROM technologies").fetchall()}
+
+                    if s_cfg["tech_id"] not in existing_techs:
+                        tech_dict = {
+                            "tech_id": s_cfg["tech_id"],
+                            "name": s_cfg["tech_name"],
+                            "canonical_name": EntityResolver.resolve_technology_canonical_name(s_cfg["tech_name"]),
+                            "domain": "molecular_and_cellular_engineering",
+                            "category": s_cfg["category"],
+                            "maturity_stage": "preclinical",
+                            "description": s_cfg["desc"],
+                        }
+                        self.db.upsert_technology(tech_dict)
+                        new_techs += 1
+
+                    self.registry.record_attempt("rcsb_pdb", success=True, timestamp=datetime.now(timezone.utc).isoformat())
+
+            except Exception as e:
+                failed_requests += 1
+                self.registry.record_attempt("rcsb_pdb", success=False, timestamp=datetime.now(timezone.utc).isoformat(), message=str(e))
 
         # 3. Ingest Example B: Literature & Gene Editing Publications
         try:
