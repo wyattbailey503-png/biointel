@@ -161,6 +161,9 @@ CREATE TABLE IF NOT EXISTS experiments (
     evidence_category TEXT NOT NULL,
     evidence_location TEXT, -- e.g., 'Fig 2C, p. 6426'
     limitations TEXT,
+    experiment_date TEXT,
+    publication_date TEXT,
+    discovery_date TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (publication_id) REFERENCES publications(publication_id)
 );
@@ -215,9 +218,21 @@ CREATE TABLE IF NOT EXISTS evidence_links (
     FOREIGN KEY (experiment_id) REFERENCES experiments(experiment_id)
 );
 
+CREATE TABLE IF NOT EXISTS evidence_relationships (
+    rel_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_id TEXT NOT NULL,
+    target_id TEXT NOT NULL,
+    relation_type TEXT NOT NULL, -- 'SUPPORTS', 'CONTRADICTS', 'REPLICATES', 'EXTENDS', 'REFINES', 'USES_METHOD', 'EVALUATES_TECHNOLOGY', 'DEMONSTRATES_SCALE', 'REPORTS_SAFETY_CONCERN', 'ASSOCIATED_WITH_COMPANY'
+    confidence_score REAL DEFAULT 1.0,
+    explanation TEXT,
+    metadata_json TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 10. Technology Relationships & Lineage
 CREATE TABLE IF NOT EXISTS technology_relationships (
     rel_id INTEGER PRIMARY KEY AUTOINCREMENT,
+
     source_tech_id TEXT NOT NULL,
     target_tech_id TEXT NOT NULL,
     relation_type TEXT NOT NULL, -- 'enables', 'improves_upon', 'competes_with', 'derived_from'
@@ -326,3 +341,7 @@ CREATE INDEX IF NOT EXISTS idx_exp_results_exp ON experimental_results(experimen
 CREATE INDEX IF NOT EXISTS idx_evidence_claim ON evidence_links(claim_id);
 CREATE INDEX IF NOT EXISTS idx_tech_domain ON technologies(domain, category);
 CREATE INDEX IF NOT EXISTS idx_changes_tech ON scientific_changes(technology_id);
+CREATE INDEX IF NOT EXISTS idx_evidence_rel_src ON evidence_relationships(source_id);
+CREATE INDEX IF NOT EXISTS idx_evidence_rel_tgt ON evidence_relationships(target_id);
+CREATE INDEX IF NOT EXISTS idx_evidence_rel_type ON evidence_relationships(relation_type);
+

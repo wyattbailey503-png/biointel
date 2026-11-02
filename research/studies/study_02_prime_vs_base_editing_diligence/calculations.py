@@ -84,10 +84,12 @@ def run_study_calculations(study_dir: Path) -> dict:
         "editing_modalities_comparison": comparison_matrix,
         "diligence_recommendation": {
             "verdict": "ALLOCATE BY CLINICAL DELIVERY ROUTE & MUTATION TYPE",
-            "in_vivo_cns_recommendation": "Base Editing (SaCas9-ABE8e) preferred for CNS where single AAV9 capsid is mandatory and target is a clean transition.",
+            "construct_specificity_note": "AAV packaging constraints must be evaluated for specific editor constructs: compact orthologs (SaCas9-ABE8e, 3,705 bp ORF) fit single AAV vectors (~4.4 kb total cassette), whereas standard SpCas9 base editors (ABE8e-SpCas9, 4,650 bp ORF) and all prime editors (PEmax, 6,335 bp ORF) exceed the ~4.7 kb single-capsid ceiling and strictly require dual-AAV split intein or LNP mRNA delivery.",
+            "in_vivo_cns_recommendation": "Base Editing (compact SaCas9-ABE8e) preferred for CNS where single AAV9 capsid is mandatory and target is a clean transition.",
             "in_vivo_hepatic_recommendation": "Prime Editing via LNP mRNA delivery preferred for transversions/insertions where liver ApoE targeting provides high biodistribution.",
             "ex_vivo_hspc_recommendation": "Base editing yields higher editing fraction (48% vs 14.5%) unless PEmax is co-delivered with transient MLH1dn peptide."
         }
+
     }
 
     with open(results_dir / "summary.json", "w") as f:

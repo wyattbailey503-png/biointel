@@ -52,6 +52,14 @@ class Database:
         schema_sql = schema_path.read_text(encoding="utf-8")
         with self.get_connection() as conn:
             conn.executescript(schema_sql)
+            # Automatic schema migration for existing tables
+            cur = conn.cursor()
+            cur.execute("PRAGMA table_info(experiments);")
+            exp_cols = [col[1] for col in cur.fetchall()]
+            for col in ["experiment_date", "publication_date", "discovery_date"]:
+                if col not in exp_cols:
+                    cur.execute(f"ALTER TABLE experiments ADD COLUMN {col} TEXT;")
+
 
     # -------------------------------------------------------------------------
     # Sources & Discovery
@@ -262,25 +270,118 @@ class Database:
     # Experiments & Results
     # -------------------------------------------------------------------------
     def insert_experiment(self, exp_dict: Dict[str, Any]) -> None:
+        d = dict(exp_dict)
+        defaults = {
+            "biological_question": None,
+            "hypothesis": None,
+            "species": None,
+            "cell_line_or_tissue": None,
+            "control_group": None,
+            "dose_concentration": None,
+            "exposure_duration": None,
+            "measurement_time": None,
+            "sample_size": None,
+            "biological_replicates": None,
+            "technical_replicates": None,
+            "evidence_location": None,
+            "limitations": None,
+            "experiment_date": None,
+            "publication_date": None,
+            "discovery_date": None,
+        }
+        for k, v in defaults.items():
+            d.setdefault(k, v)
         sql = """
         INSERT OR REPLACE INTO experiments (
             experiment_id, publication_id, biological_question, hypothesis,
             experimental_method, model_system, species, cell_line_or_tissue,
             treatment_intervention, control_group, dose_concentration,
             exposure_duration, measurement_time, sample_size, biological_replicates,
-            technical_replicates, evidence_category, evidence_location, limitations
+            technical_replicates, evidence_category, evidence_location, limitations,
+            experiment_date, publication_date, discovery_date
         ) VALUES (
             :experiment_id, :publication_id, :biological_question, :hypothesis,
             :experimental_method, :model_system, :species, :cell_line_or_tissue,
             :treatment_intervention, :control_group, :dose_concentration,
             :exposure_duration, :measurement_time, :sample_size, :biological_replicates,
-            :technical_replicates, :evidence_category, :evidence_location, :limitations
+            :technical_replicates, :evidence_category, :evidence_location, :limitations,
+            :experiment_date, :publication_date, :discovery_date
         );
         """
         with self.transaction() as cur:
-            cur.execute(sql, exp_dict)
+            cur.execute(sql, d)
+
+    def insert_evidence_relationship(self, rel_dict: Dict[str, Any]) -> int:
+        sql = """
+        INSERT INTO evidence_relationships (
+            source_id, target_id, relation_type, confidence_score, explanation, metadata_json
+        ) VALUES (
+            :source_id, :target_id, :relation_type, :confidence_score, :explanation, :metadata_json
+        );
+        """
+        d = dict(rel_dict)
+        d.setdefault("confidence_score", 1.0)
+        d.setdefault("explanation", "")
+        if isinstance(d.get("metadata_json"), (dict, list)):
+            d["metadata_json"] = json.dumps(d["metadata_json"])
+        else:
+            d.setdefault("metadata_json", None)
+        with self.transaction() as cur:
+            cur.execute(sql, d)
+            return cur.lastrowid or 0
+
+    def get_evidence_relationships(self, source_or_target_id: Optional[str] = None, relation_type: Optional[str] = None) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM evidence_relationships WHERE 1=1"
+        params: List[Any] = []
+        if source_or_target_id:
+            query += " AND (source_id = ? OR target_id = ?)"
+            params.extend([source_or_target_id, source_or_target_id])
+        if relation_type:
+            query += " AND relation_type = ?"
+            params.append(relation_type)
+        query += " ORDER BY created_at ASC"
+        with self.get_connection() as conn:
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
+
+    def get_technology_evidence_timeline(self, tech_id: str, as_of_date: Optional[str] = None) -> List[Dict[str, Any]]:
+        query = """
+            SELECT 
+                p.publication_id, p.doi, p.title, p.pub_date, p.pub_year, p.authors,
+                e.experiment_id, e.experimental_method, e.model_system, e.treatment_intervention,
+                e.limitations, e.experiment_date, e.publication_date,
+                r.result_id, r.measured_endpoint, r.value, r.unit, r.p_value,
+                c.claim_id, c.claim_statement, c.claim_type
+            FROM claims c
+            JOIN evidence_links el ON c.claim_id = el.claim_id
+            JOIN experiments e ON el.experiment_id = e.experiment_id
+            JOIN publications p ON e.publication_id = p.publication_id
+            LEFT JOIN experimental_results r ON e.experiment_id = r.experiment_id
+            WHERE c.technology_id = ?
+        """
+        params: List[Any] = [tech_id]
+        if as_of_date:
+            query += " AND (COALESCE(e.publication_date, p.pub_date, CAST(p.pub_year AS TEXT)) <= ?)"
+            params.append(as_of_date)
+        query += " ORDER BY COALESCE(e.publication_date, p.pub_date, CAST(p.pub_year AS TEXT)) ASC"
+
+        with self.get_connection() as conn:
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
 
     def insert_experimental_result(self, res_dict: Dict[str, Any]) -> None:
+        d = dict(res_dict)
+        defaults = {
+            "assay_id": None,
+            "standard_deviation": None,
+            "confidence_interval": None,
+            "p_value": None,
+            "statistical_method": None,
+            "effect_size": None,
+            "raw_summary": None,
+        }
+        for k, v in defaults.items():
+            d.setdefault(k, v)
         sql = """
         INSERT OR REPLACE INTO experimental_results (
             result_id, experiment_id, assay_id, measured_endpoint, value,
@@ -293,7 +394,8 @@ class Database:
         );
         """
         with self.transaction() as cur:
-            cur.execute(sql, res_dict)
+            cur.execute(sql, d)
+
 
     def get_experiments_for_publication(self, pub_id: str) -> List[Dict[str, Any]]:
         with self.get_connection() as conn:

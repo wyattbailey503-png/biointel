@@ -113,9 +113,10 @@ def run_study_calculations(study_dir: Path) -> dict:
             "cogs_underestimation_factor": round(92.50 / 22.00, 2)
         },
         "scientific_and_diligence_verdict": {
-            "verdict": "REJECT CLAIMED ECONOMICS / RE-RATE VALUATION",
-            "justification": "The 40.0 g/L titer claim requires an OUR of 240 mmol/L/h and generates 620 kW of metabolic heat, exceeding the 50,000 L tank cooling capacity (450 kW) and requiring 75% pure O2 sparging. This creates an unmitigated explosive methanol environment and broth boiling. Realizable commercial titer is capped at 14 g/L, driving true unit cost to ~$92.50/kg (4.2x higher than pitch deck)."
+            "verdict": "REJECT CLAIMED ECONOMICS FOR MODELED VESSEL / RE-RATE VALUATION",
+            "justification": "The cooling analysis establishes a conditional feasibility constraint for the modeled 50,000 L jacketed stirred reactor (cooling jacket cap 450 kW, max OTR 28 mmol/L/h on air), NOT a universal disproof of a reported fermentation titer in alternative reactor geometries (e.g. external heat exchangers or micro-bubble contactors). For this modeled vessel, 40 g/L requires OUR of 240 mmol/L/h and generates 620 kW of metabolic heat, exceeding the 450 kW jacket cooling limit and requiring 75% O2 sparging in an explosive methanol broth. Realizable commercial titer in this vessel geometry is capped at 14 g/L, driving unit cost to ~$92.50/kg (4.2x pitch deck)."
         }
+
     }
 
     with open(results_dir / "summary.json", "w") as f:

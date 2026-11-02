@@ -1,0 +1,621 @@
+[
+  {
+    "technology_id": "fast_petase_depolymerase",
+    "as_of_date": "2016-04-01",
+    "snapshot_label": "Snapshot 1 (April 2016): Initial Discovery & Wild-Type IsPETase",
+    "publications_count": 1,
+    "publications": [
+      {
+        "doi": "10.1126/science.aad6359",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "publication_date": "2016-03-10",
+        "senior_author": "Kohei Oda / Kenji Miyamoto",
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+      }
+    ],
+    "structures": [
+      "5XJH"
+    ],
+    "demonstrated_capabilities": [
+      "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)"
+    ],
+    "established_physical_boundaries": [
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+    ],
+    "commercial_feasibility": {
+      "readiness_stage": "Academic Discovery / Early Research",
+      "estimated_tpa_cost_usd_kg": 65.0,
+      "commercial_verdict": "ECONOMICALLY UNVIABLE: Reaction requires 6 weeks; zero activity on commercial post-consumer plastic.",
+      "market_clearing_parity_ratio": 52.0
+    },
+    "unresolved_uncertainties": [
+      "Is the enzyme mechanism distinct from legacy fungal cutinases (e.g. Thermobifida fusca)?",
+      "Can active site mutations overcome the severe steric barrier of crystalline PET chains?",
+      "Can thermal stability be increased to operate near the PET glass transition temperature (Tg ~ 65-70 \u00b0C)?"
+    ],
+    "evidence_items": [
+      {
+        "item_id": "PET-2016-YOSHIDA",
+        "publication_date": "2016-03-10",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "doi": "10.1126/science.aad6359",
+        "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "enzyme_variant": "Wild-type IsPETase",
+        "pdb_id": "5XJH",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "is_independent": true,
+        "limitations": [
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+        ],
+        "raw_data": {}
+      }
+    ],
+    "snapshot_hash": "d2de1347520d6629d4e12e0d278ad81e519ad320b55d31b4e900a96cf7a9a52e"
+  },
+  {
+    "technology_id": "fast_petase_depolymerase",
+    "as_of_date": "2018-05-01",
+    "snapshot_label": "Snapshot 2 (May 2018): Crystallographic Structure & Initial Active Site Engineering",
+    "publications_count": 2,
+    "publications": [
+      {
+        "doi": "10.1126/science.aad6359",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "publication_date": "2016-03-10",
+        "senior_author": "Kohei Oda / Kenji Miyamoto",
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+      },
+      {
+        "doi": "10.1073/pnas.1718804115",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "publication_date": "2018-04-17",
+        "senior_author": "John M. McGeehan / Gregg T. Beckham",
+        "institution": "University of Portsmouth (UK) / NREL (USA)"
+      }
+    ],
+    "structures": [
+      "5XJH",
+      "6EQE"
+    ],
+    "demonstrated_capabilities": [
+      "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)",
+      "[2018-04-17] IsPETase double mutant (S238F/W159H): ~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed (Substrate: 1.9% crystallinity)"
+    ],
+    "established_physical_boundaries": [
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+      "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+      "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
+    ],
+    "commercial_feasibility": {
+      "readiness_stage": "Lead Optimization / Protein Engineering",
+      "estimated_tpa_cost_usd_kg": 42.0,
+      "commercial_verdict": "COMMERCIALLY UNFEASIBLE: Establishes structural basis, but catalytic velocity at 30 \u00b0C remains orders of magnitude too slow for industrial recovery.",
+      "market_clearing_parity_ratio": 33.6
+    },
+    "unresolved_uncertainties": [
+      "Does narrow active-site cleft restrict bulky synthetic polyester chains from entering?",
+      "Why do mesophilic IsPETase variants lose all activity within 24 hours at 37 \u00b0C?",
+      "Is IsPETase intrinsically the wrong enzyme chassis compared to thermophilic actinomycete cutinases?"
+    ],
+    "evidence_items": [
+      {
+        "item_id": "PET-2016-YOSHIDA",
+        "publication_date": "2016-03-10",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "doi": "10.1126/science.aad6359",
+        "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "enzyme_variant": "Wild-type IsPETase",
+        "pdb_id": "5XJH",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "is_independent": true,
+        "limitations": [
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2018-AUSTIN",
+        "publication_date": "2018-04-17",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "doi": "10.1073/pnas.1718804115",
+        "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
+        "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
+        "pdb_id": "6EQE",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "reproducibility_class": "INDEPENDENT_REPLICATION",
+        "is_independent": true,
+        "limitations": [
+          "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+          "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+          "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
+        ],
+        "raw_data": {}
+      }
+    ],
+    "snapshot_hash": "6d3f656a5d983a7187613e5a1ca4d3c297e06fc9339ad0f4cfe6c3514d60384e"
+  },
+  {
+    "technology_id": "fast_petase_depolymerase",
+    "as_of_date": "2020-05-01",
+    "snapshot_label": "Snapshot 3 (May 2020): Thermophilic Breakthrough Operating Near PET Glass Transition",
+    "publications_count": 3,
+    "publications": [
+      {
+        "doi": "10.1126/science.aad6359",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "publication_date": "2016-03-10",
+        "senior_author": "Kohei Oda / Kenji Miyamoto",
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+      },
+      {
+        "doi": "10.1073/pnas.1718804115",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "publication_date": "2018-04-17",
+        "senior_author": "John M. McGeehan / Gregg T. Beckham",
+        "institution": "University of Portsmouth (UK) / NREL (USA)"
+      },
+      {
+        "doi": "10.1038/s41586-020-2149-4",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "publication_date": "2020-04-08",
+        "senior_author": "Alain Marty",
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+      }
+    ],
+    "structures": [
+      "5XJH",
+      "6EQE",
+      "6T54"
+    ],
+    "demonstrated_capabilities": [
+      "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)",
+      "[2018-04-17] IsPETase double mutant (S238F/W159H): ~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed (Substrate: 1.9% crystallinity)",
+      "[2020-04-08] Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG): 90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading (Substrate: 10.0% crystallinity)"
+    ],
+    "established_physical_boundaries": [
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+      "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+      "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
+      "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+      "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+      "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+    ],
+    "commercial_feasibility": {
+      "readiness_stage": "Pilot-Scale Demonstration",
+      "estimated_tpa_cost_usd_kg": 1.65,
+      "commercial_verdict": "CONDITIONAL PILOT VIABILITY: First demonstration of industrially relevant reaction velocity (10 h batch). However, thermal amorphization adds $0.49/kg, making cost 57% higher than virgin petrochemical TPA ($1.05/kg).",
+      "market_clearing_parity_ratio": 1.57
+    },
+    "unresolved_uncertainties": [
+      "What is the fouling rate of ultrafiltration membranes when separating soluble TPA from residual insoluble oligomers (MHET)?",
+      "Can sodium sulfate salt byproduct be monetized or does it incur hazardous industrial brine disposal costs?",
+      "Can directed evolution yield an enzyme active at 50 \u00b0C with equivalent velocity, avoiding 72 \u00b0C heating costs?"
+    ],
+    "evidence_items": [
+      {
+        "item_id": "PET-2016-YOSHIDA",
+        "publication_date": "2016-03-10",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "doi": "10.1126/science.aad6359",
+        "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "enzyme_variant": "Wild-type IsPETase",
+        "pdb_id": "5XJH",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "is_independent": true,
+        "limitations": [
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2018-AUSTIN",
+        "publication_date": "2018-04-17",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "doi": "10.1073/pnas.1718804115",
+        "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
+        "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
+        "pdb_id": "6EQE",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "reproducibility_class": "INDEPENDENT_REPLICATION",
+        "is_independent": true,
+        "limitations": [
+          "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+          "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+          "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2020-TOURNIER",
+        "publication_date": "2020-04-08",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "doi": "10.1038/s41586-020-2149-4",
+        "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
+        "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
+        "pdb_id": "6T54",
+        "crystallinity_pct": 10.0,
+        "temperature_celsius": 72.0,
+        "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
+        "is_independent": true,
+        "limitations": [
+          "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+          "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+        ],
+        "raw_data": {}
+      }
+    ],
+    "snapshot_hash": "c204a3c865634b7043c18ad3cd3ba5265b4fcd619b6d26c064421cb0a24e9c0a"
+  },
+  {
+    "technology_id": "fast_petase_depolymerase",
+    "as_of_date": "2022-05-01",
+    "snapshot_label": "Snapshot 4 (May 2022): Neural-Network Guided Directed Evolution (FAST-PETase)",
+    "publications_count": 4,
+    "publications": [
+      {
+        "doi": "10.1126/science.aad6359",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "publication_date": "2016-03-10",
+        "senior_author": "Kohei Oda / Kenji Miyamoto",
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+      },
+      {
+        "doi": "10.1073/pnas.1718804115",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "publication_date": "2018-04-17",
+        "senior_author": "John M. McGeehan / Gregg T. Beckham",
+        "institution": "University of Portsmouth (UK) / NREL (USA)"
+      },
+      {
+        "doi": "10.1038/s41586-020-2149-4",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "publication_date": "2020-04-08",
+        "senior_author": "Alain Marty",
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+      },
+      {
+        "doi": "10.1038/s41586-022-04599-z",
+        "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "publication_date": "2022-04-27",
+        "senior_author": "Hal S. Alper / Andrew D. Ellington",
+        "institution": "University of Texas at Austin (USA)"
+      }
+    ],
+    "structures": [
+      "5XJH",
+      "6EQE",
+      "6T54",
+      "7SH6"
+    ],
+    "demonstrated_capabilities": [
+      "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)",
+      "[2018-04-17] IsPETase double mutant (S238F/W159H): ~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed (Substrate: 1.9% crystallinity)",
+      "[2020-04-08] Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG): 90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading (Substrate: 10.0% crystallinity)",
+      "[2022-04-27] FAST-PETase (S121E/D186H/R224Q/N233K/R280A): Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C (Substrate: 5.0% crystallinity)"
+    ],
+    "established_physical_boundaries": [
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+      "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+      "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
+      "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+      "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+      "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
+      "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+      "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
+    ],
+    "commercial_feasibility": {
+      "readiness_stage": "Pre-Pilot / Advanced Biocatalyst",
+      "estimated_tpa_cost_usd_kg": 1.54,
+      "commercial_verdict": "COMMERCIALLY CONSTRAINED: Operates at mild 50 \u00b0C, reducing reactor thermal stress, but cannot bypass amorphization pre-treatment on bottle-grade packaging ($1.54/kg TPA vs $1.05/kg virgin).",
+      "market_clearing_parity_ratio": 1.47
+    },
+    "unresolved_uncertainties": [
+      "Can FAST-PETase tolerate industrial wash impurities, detergents, and colored PET dyes?",
+      "Will membrane recovery achieve >5 cycles in the presence of supersaturated mono-(2-hydroxyethyl) terephthalate?",
+      "Does the mild 50 \u00b0C operating temperature allow bacterial contamination during multi-day open digestions?"
+    ],
+    "evidence_items": [
+      {
+        "item_id": "PET-2016-YOSHIDA",
+        "publication_date": "2016-03-10",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "doi": "10.1126/science.aad6359",
+        "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "enzyme_variant": "Wild-type IsPETase",
+        "pdb_id": "5XJH",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "is_independent": true,
+        "limitations": [
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2018-AUSTIN",
+        "publication_date": "2018-04-17",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "doi": "10.1073/pnas.1718804115",
+        "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
+        "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
+        "pdb_id": "6EQE",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "reproducibility_class": "INDEPENDENT_REPLICATION",
+        "is_independent": true,
+        "limitations": [
+          "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+          "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+          "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2020-TOURNIER",
+        "publication_date": "2020-04-08",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "doi": "10.1038/s41586-020-2149-4",
+        "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
+        "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
+        "pdb_id": "6T54",
+        "crystallinity_pct": 10.0,
+        "temperature_celsius": 72.0,
+        "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
+        "is_independent": true,
+        "limitations": [
+          "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+          "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2022-LU",
+        "publication_date": "2022-04-27",
+        "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "doi": "10.1038/s41586-022-04599-z",
+        "experimental_system": "Structure-based neural network (mutCompute) + circular dichroism + 50 \u00b0C reaction",
+        "enzyme_variant": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
+        "pdb_id": "7SH6",
+        "crystallinity_pct": 5.0,
+        "temperature_celsius": 50.0,
+        "reported_rate": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
+        "reproducibility_class": "SAME_LAB_EXTENSION",
+        "is_independent": true,
+        "limitations": [
+          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
+          "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+          "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
+        ],
+        "raw_data": {}
+      }
+    ],
+    "snapshot_hash": "da5950c26ea298237dc015694e0b9b0eed0ff4476d4cb3cc7ffc8a6de80706a7"
+  },
+  {
+    "technology_id": "fast_petase_depolymerase",
+    "as_of_date": "2024-02-01",
+    "snapshot_label": "Snapshot 5 (February 2024): Industrial Reconciliation & Reality Boundary Audit",
+    "publications_count": 5,
+    "publications": [
+      {
+        "doi": "10.1126/science.aad6359",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "publication_date": "2016-03-10",
+        "senior_author": "Kohei Oda / Kenji Miyamoto",
+        "institution": "Kyoto Institute of Technology / Keio University (Japan)"
+      },
+      {
+        "doi": "10.1073/pnas.1718804115",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "publication_date": "2018-04-17",
+        "senior_author": "John M. McGeehan / Gregg T. Beckham",
+        "institution": "University of Portsmouth (UK) / NREL (USA)"
+      },
+      {
+        "doi": "10.1038/s41586-020-2149-4",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "publication_date": "2020-04-08",
+        "senior_author": "Alain Marty",
+        "institution": "Carbios / Toulouse Biotechnology Institute (France)"
+      },
+      {
+        "doi": "10.1038/s41586-022-04599-z",
+        "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "publication_date": "2022-04-27",
+        "senior_author": "Hal S. Alper / Andrew D. Ellington",
+        "institution": "University of Texas at Austin (USA)"
+      },
+      {
+        "doi": "10.1016/j.biortech.2023.130101",
+        "citation": "Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
+        "publication_date": "2024-01-15",
+        "senior_author": "Independent Consortium Audit",
+        "institution": "NREL / Industrial Biorecycling Advisory Board"
+      }
+    ],
+    "structures": [
+      "5XJH",
+      "6EQE",
+      "6T54",
+      "7SH6"
+    ],
+    "demonstrated_capabilities": [
+      "[2016-03-10] Wild-type IsPETase: 0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks (Substrate: 1.9% crystallinity)",
+      "[2018-04-17] IsPETase double mutant (S238F/W159H): ~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed (Substrate: 1.9% crystallinity)",
+      "[2020-04-08] Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG): 90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading (Substrate: 10.0% crystallinity)",
+      "[2022-04-27] FAST-PETase (S121E/D186H/R224Q/N233K/R280A): Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C (Substrate: 5.0% crystallinity)",
+      "[2024-01-15] Commercialized Cutinases & Engineered PETases: Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA. (Substrate: 32.0% crystallinity)"
+    ],
+    "established_physical_boundaries": [
+      "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+      "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+      "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.",
+      "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+      "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+      "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.",
+      "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+      "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+      "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.",
+      "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
+      "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+      "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling.",
+      "Unavoidable physical law: Enthalpy of amorphization and extrusion electrical work cannot be engineered away biologically.",
+      "Oligomer precipitation (MHET solubility < 0.5 g/L at 25 \u00b0C) causes irreversible flux decay in ultrafiltration membranes.",
+      "Enzymatic TPA ($1.55-$1.65/kg) requires a 50% green premium over chemical glycolysis ($1.05/kg) or fossil PTA ($1.15/kg)."
+    ],
+    "commercial_feasibility": {
+      "readiness_stage": "Commercial Demonstration (Bounded)",
+      "estimated_tpa_cost_usd_kg": 1.6,
+      "commercial_verdict": "COMMERCIALLY BOUNDED BY NON-BIOLOGICAL UNIT OPERATIONS: The limiting factors in enzymatic recycling are not enzyme kinetics, but mechanical pre-treatment, caustic neutralization, and salt disposal. Viable only under mandatory recycled-content regulations.",
+      "market_clearing_parity_ratio": 1.52
+    },
+    "unresolved_uncertainties": [
+      "Will brands pay a $0.50/kg green premium for circular enzyme-recycled polyester over mechanically downcycled rPET?",
+      "Can sodium sulfate brine be electrolyzed back to NaOH and H2SO4 economically?",
+      "Will emerging thermochemical methanolysis / glycolysis outcompete biological depolymerization on impure mixed-waste bales?"
+    ],
+    "evidence_items": [
+      {
+        "item_id": "PET-2016-YOSHIDA",
+        "publication_date": "2016-03-10",
+        "citation": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "doi": "10.1126/science.aad6359",
+        "experimental_system": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "enzyme_variant": "Wild-type IsPETase",
+        "pdb_id": "5XJH",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "reproducibility_class": "INITIAL_DISCOVERY",
+        "is_independent": true,
+        "limitations": [
+          "Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \u00b0C (Tm ~ 48 \u00b0C).",
+          "Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).",
+          "Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2018-AUSTIN",
+        "publication_date": "2018-04-17",
+        "citation": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "doi": "10.1073/pnas.1718804115",
+        "experimental_system": "High-resolution X-ray crystallography & recombinant variant assay",
+        "enzyme_variant": "IsPETase double mutant (S238F/W159H)",
+        "pdb_id": "6EQE",
+        "crystallinity_pct": 1.9,
+        "temperature_celsius": 30.0,
+        "reported_rate": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "reproducibility_class": "INDEPENDENT_REPLICATION",
+        "is_independent": true,
+        "limitations": [
+          "Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \u00b0C).",
+          "Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.",
+          "Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2020-TOURNIER",
+        "publication_date": "2020-04-08",
+        "citation": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "doi": "10.1038/s41586-020-2149-4",
+        "experimental_system": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
+        "enzyme_variant": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
+        "pdb_id": "6T54",
+        "crystallinity_pct": 10.0,
+        "temperature_celsius": 72.0,
+        "reported_rate": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "reproducibility_class": "CROSS_FAMILY_HOMOLOG",
+        "is_independent": true,
+        "limitations": [
+          "Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \u00b0C and flash-quenched before enzyme exposure.",
+          "Operating at 72 \u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.",
+          "Enzyme lifetime at 72 \u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2022-LU",
+        "publication_date": "2022-04-27",
+        "citation": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "doi": "10.1038/s41586-022-04599-z",
+        "experimental_system": "Structure-based neural network (mutCompute) + circular dichroism + 50 \u00b0C reaction",
+        "enzyme_variant": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
+        "pdb_id": "7SH6",
+        "crystallinity_pct": 5.0,
+        "temperature_celsius": 50.0,
+        "reported_rate": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
+        "reproducibility_class": "SAME_LAB_EXTENSION",
+        "is_independent": true,
+        "limitations": [
+          "Activity at 50 \u00b0C remains well below PET glass transition (Tg ~ 65-70 \u00b0C); still requires amorphized feedstock for high conversion.",
+          "Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.",
+          "Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling."
+        ],
+        "raw_data": {}
+      },
+      {
+        "item_id": "PET-2024-DILIGENCE",
+        "publication_date": "2024-01-15",
+        "citation": "Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
+        "doi": "10.1016/j.biortech.2023.130101",
+        "experimental_system": "Continuous demonstration facility data & mass balance reconciliation",
+        "enzyme_variant": "Commercialized Cutinases & Engineered PETases",
+        "pdb_id": null,
+        "crystallinity_pct": 32.0,
+        "temperature_celsius": 70.0,
+        "reported_rate": "Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA.",
+        "reproducibility_class": "INDUSTRIAL_VALIDATION",
+        "is_independent": true,
+        "limitations": [
+          "Unavoidable physical law: Enthalpy of amorphization and extrusion electrical work cannot be engineered away biologically.",
+          "Oligomer precipitation (MHET solubility < 0.5 g/L at 25 \u00b0C) causes irreversible flux decay in ultrafiltration membranes.",
+          "Enzymatic TPA ($1.55-$1.65/kg) requires a 50% green premium over chemical glycolysis ($1.05/kg) or fossil PTA ($1.15/kg)."
+        ],
+        "raw_data": {}
+      }
+    ],
+    "snapshot_hash": "1aae6be62c8aad936ad3dd23becefad52471b65b16cf1bcf5d15fa615415e611"
+  }
+]

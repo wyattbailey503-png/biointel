@@ -27,7 +27,7 @@ class StudyPackageRunner:
     def list_studies(self) -> List[str]:
         if not self.studies_dir.exists():
             return []
-        return sorted([d.name for d in self.studies_dir.iterdir() if d.is_dir() and not d.name.startswith(".")])
+        return sorted([d.name for d in self.studies_dir.iterdir() if d.is_dir() and d.name.startswith("study_")])
 
     def verify_study(self, study_id: str) -> Dict[str, Any]:
         study_path = self.studies_dir / study_id

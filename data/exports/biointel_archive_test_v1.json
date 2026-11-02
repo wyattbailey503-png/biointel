@@ -1,14 +1,14 @@
 {
   "archive_version": "test_v1",
-  "export_timestamp": "2026-11-02T19:47:40.299696+00:00",
+  "export_timestamp": "2026-11-02T21:25:17.390257+00:00",
   "system": "BioIntel Autonomous Biotechnology Intelligence Engine",
   "telemetry": {
     "total_sources": 5,
-    "total_publications": 3,
-    "total_technologies": 3,
+    "total_publications": 8,
+    "total_technologies": 4,
     "total_structures": 2,
-    "total_experiments": 2,
-    "total_claims": 2,
+    "total_experiments": 7,
+    "total_claims": 7,
     "total_comparisons": 1,
     "total_changes": 1,
     "total_economic_models": 0
@@ -24,14 +24,14 @@
         "adapter_type": "europe_pmc",
         "api_version": null,
         "rate_limit_per_min": 60,
-        "last_successful_retrieval": "2026-11-02T19:47:40.297255+00:00",
-        "last_attempt": "2026-11-02T19:47:40.297255+00:00",
+        "last_successful_retrieval": "2026-11-02T21:25:17.386230+00:00",
+        "last_attempt": "2026-11-02T21:25:17.386230+00:00",
         "licensing": "Open Access / CC-BY / Open Research",
         "retry_state": "healthy",
         "priority": 1,
         "monitoring_frequency_hours": 24,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-02 19:47:40"
+        "updated_at": "2026-11-02 21:25:17"
       },
       {
         "source_id": "pubmed_ncbi",
@@ -49,7 +49,7 @@
         "priority": 2,
         "monitoring_frequency_hours": 24,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-02 19:47:40"
+        "updated_at": "2026-11-02 21:25:17"
       },
       {
         "source_id": "rcsb_pdb",
@@ -60,14 +60,14 @@
         "adapter_type": "rcsb_pdb",
         "api_version": null,
         "rate_limit_per_min": 120,
-        "last_successful_retrieval": "2026-11-02T19:47:40.293350+00:00",
-        "last_attempt": "2026-11-02T19:47:40.293350+00:00",
+        "last_successful_retrieval": "2026-11-02T21:25:17.381168+00:00",
+        "last_attempt": "2026-11-02T21:25:17.381168+00:00",
         "licensing": "CC0 1.0 Universal",
         "retry_state": "healthy",
         "priority": 1,
         "monitoring_frequency_hours": 48,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-02 19:47:40"
+        "updated_at": "2026-11-02 21:25:17"
       },
       {
         "source_id": "uniprot",
@@ -85,7 +85,7 @@
         "priority": 2,
         "monitoring_frequency_hours": 72,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-02 19:47:40"
+        "updated_at": "2026-11-02 21:25:17"
       },
       {
         "source_id": "clinicaltrials_gov",
@@ -103,7 +103,7 @@
         "priority": 3,
         "monitoring_frequency_hours": 168,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-02 19:47:40"
+        "updated_at": "2026-11-02 21:25:17"
       }
     ],
     "publications": [
@@ -163,6 +163,101 @@
         "citation_count": 0,
         "abstract": null,
         "created_at": "2026-11-02 07:07:14"
+      },
+      {
+        "publication_id": "doi:10.1126/science.aad6359",
+        "doi": "10.1126/science.aad6359",
+        "pmid": null,
+        "pmcid": null,
+        "title": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "authors": "Kohei Oda / Kenji Miyamoto",
+        "journal": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "pub_year": 2016,
+        "pub_date": "2016-03-10",
+        "is_open_access": 0,
+        "license": null,
+        "citation_count": 0,
+        "abstract": "Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "created_at": "2026-11-02 21:22:05"
+      },
+      {
+        "publication_id": "doi:10.1073/pnas.1718804115",
+        "doi": "10.1073/pnas.1718804115",
+        "pmid": null,
+        "pmcid": null,
+        "title": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "authors": "John M. McGeehan / Gregg T. Beckham",
+        "journal": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "pub_year": 2018,
+        "pub_date": "2018-04-17",
+        "is_open_access": 0,
+        "license": null,
+        "citation_count": 0,
+        "abstract": "Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "publication_id": "doi:10.1038/s41586-020-2149-4",
+        "doi": "10.1038/s41586-020-2149-4",
+        "pmid": null,
+        "pmcid": null,
+        "title": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "authors": "Alain Marty",
+        "journal": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "pub_year": 2020,
+        "pub_date": "2020-04-08",
+        "is_open_access": 0,
+        "license": null,
+        "citation_count": 0,
+        "abstract": "Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "publication_id": "doi:10.1038/s41586-022-04599-z",
+        "doi": "10.1038/s41586-022-04599-z",
+        "pmid": null,
+        "pmcid": null,
+        "title": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "authors": "Hal S. Alper / Andrew D. Ellington",
+        "journal": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "pub_year": 2022,
+        "pub_date": "2022-04-27",
+        "is_open_access": 0,
+        "license": null,
+        "citation_count": 0,
+        "abstract": "Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "publication_id": "doi:10.1016/j.biortech.2023.130101",
+        "doi": "10.1016/j.biortech.2023.130101",
+        "pmid": null,
+        "pmcid": null,
+        "title": "Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
+        "authors": "Independent Consortium Audit",
+        "journal": null,
+        "volume": null,
+        "issue": null,
+        "pages": null,
+        "pub_year": 2024,
+        "pub_date": "2024-01-15",
+        "is_open_access": 0,
+        "license": null,
+        "citation_count": 0,
+        "abstract": "Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
+        "created_at": "2026-11-02 21:23:14"
       }
     ],
     "technologies": [
@@ -198,6 +293,17 @@
         "description": "Search-and-replace gene editing fusing Cas9 nickase with reverse transcriptase, writing edits directly without DSBs or donor DNA.",
         "created_at": "2026-11-02 07:07:14",
         "updated_at": "2026-11-02 16:49:34"
+      },
+      {
+        "tech_id": "fast_petase_depolymerase",
+        "name": "Engineered PETase / Cutinase Biocatalytic Depolymerization",
+        "canonical_name": "engineered_petase_depolymerization",
+        "domain": "industrial_biotechnology",
+        "category": "biocatalytic_plastics_recycling",
+        "maturity_stage": "pilot_scale",
+        "description": "Enzymatic depolymerization of polyethylene terephthalate (PET) into terephthalic acid (TPA) and ethylene glycol (EG).",
+        "created_at": "2026-11-02 21:22:05",
+        "updated_at": "2026-11-02 21:23:14"
       }
     ],
     "structures": [
@@ -214,7 +320,7 @@
         "bound_ligands": "[\"2\"]",
         "coordinate_path": "/Users/wyattbailey/.gemini/antigravity/scratch/biointel/data/structures/7k38.pdb",
         "source_url": "https://www.rcsb.org/structure/7K38",
-        "download_timestamp": "2026-11-02T19:47:40.292562+00:00",
+        "download_timestamp": "2026-11-02T21:25:17.380222+00:00",
         "version_revision": "2023-10-18T00:00:00.000+00:00",
         "created_at": "2026-11-02 07:07:14"
       },
@@ -231,7 +337,7 @@
         "bound_ligands": "[\"2\"]",
         "coordinate_path": "/Users/wyattbailey/.gemini/antigravity/scratch/biointel/data/structures/7sh6.pdb",
         "source_url": "https://www.rcsb.org/structure/7SH6",
-        "download_timestamp": "2026-11-02T19:47:40.289996+00:00",
+        "download_timestamp": "2026-11-02T21:25:17.377208+00:00",
         "version_revision": "2024-10-16T00:00:00.000+00:00",
         "created_at": "2026-11-02 19:42:27"
       }
@@ -257,7 +363,10 @@
         "evidence_category": "cell_based_experiment",
         "evidence_location": "Fig 2C, p. 6426",
         "limitations": "Assayed in transformed HEK293T cells; in vivo delivery not evaluated.",
-        "created_at": "2026-11-02 16:49:34"
+        "created_at": "2026-11-02 16:49:34",
+        "experiment_date": null,
+        "publication_date": null,
+        "discovery_date": null
       },
       {
         "experiment_id": "exp_cas9_dsb_knockout_01",
@@ -279,7 +388,135 @@
         "evidence_category": "cell_based_experiment",
         "evidence_location": "Supplementary Fig S4",
         "limitations": "Knockout mediated by indel disruption; cannot perform precise base substitution.",
-        "created_at": "2026-11-02 16:49:34"
+        "created_at": "2026-11-02 16:49:34",
+        "experiment_date": null,
+        "publication_date": null,
+        "discovery_date": null
+      },
+      {
+        "experiment_id": "exp_pet-2016-yoshida",
+        "publication_id": "doi:10.1126/science.aad6359",
+        "biological_question": "Depolymerization efficacy of Wild-type IsPETase",
+        "hypothesis": "Enzyme degrades PET at 30.0 \u00b0C",
+        "experimental_method": "Ideonella sakaiensis 201-F6 whole-cell & recombinant IsPETase",
+        "model_system": "in_vitro",
+        "species": null,
+        "cell_line_or_tissue": null,
+        "treatment_intervention": "Wild-type IsPETase",
+        "control_group": "Buffer vehicle without enzyme",
+        "dose_concentration": null,
+        "exposure_duration": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "measurement_time": null,
+        "sample_size": null,
+        "biological_replicates": null,
+        "technical_replicates": null,
+        "evidence_category": "enzymatic_biocatalysis",
+        "evidence_location": null,
+        "limitations": "[\"Strictly mesophilic enzyme; irreversible thermal denaturation above 40 \\u00b0C (Tm ~ 48 \\u00b0C).\", \"Completely inactive against commercial bottle-grade crystalline PET (30-35% crystallinity).\", \"Enzyme secretion titer from native host is negligible; requires recombinant E. coli expression.\"]",
+        "created_at": "2026-11-02 21:23:14",
+        "experiment_date": "2016-03-10",
+        "publication_date": "2016-03-10",
+        "discovery_date": "2016-03-10"
+      },
+      {
+        "experiment_id": "exp_pet-2018-austin",
+        "publication_id": "doi:10.1073/pnas.1718804115",
+        "biological_question": "Depolymerization efficacy of IsPETase double mutant (S238F/W159H)",
+        "hypothesis": "Enzyme degrades PET at 30.0 \u00b0C",
+        "experimental_method": "High-resolution X-ray crystallography & recombinant variant assay",
+        "model_system": "in_vitro",
+        "species": null,
+        "cell_line_or_tissue": null,
+        "treatment_intervention": "IsPETase double mutant (S238F/W159H)",
+        "control_group": "Buffer vehicle without enzyme",
+        "dose_concentration": null,
+        "exposure_duration": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "measurement_time": null,
+        "sample_size": null,
+        "biological_replicates": null,
+        "technical_replicates": null,
+        "evidence_category": "enzymatic_biocatalysis",
+        "evidence_location": null,
+        "limitations": "[\"Engineering focused on active-site pocket did not improve melting temperature (Tm ~ 46.5 \\u00b0C).\", \"Remains completely incapable of hydrolyzing biaxially oriented bottle PET without prior thermal destruction.\", \"Modest ~1.2-fold improvement is insufficient to alter batch bioprocess kinetics.\"]",
+        "created_at": "2026-11-02 21:23:14",
+        "experiment_date": "2018-04-17",
+        "publication_date": "2018-04-17",
+        "discovery_date": "2018-04-17"
+      },
+      {
+        "experiment_id": "exp_pet-2020-tournier",
+        "publication_id": "doi:10.1038/s41586-020-2149-4",
+        "biological_question": "Depolymerization efficacy of Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
+        "hypothesis": "Enzyme degrades PET at 72.0 \u00b0C",
+        "experimental_method": "High-temperature 500 mL & 5 L stirred-tank batch bioreactor",
+        "model_system": "in_vitro",
+        "species": null,
+        "cell_line_or_tissue": null,
+        "treatment_intervention": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG)",
+        "control_group": "Buffer vehicle without enzyme",
+        "dose_concentration": null,
+        "exposure_duration": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "measurement_time": null,
+        "sample_size": null,
+        "biological_replicates": null,
+        "technical_replicates": null,
+        "evidence_category": "enzymatic_biocatalysis",
+        "evidence_location": null,
+        "limitations": "[\"Completely reliant on upstream thermal amorphization: Virgin bottles (30% crystalline) MUST be melted at 260 \\u00b0C and flash-quenched before enzyme exposure.\", \"Operating at 72 \\u00b0C requires continuous pH neutralization (NaOH titrant), generating massive inorganic salt waste (Na2SO4) upon acid precipitation.\", \"Enzyme lifetime at 72 \\u00b0C is limited to ~15-20 hours; catalyst cannot be recycled without extensive cooling/reheating.\"]",
+        "created_at": "2026-11-02 21:23:14",
+        "experiment_date": "2020-04-08",
+        "publication_date": "2020-04-08",
+        "discovery_date": "2020-04-08"
+      },
+      {
+        "experiment_id": "exp_pet-2022-lu",
+        "publication_id": "doi:10.1038/s41586-022-04599-z",
+        "biological_question": "Depolymerization efficacy of FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
+        "hypothesis": "Enzyme degrades PET at 50.0 \u00b0C",
+        "experimental_method": "Structure-based neural network (mutCompute) + circular dichroism + 50 \u00b0C reaction",
+        "model_system": "in_vitro",
+        "species": null,
+        "cell_line_or_tissue": null,
+        "treatment_intervention": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A)",
+        "control_group": "Buffer vehicle without enzyme",
+        "dose_concentration": null,
+        "exposure_duration": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
+        "measurement_time": null,
+        "sample_size": null,
+        "biological_replicates": null,
+        "technical_replicates": null,
+        "evidence_category": "enzymatic_biocatalysis",
+        "evidence_location": null,
+        "limitations": "[\"Activity at 50 \\u00b0C remains well below PET glass transition (Tg ~ 65-70 \\u00b0C); still requires amorphized feedstock for high conversion.\", \"Enzyme loading is relatively high (5-10 mg / g PET), driving biocatalyst OPEX.\", \"Membrane ultrafiltration recycling is theoretically proposed but subject to oligomeric pore fouling.\"]",
+        "created_at": "2026-11-02 21:23:14",
+        "experiment_date": "2022-04-27",
+        "publication_date": "2022-04-27",
+        "discovery_date": "2022-04-27"
+      },
+      {
+        "experiment_id": "exp_pet-2024-diligence",
+        "publication_id": "doi:10.1016/j.biortech.2023.130101",
+        "biological_question": "Depolymerization efficacy of Commercialized Cutinases & Engineered PETases",
+        "hypothesis": "Enzyme degrades PET at 70.0 \u00b0C",
+        "experimental_method": "Continuous demonstration facility data & mass balance reconciliation",
+        "model_system": "in_vitro",
+        "species": null,
+        "cell_line_or_tissue": null,
+        "treatment_intervention": "Commercialized Cutinases & Engineered PETases",
+        "control_group": "Buffer vehicle without enzyme",
+        "dose_concentration": null,
+        "exposure_duration": "Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA.",
+        "measurement_time": null,
+        "sample_size": null,
+        "biological_replicates": null,
+        "technical_replicates": null,
+        "evidence_category": "enzymatic_biocatalysis",
+        "evidence_location": null,
+        "limitations": "[\"Unavoidable physical law: Enthalpy of amorphization and extrusion electrical work cannot be engineered away biologically.\", \"Oligomer precipitation (MHET solubility < 0.5 g/L at 25 \\u00b0C) causes irreversible flux decay in ultrafiltration membranes.\", \"Enzymatic TPA ($1.55-$1.65/kg) requires a 50% green premium over chemical glycolysis ($1.05/kg) or fossil PTA ($1.15/kg).\"]",
+        "created_at": "2026-11-02 21:23:14",
+        "experiment_date": "2024-01-15",
+        "publication_date": "2024-01-15",
+        "discovery_date": "2024-01-15"
       }
     ],
     "experimental_results": [
@@ -312,6 +549,81 @@
         "effect_size": 3.2,
         "raw_summary": "SpCas9 achieved 78.2% indel knockout at target site with 6.8% off-target indels.",
         "created_at": "2026-11-02 16:49:34"
+      },
+      {
+        "result_id": "res_pet-2016-yoshida",
+        "experiment_id": "exp_pet-2016-yoshida",
+        "assay_id": null,
+        "measured_endpoint": "reaction_temperature_celsius",
+        "value": 30.0,
+        "unit": "celsius",
+        "standard_deviation": null,
+        "confidence_interval": null,
+        "p_value": null,
+        "statistical_method": null,
+        "effect_size": null,
+        "raw_summary": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "result_id": "res_pet-2018-austin",
+        "experiment_id": "exp_pet-2018-austin",
+        "assay_id": null,
+        "measured_endpoint": "reaction_temperature_celsius",
+        "value": 30.0,
+        "unit": "celsius",
+        "standard_deviation": null,
+        "confidence_interval": null,
+        "p_value": null,
+        "statistical_method": null,
+        "effect_size": null,
+        "raw_summary": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "result_id": "res_pet-2020-tournier",
+        "experiment_id": "exp_pet-2020-tournier",
+        "assay_id": null,
+        "measured_endpoint": "reaction_temperature_celsius",
+        "value": 72.0,
+        "unit": "celsius",
+        "standard_deviation": null,
+        "confidence_interval": null,
+        "p_value": null,
+        "statistical_method": null,
+        "effect_size": null,
+        "raw_summary": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "result_id": "res_pet-2022-lu",
+        "experiment_id": "exp_pet-2022-lu",
+        "assay_id": null,
+        "measured_endpoint": "reaction_temperature_celsius",
+        "value": 50.0,
+        "unit": "celsius",
+        "standard_deviation": null,
+        "confidence_interval": null,
+        "p_value": null,
+        "statistical_method": null,
+        "effect_size": null,
+        "raw_summary": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "result_id": "res_pet-2024-diligence",
+        "experiment_id": "exp_pet-2024-diligence",
+        "assay_id": null,
+        "measured_endpoint": "reaction_temperature_celsius",
+        "value": 70.0,
+        "unit": "celsius",
+        "standard_deviation": null,
+        "confidence_interval": null,
+        "p_value": null,
+        "statistical_method": null,
+        "effect_size": null,
+        "raw_summary": "Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA.",
+        "created_at": "2026-11-02 21:23:14"
       }
     ],
     "claims": [
@@ -330,6 +642,46 @@
         "claim_type": "efficacy",
         "mechanistic_assertion": "Double-strand break repair via error-prone NHEJ.",
         "created_at": "2026-11-02 16:49:34"
+      },
+      {
+        "claim_id": "claim_pet-2016-yoshida",
+        "technology_id": "fast_petase_depolymerase",
+        "claim_statement": "0.13 mg/cm\u00b2/day mass loss at 30 \u00b0C; 60 mg film fully degraded after 6 weeks",
+        "claim_type": "efficacy",
+        "mechanistic_assertion": "Wild-type IsPETase operating on 1.9% crystalline PET",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "claim_id": "claim_pet-2018-austin",
+        "technology_id": "fast_petase_depolymerase",
+        "claim_statement": "~20% improvement in amorphous PET degradation rate over wild-type; active site cleft narrowed",
+        "claim_type": "efficacy",
+        "mechanistic_assertion": "IsPETase double mutant (S238F/W159H) operating on 1.9% crystalline PET",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "claim_id": "claim_pet-2020-tournier",
+        "technology_id": "fast_petase_depolymerase",
+        "claim_statement": "90% depolymerization into terephthalic acid (TPA) and ethylene glycol (EG) within 9.3 hours at 3 mg enzyme / g PET loading",
+        "claim_type": "efficacy",
+        "mechanistic_assertion": "Engineered Leaf-branch Compost Cutinase (LCC-ICCG / LCC-WCCG) operating on 10.0% crystalline PET",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "claim_id": "claim_pet-2022-lu",
+        "technology_id": "fast_petase_depolymerase",
+        "claim_statement": "Complete depolymerization of untreated post-consumer amorphous containers in 24-48 hours at 50 \u00b0C; Tm increased by 8.2 \u00b0C",
+        "claim_type": "efficacy",
+        "mechanistic_assertion": "FAST-PETase (S121E/D186H/R224Q/N233K/R280A) operating on 5.0% crystalline PET",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "claim_id": "claim_pet-2024-diligence",
+        "technology_id": "fast_petase_depolymerase",
+        "claim_statement": "Reconciliation of commercial economics: Amorphization extruder energy accounts for 31% of total cost; NaOH/H2SO4 neutralization consumes 2.1 mol reagents per mol TPA.",
+        "claim_type": "efficacy",
+        "mechanistic_assertion": "Commercialized Cutinases & Engineered PETases operating on 32.0% crystalline PET",
+        "created_at": "2026-11-02 21:23:14"
       }
     ],
     "evidence_links": [
@@ -530,6 +882,51 @@
         "confidence_score": 0.55,
         "explanation": "Assessed on cell_line system (Homo sapiens). Biological replicates: 3, Technical: 3. Reporting completeness: Complete.",
         "created_at": "2026-11-02 16:49:34"
+      },
+      {
+        "link_id": 23,
+        "claim_id": "claim_pet-2016-yoshida",
+        "experiment_id": "exp_pet-2016-yoshida",
+        "support_direction": "supports",
+        "confidence_score": 0.95,
+        "explanation": "Validated by Yoshida et al., A bacterium that degrades and assimilates poly(ethylene terephthalate), Science 351(6278):1196-1199 (2016)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "link_id": 24,
+        "claim_id": "claim_pet-2018-austin",
+        "experiment_id": "exp_pet-2018-austin",
+        "support_direction": "supports",
+        "confidence_score": 0.95,
+        "explanation": "Validated by Austin et al., Characterization and engineering of a plastic-degrading aromatic polyesterase, PNAS 115(19):E4350-E4357 (2018)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "link_id": 25,
+        "claim_id": "claim_pet-2020-tournier",
+        "experiment_id": "exp_pet-2020-tournier",
+        "support_direction": "supports",
+        "confidence_score": 0.95,
+        "explanation": "Validated by Tournier et al., An engineered PET depolymerase to break down and recycle plastic bottles, Nature 580:216-219 (2020)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "link_id": 26,
+        "claim_id": "claim_pet-2022-lu",
+        "experiment_id": "exp_pet-2022-lu",
+        "support_direction": "supports",
+        "confidence_score": 0.95,
+        "explanation": "Validated by Lu et al., Machine learning-aided engineering of hydrolases for PET depolymerization, Nature 604:662-667 (2022)",
+        "created_at": "2026-11-02 21:23:14"
+      },
+      {
+        "link_id": 27,
+        "claim_id": "claim_pet-2024-diligence",
+        "experiment_id": "exp_pet-2024-diligence",
+        "support_direction": "supports",
+        "confidence_score": 0.95,
+        "explanation": "Validated by Industrial Consortium Technical Audit & NREL Bioprocess Report, Operating reality of enzymatic polyester recycling at scale, Bioresour Technol (2024)",
+        "created_at": "2026-11-02 21:23:14"
       }
     ],
     "competitor_matches": [
@@ -542,7 +939,7 @@
         "comparison_matrix": "{\"dimensions\": [{\"metric\": \"Targeting Mechanism\", \"technology_a\": \"sgRNA: 20-nt spacer targeting 5'-NGG PAM on SpCas9\", \"technology_b\": \"pegRNA: Guide sequence + Primer Binding Site (PBS) + Reverse Transcriptase (RT) template\", \"context_a\": \"Direct DNA sequence pairing\", \"context_b\": \"Dual pairing: guide targeting + 3'-flap hybridisation\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Editing Modality\", \"technology_a\": \"Double-Strand Break (DSB) inducing non-homologous end joining (NHEJ) or HDR\", \"technology_b\": \"Single-strand nick with search-and-replace reverse transcription (no DSB required)\", \"context_a\": \"Endogenous error-prone repair pathways\", \"context_b\": \"Engineered M-MLV RT template incorporation\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Reported On-Target Editing Efficiency\", \"technology_a\": \"40% \\u2013 85% indel knockout efficiency\", \"technology_b\": \"15% \\u2013 55% precise installation (bi-PE improves to 40% \\u2013 60%)\", \"context_a\": \"HEK293T plasmid transfection (standard gene disruption)\", \"context_b\": \"HEK293T plasmid/RNP with engineered dual-prime guides (precise transversion/insertion)\", \"compatible\": false, \"warning\": \"INCOMPATIBLE COMPARISON (CONDITION MISMATCH, 1 incompatibilities detected): ASSAY_RESOLUTION_MISMATCH: Enzymatic mismatch cleavage (T7E1/TIDE) lacks sensitivity of high-throughput deep sequencing (HTS).\"}, {\"metric\": \"Off-Target Cleavage & Indels\", \"technology_a\": \"Moderate to High (1% \\u2013 10% genome-wide off-target cleavage at homologous sites)\", \"technology_b\": \"Low (< 0.5% unintended indel rate; minimal off-target nicking)\", \"context_a\": \"GUIDE-seq / CIRCLE-seq across mismatched genomic targets\", \"context_b\": \"High-throughput sequencing at predicted Cas9 off-target loci\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Cell-Type Compatibility\", \"technology_a\": \"High in dividing cells; HDR severely restricted in non-dividing / post-mitotic cells\", \"technology_b\": \"Broadly active in both dividing and post-mitotic cells (does not depend on G2/M phase HDR)\", \"context_a\": \"Dependent on cell cycle machinery for precise editing\", \"context_b\": \"Operates independently of donor template and HDR machinery\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Delivery Packaging Constraints\", \"technology_a\": \"Single AAV packaging viable with compact Cas9 or split Cas9 (~4.2 kb payload)\", \"technology_b\": \"Requires dual AAV or Lipid Nanoparticle (LNP) mRNA (>6.0 kb total editor size)\", \"context_a\": \"Cas9 (1,368 aa) fits standard AAV packaging ceiling (<4.7 kb)\", \"context_b\": \"Cas9 nickase + M-MLV RT + pegRNA exceeds single AAV capsid capacity\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Clinical / Commercial Stage\", \"technology_a\": \"Commercial / FDA Approved (Exa-cel / Casgevy for sickle cell disease)\", \"technology_b\": \"Phase 1 Clinical Development (Prime Medicine PM359 for chronic granulomatous disease)\", \"context_a\": \"Approved ex vivo autologous HSPC therapy\", \"context_b\": \"Ex vivo early clinical trial; in vivo preclinical pipeline\", \"compatible\": true, \"warning\": null}]}",
         "incompatibility_warnings": "[\"INCOMPATIBLE COMPARISON (CONDITION MISMATCH, 1 incompatibilities detected): ASSAY_RESOLUTION_MISMATCH: Enzymatic mismatch cleavage (T7E1/TIDE) lacks sensitivity of high-throughput deep sequencing (HTS).\"]",
         "strategic_takeaway": "SpCas9 remains the standard for gene disruption and ex vivo knockout where high indel rates are acceptable. Prime Editing significantly expands therapeutic scope by enabling all 12 base conversions, insertions up to 100 bp, and deletions without double-strand breaks or donor DNA, but faces in vivo delivery bottlenecks due to protein size (>6 kb).",
-        "created_at": "2026-11-02 19:47:40"
+        "created_at": "2026-11-02 21:25:17"
       }
     ],
     "scientific_changes": [
