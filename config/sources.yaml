@@ -1,0 +1,55 @@
+sources:
+  - id: europe_pmc
+    name: "Europe PMC REST API"
+    publisher: "EMBL-EBI"
+    url: "https://www.ebi.ac.uk/europepmc/webservices/rest"
+    category: "literature"
+    adapter_type: "europe_pmc"
+    rate_limit_per_min: 60
+    licensing: "Open Access / CC-BY / Open Research"
+    priority: 1
+    monitoring_frequency_hours: 24
+
+  - id: pubmed_ncbi
+    name: "NCBI E-utilities"
+    publisher: "NCBI / NLM"
+    url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
+    category: "literature"
+    adapter_type: "pubmed"
+    rate_limit_per_min: 180
+    licensing: "US Public Domain / NLM terms"
+    priority: 2
+    monitoring_frequency_hours: 24
+
+  - id: rcsb_pdb
+    name: "RCSB Protein Data Bank Data API"
+    publisher: "RCSB PDB / wwPDB"
+    url: "https://data.rcsb.org/rest/v1"
+    category: "structures"
+    adapter_type: "rcsb_pdb"
+    rate_limit_per_min: 120
+    licensing: "CC0 1.0 Universal"
+    priority: 1
+    monitoring_frequency_hours: 48
+
+  - id: uniprot
+    name: "UniProtKB REST API"
+    publisher: "UniProt Consortium"
+    url: "https://rest.uniprot.org/uniprotkb"
+    category: "molecular"
+    adapter_type: "uniprot"
+    rate_limit_per_min: 120
+    licensing: "CC-BY 4.0"
+    priority: 2
+    monitoring_frequency_hours: 72
+
+  - id: clinicaltrials_gov
+    name: "ClinicalTrials.gov API v2"
+    publisher: "U.S. National Library of Medicine"
+    url: "https://clinicaltrials.gov/api/v2"
+    category: "clinical"
+    adapter_type: "clinical_trials"
+    rate_limit_per_min: 60
+    licensing: "Public Domain"
+    priority: 3
+    monitoring_frequency_hours: 168

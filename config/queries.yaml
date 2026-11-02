@@ -1,0 +1,36 @@
+query_groups:
+  gene_editing_systems:
+    name: "Gene Editing Innovations"
+    domain: "molecular_and_cellular_engineering"
+    queries:
+      - "CRISPR Cas9 prime editing"
+      - "base editing cytidine adenine transition"
+      - "engineered Cas12a Cas14 novel nuclease specificity"
+    priority: 1
+
+  protein_engineering:
+    name: "Protein Engineering Breakthroughs"
+    domain: "molecular_and_cellular_engineering"
+    queries:
+      - "directed evolution enzyme thermal stability"
+      - "de novo protein design generative model"
+      - "stereoselective hydrolase receptor biocatalysis"
+    priority: 1
+
+  biomanufacturing_economics:
+    name: "Precision Fermentation & Scale-up"
+    domain: "industrial_biotechnology"
+    queries:
+      - "precision fermentation titer productivity yield"
+      - "metabolic engineering microbial cell factory scale-up"
+      - "downstream purification protein cost per kilogram"
+    priority: 2
+
+  delivery_technologies:
+    name: "Therapeutic Delivery Modalities"
+    domain: "therapeutic_technologies"
+    queries:
+      - "lipid nanoparticle mRNA delivery in vivo"
+      - "engineered adeno-associated virus tropism"
+      - "virus-like particles ribonucleoprotein delivery"
+    priority: 2

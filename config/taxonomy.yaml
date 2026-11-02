@@ -1,0 +1,63 @@
+domains:
+  therapeutic_technologies:
+    name: "Therapeutic Technologies"
+    categories:
+      - small_molecules
+      - antibodies_and_bispecifics
+      - antibody_drug_conjugates
+      - gene_therapies
+      - cell_therapies
+      - rna_therapeutics
+      - protein_degraders
+      - vaccines
+      - gene_editing
+      - regenerative_medicine
+
+  molecular_and_cellular_engineering:
+    name: "Molecular and Cellular Engineering"
+    categories:
+      - crispr_systems
+      - base_and_prime_editing
+      - engineered_enzymes
+      - protein_engineering
+      - synthetic_biology
+      - genetic_circuits
+      - engineered_cell_systems
+      - cellular_reprogramming
+      - biological_computing
+
+  industrial_biotechnology:
+    name: "Industrial Biotechnology"
+    categories:
+      - precision_fermentation
+      - enzyme_based_manufacturing
+      - metabolic_engineering
+      - biomaterials
+      - biofuels
+      - bioplastics
+      - carbon_utilization
+      - agricultural_biotechnology
+
+  biotechnology_tools:
+    name: "Biotechnology Tools"
+    categories:
+      - sequencing_platforms
+      - proteomics
+      - single_cell_analysis
+      - lab_automation
+      - high_throughput_screening
+      - biosensors
+      - microfluidics
+      - spatial_biology
+      - organ_on_chip
+      - bioprocess_monitoring
+
+  computational_biology:
+    name: "Computational Biology"
+    categories:
+      - protein_structure_prediction
+      - generative_protein_design
+      - computational_drug_discovery
+      - multi_omics_models
+      - molecular_dynamics
+      - biological_foundation_models
