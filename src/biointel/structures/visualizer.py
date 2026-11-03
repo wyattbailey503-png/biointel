@@ -24,6 +24,10 @@ class StructureVisualizer:
             self.output_dir = Path(__file__).parent.parent.parent.parent / "outputs" / "figures"
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
+    def get_sidecar_viewer_link(self, pdb_id: Optional[str] = None) -> str:
+        """Returns the interactive Mol* Biomolecular Structure Viewer sidecar link."""
+        return "[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)"
+
     def render_b_factor_profile(self, parser: PDBParser, filename_stem: str = "b_factor_profile") -> Dict[str, Path]:
         """Generate per-residue B-factor flexibility chart (SVG + PNG)."""
         chain_res = [res for (ch, r), res in sorted(parser.residues.items()) if res.ca_atom is not None]

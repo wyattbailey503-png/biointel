@@ -85,7 +85,13 @@ class RCSBPDBAdapter:
         bound_ligands = json.dumps(raw_meta.get("rcsb_entry_container_identifiers", {}).get("non_polymer_entity_ids", []))
 
         now_iso = datetime.now(timezone.utc).isoformat()
-        source_url = f"https://www.rcsb.org/structure/{pdb_id}"
+        acc_info = raw_meta.get("rcsb_accession_info", {})
+        dep_date = acc_info.get("deposit_date", "")
+        if dep_date and "T" in dep_date:
+            dep_date = dep_date.split("T")[0]
+        rel_date = acc_info.get("initial_release_date", "")
+        if rel_date and "T" in rel_date:
+            rel_date = rel_date.split("T")[0]
 
         return StructureRecord(
             structure_id=struct_id,
@@ -100,5 +106,7 @@ class RCSBPDBAdapter:
             bound_ligands=bound_ligands,
             coordinate_path=coord_path,
             download_timestamp=now_iso,
-            version_revision=raw_meta.get("rcsb_accession_info", {}).get("revision_date"),
+            version_revision=acc_info.get("revision_date"),
+            deposition_date=dep_date or None,
+            public_release_date=rel_date or None,
         )

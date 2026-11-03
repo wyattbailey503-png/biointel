@@ -64,6 +64,8 @@ class StructureRecord:
     coordinate_path: Optional[str] = None
     download_timestamp: Optional[str] = None
     version_revision: Optional[str] = None
+    deposition_date: Optional[str] = None
+    public_release_date: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
