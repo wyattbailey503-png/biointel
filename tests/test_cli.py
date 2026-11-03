@@ -5,13 +5,17 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 from biointel.cli import (
+    cmd_certify,
     cmd_change_feed,
     cmd_compare,
     cmd_discover,
     cmd_export,
     cmd_memo,
     cmd_pathway,
+    cmd_phd_audit,
+    cmd_pinch,
     cmd_structure,
+    cmd_superposition,
     cmd_teo_model,
 )
 
@@ -53,3 +57,30 @@ def test_cli_export() -> None:
     args = argparse.Namespace(version="test_v1")
     cmd_export(args)
     assert Path("data/exports/biointel_archive_test_v1.json").exists()
+
+
+def test_cli_phd_audit() -> None:
+    args = argparse.Namespace(
+        particle_radius=100.0,
+        crystallinity=15.0,
+        enzyme_loading=2.5,
+        variant="FAST-PETase",
+        temperature=50.0,
+    )
+    cmd_phd_audit(args)
+
+
+def test_cli_superposition() -> None:
+    args = argparse.Namespace(pdb_a="7SH6", pdb_b="7K38")
+    cmd_superposition(args)
+
+
+def test_cli_pinch() -> None:
+    args = argparse.Namespace(scale=50000.0, delta_t_min=10.0)
+    cmd_pinch(args)
+
+
+def test_cli_certify() -> None:
+    args = argparse.Namespace(model_name="Unit_Test_Model", seed=42)
+    cmd_certify(args)
+
