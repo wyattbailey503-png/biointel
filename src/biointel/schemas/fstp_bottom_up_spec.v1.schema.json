@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://biointel.internal/schemas/fstp_bottom_up_spec.v1.json",
+  "title": "FSTPBottomUpSpecificationV1",
+  "description": "Standardized first-principles engineering model specification linking BioIntel biophysical units to FSTP macro learning curves.",
+  "type": "object",
+  "required": [
+    "technology_id",
+    "domain",
+    "category",
+    "as_of_date",
+    "scale_unit",
+    "scale_value",
+    "thermodynamic_cost_floor_usd_per_unit",
+    "cost_stack_usd_per_unit",
+    "physical_bottlenecks",
+    "utility_targets",
+    "fstp_integration_metadata",
+    "model_provenance_seal"
+  ],
+  "properties": {
+    "technology_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Canonical lower snake_case technology identifier."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Broad technical domain (e.g. industrial_biotechnology, genetic_medicine)."
+    },
+    "category": {
+      "type": "string",
+      "description": "Sub-domain classification."
+    },
+    "as_of_date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Effective snapshot date in YYYY-MM-DD format (point-in-time invariant)."
+    },
+    "scale_unit": {
+      "type": "string",
+      "description": "Unit of manufacturing capacity (e.g. MT_per_year, doses_per_year)."
+    },
+    "scale_value": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Nominal nameplate production scale."
+    },
+    "thermodynamic_cost_floor_usd_per_unit": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Asymptotic first-principles cost floor C_floor in USD per scale_unit."
+    },
+    "cost_stack_usd_per_unit": {
+      "type": "object",
+      "description": "Disaggregated unit-operation cost breakdown.",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "physical_bottlenecks": {
+      "type": "object",
+      "required": ["limiting_regime"],
+      "properties": {
+        "limiting_regime": {
+          "type": "string",
+          "description": "Rate-determining physical or transport mechanism."
+        },
+        "thiele_modulus": {
+          "type": "number",
+          "minimum": 0
+        },
+        "effectiveness_factor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1.0
+        },
+        "damkohler_number": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mixing_timescale_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "final_conversion_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100.0
+        },
+        "encapsulation_efficiency_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100.0
+        }
+      },
+      "additionalProperties": true
+    },
+    "utility_targets": {
+      "type": "object",
+      "description": "Plant energy, cooling, cleanroom, or solvent recovery targets.",
+      "additionalProperties": true
+    },
+    "fstp_integration_metadata": {
+      "type": "object",
+      "required": [
+        "confidence_tier",
+        "confidence_label",
+        "recommended_wrights_law_asymptote_usd",
+        "incumbent_market_clearing_parity_ratio"
+      ],
+      "properties": {
+        "confidence_tier": {
+          "type": "integer",
+          "enum": [1, 2, 3]
+        },
+        "confidence_label": {
+          "type": "string"
+        },
+        "recommended_wrights_law_asymptote_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "incumbent_market_clearing_parity_ratio": {
+          "type": "number"
+        },
+        "substitution_barrier": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "model_provenance_seal": {
+      "type": "string",
+      "pattern": "^SEAL_FSTP_[A-F0-9]{16}$",
+      "description": "Cryptographic SHA-256 integrity seal over canonical JSON payload."
+    }
+  },
+  "additionalProperties": false
+}

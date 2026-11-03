@@ -1,0 +1,50 @@
+{
+  "technology_id": "mrna_lnp_platform",
+  "domain": "genetic_medicine",
+  "category": "nucleic_acid_therapeutics",
+  "as_of_date": "2026-11-02",
+  "scale_unit": "doses_per_year",
+  "scale_value": 100000000.0,
+  "thermodynamic_cost_floor_usd_per_unit": 0.752,
+  "cost_stack_usd_per_unit": {
+    "enzymes_and_capping": 0.1646,
+    "modified_nucleotides_m1psi": 0.0051,
+    "synthetic_lipids_sm102": 0.0367,
+    "single_use_consumables": 0.16,
+    "cleanroom_labor_overhead": 0.22,
+    "capex_amortization": 0.086,
+    "qc_release_testing": 0.08
+  },
+  "physical_bottlenecks": {
+    "limiting_regime": "MICROFLUIDIC_DIFFUSION_AND_ENDOSOMAL_ESCAPE",
+    "damkohler_number": 0.259,
+    "mixing_timescale_ms": 2.2,
+    "encapsulation_efficiency_pct": 94.5,
+    "endosomal_escape_fraction_pct": 1.5,
+    "polydispersity_index": 0.08
+  },
+  "utility_targets": {
+    "storage_temperature_c": -20.0,
+    "ethanol_residual_pct": 0.25,
+    "cleanroom_air_exchanges_per_hour": 25.0
+  },
+  "fstp_integration_metadata": {
+    "confidence_tier": 2,
+    "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
+    "recommended_wrights_law_asymptote_usd": 0.752,
+    "incumbent_market_clearing_parity_ratio": 0.05,
+    "substitution_barrier": "Requires microfluidic Da < 1.0 to prevent uncontrolled lipid precipitation and cold-chain distribution",
+    "recommended_wrights_law_asymptote_usd_kg": 0.752
+  },
+  "thermodynamic_cost_floor_usd_per_kg": 0.752,
+  "cost_stack_usd_per_kg": {
+    "enzymes_and_capping": 0.1646,
+    "modified_nucleotides_m1psi": 0.0051,
+    "synthetic_lipids_sm102": 0.0367,
+    "single_use_consumables": 0.16,
+    "cleanroom_labor_overhead": 0.22,
+    "capex_amortization": 0.086,
+    "qc_release_testing": 0.08
+  },
+  "model_provenance_seal": "SEAL_FSTP_87872CC7C8B50CBD"
+}

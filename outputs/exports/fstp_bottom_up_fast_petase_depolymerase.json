@@ -3,9 +3,10 @@
   "domain": "industrial_biotechnology",
   "category": "enzymatic_plastics_recycling",
   "as_of_date": "2026-11-02",
-  "scale_mt_pet_per_year": 50000.0,
-  "thermodynamic_cost_floor_usd_per_kg": 0.76,
-  "cost_stack_usd_per_kg": {
+  "scale_unit": "MT_per_year",
+  "scale_value": 50000.0,
+  "thermodynamic_cost_floor_usd_per_unit": 0.76,
+  "cost_stack_usd_per_unit": {
     "feedstock_baled_pet": 0.35,
     "extrusion_preprocessing": 0.1904,
     "bmed_salt_splitting_net": -0.2201,
@@ -30,9 +31,18 @@
   "fstp_integration_metadata": {
     "confidence_tier": 2,
     "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
-    "recommended_wrights_law_asymptote_usd_kg": 0.76,
+    "recommended_wrights_law_asymptote_usd": 0.76,
     "incumbent_market_clearing_parity_ratio": 0.66,
-    "substitution_barrier": "Requires pre-extrusion amorphization when feedstock crystallinity > 15%"
+    "substitution_barrier": "Requires pre-extrusion amorphization when feedstock crystallinity > 15%",
+    "recommended_wrights_law_asymptote_usd_kg": 0.76
   },
-  "model_provenance_seal": "SEAL_FSTP_38278A30E656F142"
+  "thermodynamic_cost_floor_usd_per_kg": 0.76,
+  "cost_stack_usd_per_kg": {
+    "feedstock_baled_pet": 0.35,
+    "extrusion_preprocessing": 0.1904,
+    "bmed_salt_splitting_net": -0.2201,
+    "capex_depreciation": 0.28,
+    "labor_and_plant_overhead": 0.16
+  },
+  "model_provenance_seal": "SEAL_FSTP_53A11A1AD108D4D4"
 }
