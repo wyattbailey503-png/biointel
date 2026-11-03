@@ -15,6 +15,18 @@ import math
 import sys
 from pathlib import Path
 
+# Ensure src is in sys.path
+_src_dir = Path(__file__).resolve().parent.parent.parent.parent / "src"
+if str(_src_dir) not in sys.path:
+    sys.path.insert(0, str(_src_dir))
+
+from biointel.crystallization.precipitation import ReactiveCrystallizationModel
+from biointel.economics.pinch_analysis import ThermalPinchAnalyzer
+from biointel.kinetics.interfacial import InterfacialPolymerKineticsModel
+from biointel.kinetics.mass_transfer import MassTransferBoundaryEngine
+from biointel.provenance.audit_trail import ComputationalAuditTrail
+
+
 def run_study_calculations(study_dir: Path) -> dict:
     results_dir = study_dir / "results"
     figures_dir = study_dir / "figures"
@@ -193,6 +205,74 @@ def run_study_calculations(study_dir: Path) -> dict:
             ]
         }
     }
+
+    # 2b. Advanced Chemical & Biophysical Rigor Evaluations
+    interfacial_res = InterfacialPolymerKineticsModel.evaluate_interfacial_hydrolysis(
+        particle_radius_microns=15.0,
+        crystallinity_pct=5.0,
+        enzyme_loading_um=2.5,
+    )
+    mass_transfer_res = MassTransferBoundaryEngine.evaluate_transport_limitations(
+        particle_diameter_microns=30.0,
+        solids_wt_percent=15.0,
+    )
+    precipitation_res = ReactiveCrystallizationModel.evaluate_acid_precipitation(
+        initial_tpa_concentration_g_l=65.0,
+        operating_ph=2.2,
+        temperature_c=60.0,
+    )
+    pinch_res = ThermalPinchAnalyzer.evaluate_plant_heat_integration(
+        scale_mt_tpa_year=annual_pet_throughput_mt,
+        delta_t_min_k=10.0,
+    )
+
+    provenance_certificate = ComputationalAuditTrail.generate_certificate(
+        model_name="study_01_petase_plastics_bioprocess",
+        model_version="v3.0.0_phd_hardened",
+        inputs={
+            "annual_pet_throughput_mt": annual_pet_throughput_mt,
+            "pet_bale_price": pet_bale_price,
+            "pretreat_cost_pet": pretreat_cost_pet,
+            "enzyme_cost_kg": enzyme_cost_kg,
+            "operating_hours": operating_hours,
+        },
+        outputs={
+            "total_cost_tpa_amorph": round(total_cost_tpa_amorph, 4),
+            "precipitation_yield_pct": precipitation_res.precipitation_yield_pct,
+            "heat_recovery_efficiency_pct": pinch_res.energy_recovery_efficiency_pct,
+            "controlling_regime": mass_transfer_res.controlling_regime,
+        },
+        notes="Deterministic mass-balance, interfacial Langmuir kinetics, reactive crystallization, and thermal pinch audit.",
+    )
+
+    summary["interfacial_heterogeneous_kinetics"] = {
+        "surface_reaction_rate_umol_per_m2_s": round(interfacial_res.surface_reaction_rate_umol_per_m2_s, 4),
+        "surface_coverage_theta": round(interfacial_res.surface_coverage_theta, 4),
+        "volumetric_cleavage_rate_mm_per_hr": round(interfacial_res.volumetric_cleavage_rate_mm_per_hr, 4),
+        "accessible_amorphous_fraction": interfacial_res.accessible_amorphous_fraction,
+    }
+    summary["mass_transfer_and_thiele_regime"] = {
+        "controlling_regime": mass_transfer_res.controlling_regime,
+        "thiele_modulus": round(mass_transfer_res.thiele_modulus, 4),
+        "overall_effectiveness_factor": round(mass_transfer_res.overall_effectiveness_factor, 4),
+        "engineering_guidance": mass_transfer_res.engineering_guidance,
+    }
+    summary["reactive_precipitation_and_filtration"] = {
+        "precipitation_yield_pct": round(precipitation_res.precipitation_yield_pct, 2),
+        "mother_liquor_loss_pct": round(precipitation_res.mother_liquor_loss_pct, 2),
+        "mean_crystal_diameter_microns": round(precipitation_res.mean_crystal_diameter_microns, 2),
+        "specific_cake_resistance_m_kg": f"{precipitation_res.specific_cake_resistance_m_kg:.2e}",
+        "filtration_feasibility": precipitation_res.filtration_feasibility,
+    }
+    summary["thermal_pinch_and_heat_integration"] = {
+        "minimum_hot_utility_kw": round(pinch_res.minimum_hot_utility_kw, 1),
+        "maximum_internal_heat_recovery_kw": round(pinch_res.maximum_internal_heat_recovery_kw, 1),
+        "energy_recovery_efficiency_pct": round(pinch_res.energy_recovery_efficiency_pct, 1),
+        "steam_cost_savings_usd_per_year": round(pinch_res.steam_cost_savings_usd_per_year, 2),
+        "avoided_boiler_ghg_mt_co2e_per_year": round(pinch_res.avoided_boiler_ghg_mt_co2e_per_year, 1),
+        "pinch_verdict": pinch_res.pinch_verdict,
+    }
+    summary["computational_provenance_seal"] = provenance_certificate.to_dict()
 
     with open(results_dir / "summary.json", "w") as f:
         json.dump(summary, f, indent=2)

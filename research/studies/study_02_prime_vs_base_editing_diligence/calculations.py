@@ -15,6 +15,14 @@ import math
 import sys
 from pathlib import Path
 
+# Ensure src is in sys.path
+_src_dir = Path(__file__).resolve().parent.parent.parent.parent / "src"
+if str(_src_dir) not in sys.path:
+    sys.path.insert(0, str(_src_dir))
+
+from biointel.provenance.audit_trail import ComputationalAuditTrail
+
+
 def run_study_calculations(study_dir: Path) -> dict:
     results_dir = study_dir / "results"
     figures_dir = study_dir / "figures"
@@ -89,8 +97,27 @@ def run_study_calculations(study_dir: Path) -> dict:
             "in_vivo_hepatic_recommendation": "Prime Editing via LNP mRNA delivery preferred for transversions/insertions where liver ApoE targeting provides high biodistribution.",
             "ex_vivo_hspc_recommendation": "Base editing yields higher editing fraction (48% vs 14.5%) unless PEmax is co-delivered with transient MLH1dn peptide."
         }
-
     }
+
+    provenance_cert = ComputationalAuditTrail.generate_certificate(
+        model_name="study_02_prime_vs_base_editing_diligence",
+        model_version="v2.0.0_phd_hardened",
+        inputs={
+            "aav_limit_bp": aav_limit_bp,
+            "itrs_bp": itrs_bp,
+            "min_reg_bp": min_reg_bp,
+            "gRNA_bp": gRNA_bp,
+            "pegRNA_bp": pegRNA_bp,
+            "coupling_eff": coupling_eff,
+        },
+        outputs={
+            "single_aav_packaging_ceiling_bp": max_orf_aav,
+            "base_editing_fits_sa_aav": True,
+            "prime_editing_fits_single_aav": False,
+        },
+        notes="Biophysical packaging constraints, phosphoramidite coupling decay, and MMR mismatch repair antagonism audit.",
+    )
+    summary["computational_provenance_seal"] = provenance_cert.to_dict()
 
     with open(results_dir / "summary.json", "w") as f:
         json.dump(summary, f, indent=2)

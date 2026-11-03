@@ -85,5 +85,22 @@
     "in_vivo_cns_recommendation": "Base Editing (compact SaCas9-ABE8e) preferred for CNS where single AAV9 capsid is mandatory and target is a clean transition.",
     "in_vivo_hepatic_recommendation": "Prime Editing via LNP mRNA delivery preferred for transversions/insertions where liver ApoE targeting provides high biodistribution.",
     "ex_vivo_hspc_recommendation": "Base editing yields higher editing fraction (48% vs 14.5%) unless PEmax is co-delivered with transient MLH1dn peptide."
+  },
+  "computational_provenance_seal": {
+    "certificate_id": "CERT-STUDY_02-195ad8344a15",
+    "model_name": "study_02_prime_vs_base_editing_diligence",
+    "model_version": "v2.0.0_phd_hardened",
+    "created_at_utc": "2026-11-03T03:29:48.235897+00:00",
+    "python_version": "3.11.15",
+    "host_platform": "Darwin-arm64",
+    "random_seed": null,
+    "inputs_hash_sha256": "8f3fc8a04f4b11e23e34b8b0c14fdb0e8a0e92fe32002017adf85b470d5d0689",
+    "outputs_hash_sha256": "160bd57b5dcf94592abe20236f259ca3a802a5ae55d9b1530cb8da0d9fa0a353",
+    "computation_seal_sha256": "195ad8344a156ba44e67331d3496ec5bc33e949cabf26f0f20552c84d24d1ab7",
+    "metadata": {
+      "notes": "Biophysical packaging constraints, phosphoramidite coupling decay, and MMR mismatch repair antagonism audit.",
+      "schema_version": "1.0.0",
+      "hashing_algorithm": "SHA-256"
+    }
   }
 }

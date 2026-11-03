@@ -120,5 +120,22 @@
   "scientific_and_diligence_verdict": {
     "verdict": "REJECT CLAIMED ECONOMICS FOR MODELED VESSEL / RE-RATE VALUATION",
     "justification": "The cooling analysis establishes a conditional feasibility constraint for the modeled 50,000 L jacketed stirred reactor (cooling jacket cap 450 kW, max OTR 28 mmol/L/h on air), NOT a universal disproof of a reported fermentation titer in alternative reactor geometries (e.g. external heat exchangers or micro-bubble contactors). For this modeled vessel, 40 g/L requires OUR of 240 mmol/L/h and generates 620 kW of metabolic heat, exceeding the 450 kW jacket cooling limit and requiring 75% O2 sparging in an explosive methanol broth. Realizable commercial titer in this vessel geometry is capped at 14 g/L, driving unit cost to ~$92.50/kg (4.2x pitch deck)."
+  },
+  "computational_provenance_seal": {
+    "certificate_id": "CERT-STUDY_03-5735ed08b386",
+    "model_name": "study_03_lactoferrin_fermentation_scaleup",
+    "model_version": "v2.0.0_phd_hardened",
+    "created_at_utc": "2026-11-03T03:29:48.237471+00:00",
+    "python_version": "3.11.15",
+    "host_platform": "Darwin-arm64",
+    "random_seed": null,
+    "inputs_hash_sha256": "b16b549e79478a416b4c346d1a22ea22962c57cf65444d27a9a549dc139b98cc",
+    "outputs_hash_sha256": "d17211638eb7707b4bbcc72cd2766040fdcc9174ed9d510c83969b55a39023ba",
+    "computation_seal_sha256": "5735ed08b386741e4f1c97200e7c6ce762cd0d3c14d461f4a4dac72728c60404",
+    "metadata": {
+      "notes": "Bioreactor heat transfer bottleneck, oxygen mass transfer limits, and non-linear scaleup valuation model.",
+      "schema_version": "1.0.0",
+      "hashing_algorithm": "SHA-256"
+    }
   }
 }

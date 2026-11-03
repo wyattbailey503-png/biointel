@@ -111,5 +111,49 @@
       "Enzyme production cost must fall below $10.00/kg pure protein.",
       "Direct depolymerization of 30% crystalline PET must achieve >80% yield without amorphization extrusion."
     ]
+  },
+  "interfacial_heterogeneous_kinetics": {
+    "surface_reaction_rate_umol_per_m2_s": 1.055,
+    "surface_coverage_theta": 0.1728,
+    "volumetric_cleavage_rate_mm_per_hr": 26.1463,
+    "accessible_amorphous_fraction": 0.95
+  },
+  "mass_transfer_and_thiele_regime": {
+    "controlling_regime": "REACTION_LIMITED (INTRINSIC KINETICS REGIME)",
+    "thiele_modulus": 0.112,
+    "overall_effectiveness_factor": 0.998,
+    "engineering_guidance": "Observed depolymerization rate is >90% governed by intrinsic enzymatic catalysis. Reported turnover rates can be safely scaled to commercial reactors."
+  },
+  "reactive_precipitation_and_filtration": {
+    "precipitation_yield_pct": 99.91,
+    "mother_liquor_loss_pct": 0.09,
+    "mean_crystal_diameter_microns": 6.0,
+    "specific_cake_resistance_m_kg": "2.57e+10",
+    "filtration_feasibility": "HIGH_RESISTANCE (FINE PARTICLES / BLINDING RISK)"
+  },
+  "thermal_pinch_and_heat_integration": {
+    "minimum_hot_utility_kw": 522.0,
+    "maximum_internal_heat_recovery_kw": 2217.0,
+    "energy_recovery_efficiency_pct": 80.9,
+    "steam_cost_savings_usd_per_year": 673968.0,
+    "avoided_boiler_ghg_mt_co2e_per_year": 3582.7,
+    "pinch_verdict": "PINCH CONFIRMED at T_hot = 45.0 \u00b0C, T_cold = 35.0 \u00b0C. Internal heat recovery slashes required boiler steam from 2739 kW to 522 kW (80.9% reduction)."
+  },
+  "computational_provenance_seal": {
+    "certificate_id": "CERT-STUDY_01-b29bf6dcef2d",
+    "model_name": "study_01_petase_plastics_bioprocess",
+    "model_version": "v3.0.0_phd_hardened",
+    "created_at_utc": "2026-11-03T03:29:48.233925+00:00",
+    "python_version": "3.11.15",
+    "host_platform": "Darwin-arm64",
+    "random_seed": null,
+    "inputs_hash_sha256": "d8c0b0085413512caca59103352268d3e93746a335f903e130c1363757d80049",
+    "outputs_hash_sha256": "86856ab196b7f0b1c6269db0d6e63db818fa55fcc164068669d3be6ddcace760",
+    "computation_seal_sha256": "b29bf6dcef2d8da220b5ef897692d5bd9ade7be1819253ef286911b5828a82b8",
+    "metadata": {
+      "notes": "Deterministic mass-balance, interfacial Langmuir kinetics, reactive crystallization, and thermal pinch audit.",
+      "schema_version": "1.0.0",
+      "hashing_algorithm": "SHA-256"
+    }
   }
 }
