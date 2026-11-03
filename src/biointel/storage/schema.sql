@@ -366,3 +366,62 @@ CREATE TABLE IF NOT EXISTS technology_milestones (
 );
 
 CREATE INDEX IF NOT EXISTS idx_milestones_tech_date ON technology_milestones(technology_id, milestone_date);
+
+-- 18. Long-Horizon Prospective Prediction Contracts
+CREATE TABLE IF NOT EXISTS prediction_contracts (
+    contract_id TEXT PRIMARY KEY,
+    technology_id TEXT NOT NULL,
+    horizon_years INTEGER NOT NULL, -- 1, 5, 10, 20, 30
+    target_date TEXT NOT NULL, -- YYYY-MM-DD
+    target_metric TEXT NOT NULL,
+    p10_estimate REAL NOT NULL,
+    p50_estimate REAL NOT NULL,
+    p90_estimate REAL NOT NULL,
+    unit TEXT,
+    falsification_criteria TEXT NOT NULL,
+    comparator_hypothesis TEXT,
+    status TEXT NOT NULL DEFAULT 'PENDING', -- 'PENDING', 'RESOLVED', 'FALSIFIED', 'EXPIRED'
+    model_provenance_seal TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (technology_id) REFERENCES technologies(tech_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_contracts_tech_date ON prediction_contracts(technology_id, target_date);
+CREATE INDEX IF NOT EXISTS idx_contracts_status ON prediction_contracts(status);
+
+-- 19. Prediction Contract Resolutions
+CREATE TABLE IF NOT EXISTS prediction_resolutions (
+    resolution_id TEXT PRIMARY KEY,
+    contract_id TEXT NOT NULL UNIQUE,
+    resolved_date TEXT NOT NULL,
+    empirical_value REAL NOT NULL,
+    primary_source_doi TEXT NOT NULL,
+    residual_error REAL NOT NULL,
+    relative_error_pct REAL,
+    brier_score REAL NOT NULL,
+    outcome_status TEXT NOT NULL, -- 'CONFIRMED', 'FALSIFIED', 'INCONCLUSIVE'
+    parameter_attribution_json TEXT,
+    resolution_notes TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (contract_id) REFERENCES prediction_contracts(contract_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_resolutions_contract ON prediction_resolutions(contract_id);
+
+-- 20. Institutional Technology Graveyard & Dead-End Autopsies
+CREATE TABLE IF NOT EXISTS technology_graveyard (
+    graveyard_id TEXT PRIMARY KEY,
+    technology_id TEXT NOT NULL,
+    platform_name TEXT NOT NULL,
+    domain TEXT NOT NULL,
+    failure_mode TEXT NOT NULL, -- 'THERMODYNAMIC_UNVIABLE', 'MASS_TRANSFER_BOTTLENECK', 'TOXICITY_OFF_TARGET', 'SCALEUP_PHASE_INVERSION', 'ECONOMIC_UNCOMPETITIVE'
+    fatal_flaw_summary TEXT NOT NULL,
+    terminal_doi TEXT,
+    terminal_year INTEGER,
+    capital_consumed_usd REAL,
+    autopsy_markdown TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_graveyard_tech ON technology_graveyard(technology_id);
+CREATE INDEX IF NOT EXISTS idx_graveyard_mode ON technology_graveyard(failure_mode);

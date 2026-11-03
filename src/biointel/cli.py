@@ -598,7 +598,160 @@ def cmd_track(args: argparse.Namespace) -> None:
         print("Unknown track action. Choose from: add, milestone, timeline, snapshot, diff, list")
 
 
+def cmd_contract(args: argparse.Namespace) -> None:
+    from biointel.longitudinal.prediction_ledger import PredictionLedger
+    ledger = PredictionLedger(get_db())
+
+    if not getattr(args, "contract_action", None):
+        print("Please specify a contract action: issue, list, evaluate, observatory")
+        return
+
+    if args.contract_action == "issue":
+        contract = ledger.issue_contract(
+            technology_id=args.tech,
+            horizon_years=args.horizon,
+            target_date=args.date,
+            target_metric=args.metric,
+            p10=args.p10,
+            p50=args.p50,
+            p90=args.p90,
+            unit=args.unit or "",
+            falsification_criteria=args.falsification,
+            comparator_hypothesis=args.comparator,
+        )
+        print(f"[+] Issued Prospective Prediction Contract: {contract.contract_id}")
+        print(f"    Technology: {contract.technology_id} | Horizon: {contract.horizon_years}Y")
+        print(f"    Target Date: {contract.target_date} | Metric: {contract.target_metric}")
+        print(f"    Estimates: P10={contract.p10_estimate}, P50={contract.p50_estimate}, P90={contract.p90_estimate} {contract.unit}")
+        print(f"    Falsification Criteria: {contract.falsification_criteria}")
+        print(f"    Model Provenance Seal: {contract.model_provenance_seal}")
+
+    elif args.contract_action == "list":
+        ledger.seed_default_long_horizon_contracts()
+        contracts = ledger.db.get_prediction_contracts(status=args.status)
+        print("=================================================================")
+        print("   LONG-HORIZON PROSPECTIVE PREDICTION CONTRACTS (30-YEAR MOAT)   ")
+        print("=================================================================\n")
+        if not contracts:
+            print("No matching prediction contracts found.")
+            return
+        for c in contracts:
+            print(f"• [{c['target_date']}] {c['technology_id'].upper()} ({c['horizon_years']}Y Horizon)")
+            print(f"  ID: {c['contract_id']} | Status: {c['status']}")
+            print(f"  Metric: {c['target_metric']} (P50: {c['p50_estimate']} {c.get('unit','')})")
+            print(f"  Bounds: [{c['p10_estimate']}, {c['p90_estimate']}]")
+            print(f"  Falsification: {c['falsification_criteria']}")
+            print()
+
+    elif args.contract_action == "evaluate":
+        res = ledger.evaluate_contract(
+            contract_id=args.contract_id,
+            empirical_value=args.value,
+            primary_source_doi=args.doi,
+            resolution_notes=args.notes or "",
+        )
+        print(f"[+] Evaluated Contract {res.contract_id}:")
+        print(f"    Outcome: {res.outcome_status} (Brier Score: {res.brier_score})")
+        print(f"    Empirical Value: {res.empirical_value} (Residual: {res.residual_error:+}, {res.relative_error_pct}%)")
+        print(f"    Evidence DOI: {res.primary_source_doi}")
+
+    elif args.contract_action == "observatory":
+        ledger.seed_default_long_horizon_contracts()
+        obs = ledger.get_calibration_observatory()
+        print("=================================================================")
+        print("   EPISTEMIC CALIBRATION OBSERVATORY & SANDERS-MURPHY AUDIT       ")
+        print("=================================================================\n")
+        print(f"Total Pre-Registered Contracts: {obs.total_contracts}")
+        print(f"  • Resolved: {obs.resolved_contracts} | Pending: {obs.pending_contracts}")
+        print(f"Prospective Purity: {obs.prospective_purity_pct:.1f}% (Zero backdating)")
+        print("\nDistribution by Time Horizon:")
+        for h, count in sorted(obs.contracts_by_horizon.items()):
+            print(f"  • {h}-Year Horizon: {count} active contract(s)")
+        print("\nCalibration Scores (Sanders-Murphy Decomposition):")
+        print(f"  • Overall Brier Score: {obs.overall_brier_score:.4f}")
+        print(f"  • Reliability (Calibration distance): {obs.reliability_score:.4f}")
+        print(f"  • Resolution (Discrimination power):  {obs.resolution_score:.4f}")
+        print(f"  • Uncertainty (Inherent base-rate):   {obs.uncertainty_score:.4f}")
+        print("\nDiagnostics:")
+        for diag in obs.diagnostics:
+            print(f"  • {diag}")
+
+
+def cmd_graveyard(args: argparse.Namespace) -> None:
+    from biointel.evidence.graveyard import TechnologyGraveyardRegistry
+    registry = TechnologyGraveyardRegistry(get_db())
+
+    if not getattr(args, "graveyard_action", None):
+        print("Please specify a graveyard action: query, audit, list")
+        return
+
+    if args.graveyard_action == "query":
+        entries = registry.query_dead_ends(args.query)
+        print("=================================================================")
+        print(f"   TECHNOLOGY GRAVEYARD: DEAD-END AUTOPSY SEARCH ('{args.query}')")
+        print("=================================================================\n")
+        if not entries:
+            print("No matching technological failure autopsies found.")
+            return
+        for e in entries:
+            print(f"† {e.platform_name} [{e.technology_id}] (Failed {e.terminal_year})")
+            print(f"  Failure Mode: {e.failure_mode} | Sunk Capital: ${e.capital_consumed_usd:,.0f}")
+            print(f"  Fatal Flaw: {e.fatal_flaw_summary}")
+            if e.terminal_doi:
+                print(f"  Autopsy Citation: {e.terminal_doi}")
+            print()
+
+    elif args.graveyard_action == "audit":
+        warnings = registry.audit_technology_against_graveyard(args.technology)
+        print("=================================================================")
+        print(f"   GRAVEYARD HISTORICAL DEAD-END AUDIT: {args.technology.upper()}")
+        print("=================================================================\n")
+        if not warnings:
+            print(f"[+] Technology '{args.technology}' shows no direct analogies to historical 30-year failure modes.")
+            return
+        print(f"[!] WARNING: Found {len(warnings)} historical failure analog(s):\n")
+        for w in warnings:
+            print(f"• Analogy: {w['historical_analogy_platform']} (Failed Mode: {w['failure_mode']})")
+            print(f"  Historical Sunk Capital: ${w['capital_sunk_usd']:,.0f}")
+            print(f"  Shared Mechanism / Flaw: {w['fatal_flaw']}")
+            for finding in w["audit_findings"]:
+                print(f"  [!] Risk Flag: {finding}")
+            print()
+
+    elif args.graveyard_action == "list":
+        registry.seed_default_graveyard()
+        entries = registry.db.get_graveyard_entries()
+        print("=================================================================")
+        print("   TECHNOLOGY GRAVEYARD: 30-YEAR INSTITUTIONAL FAILURE ARCHIVE    ")
+        print("=================================================================\n")
+        for e in entries:
+            print(f"† {e['platform_name']} ({e['terminal_year']})")
+            print(f"  Mode: {e['failure_mode']} | Sunk Capital: ${float(e['capital_consumed_usd']):,.0f}")
+            print(f"  Summary: {e['fatal_flaw_summary']}")
+            print()
+
+
+def cmd_export_fstp(args: argparse.Namespace) -> None:
+    from biointel.longitudinal.fstp_adapter import FSTPBottomUpAdapter
+    adapter = FSTPBottomUpAdapter(get_db())
+    out_path = adapter.export_fstp_spec(
+        technology_id=args.technology,
+        output_path=args.out,
+    )
+    print("=================================================================")
+    print(f"   FSTP BOTTOM-UP MODEL SPECIFICATION EXPORT                     ")
+    print("=================================================================\n")
+    print(f"[+] Technology: {args.technology}")
+    print(f"[+] Exported FSTP Bottom-Up Spec: {out_path}")
+    spec = adapter.generate_bottom_up_spec(args.technology)
+    print(f"    Thermodynamic Cost Floor: ${spec['thermodynamic_cost_floor_usd_per_kg']:.2f}/kg TPA")
+    print(f"    Confidence Tier: {spec['fstp_integration_metadata']['confidence_tier']} ({spec['fstp_integration_metadata']['confidence_label']})")
+    print(f"    Parity Ratio against fossil: {spec['fstp_integration_metadata']['incumbent_market_clearing_parity_ratio']}x")
+    print(f"    Cryptographic Seal: {spec['model_provenance_seal']}")
+
+
 def main() -> None:
+
 
     parser = argparse.ArgumentParser(
         prog="biointel",
@@ -725,6 +878,57 @@ def main() -> None:
     # track list
     p_track_subs.add_parser("list", help="List all registered biotechnology platforms")
 
+    # contract
+    p_cnt = subparsers.add_parser("contract", help="Manage 30-year prospective prediction contracts and epistemic observatory")
+    p_cnt_subs = p_cnt.add_subparsers(dest="contract_action", help="Contract action")
+
+    # contract issue
+    p_cnt_issue = p_cnt_subs.add_parser("issue", help="Issue an immutable prospective prediction contract")
+    p_cnt_issue.add_argument("--tech", required=True, help="Technology identifier")
+    p_cnt_issue.add_argument("--horizon", type=int, required=True, help="Prediction horizon in years (1, 5, 10, 20, 30)")
+    p_cnt_issue.add_argument("--date", required=True, help="Target evaluation date (YYYY-MM-DD)")
+    p_cnt_issue.add_argument("--metric", required=True, help="Target metric name")
+    p_cnt_issue.add_argument("--p10", type=float, required=True, help="P10 pessimistic bound")
+    p_cnt_issue.add_argument("--p50", type=float, required=True, help="P50 median forecast")
+    p_cnt_issue.add_argument("--p90", type=float, required=True, help="P90 optimistic bound")
+    p_cnt_issue.add_argument("--unit", default="", help="Metric physical unit")
+    p_cnt_issue.add_argument("--falsification", required=True, help="Explicit criteria falsifying model")
+    p_cnt_issue.add_argument("--comparator", default=None, help="Comparator or incumbent baseline")
+
+    # contract list
+    p_cnt_list = p_cnt_subs.add_parser("list", help="List prospective prediction contracts")
+    p_cnt_list.add_argument("--status", choices=["PENDING", "CONFIRMED", "FALSIFIED", "EXPIRED"], default=None, help="Filter by contract status")
+
+    # contract evaluate
+    p_cnt_eval = p_cnt_subs.add_parser("evaluate", help="Resolve a contract against empirical evidence")
+    p_cnt_eval.add_argument("contract_id", help="Contract identifier")
+    p_cnt_eval.add_argument("--value", type=float, required=True, help="Observed empirical value")
+    p_cnt_eval.add_argument("--doi", required=True, help="Primary source peer-reviewed DOI")
+    p_cnt_eval.add_argument("--notes", default="", help="Resolution notes or attribution")
+
+    # contract observatory
+    p_cnt_subs.add_parser("observatory", help="Display Sanders-Murphy Brier decomposition and calibration metrics")
+
+    # graveyard
+    p_grave = subparsers.add_parser("graveyard", help="Audit and query 30-year technology failure graveyard")
+    p_grave_subs = p_grave.add_subparsers(dest="graveyard_action", help="Graveyard action")
+
+    # graveyard query
+    p_gr_q = p_grave_subs.add_parser("query", help="Search graveyard for failure modes and dead-ends")
+    p_gr_q.add_argument("query", help="Search keyword or failure mode")
+
+    # graveyard audit
+    p_gr_aud = p_grave_subs.add_parser("audit", help="Audit candidate platform against historical failure patterns")
+    p_gr_aud.add_argument("technology", help="Technology identifier to audit")
+
+    # graveyard list
+    p_grave_subs.add_parser("list", help="List all archival technology failure autopsies")
+
+    # export-fstp
+    p_fstp = subparsers.add_parser("export-fstp", help="Export first-principles bottom-up model specification for FSTP")
+    p_fstp.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
+    p_fstp.add_argument("--out", default=None, help="Custom output JSON path")
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -748,7 +952,11 @@ def main() -> None:
         "verify-certificates": cmd_verify_certificates,
         "replay": cmd_replay,
         "track": cmd_track,
+        "contract": cmd_contract,
+        "graveyard": cmd_graveyard,
+        "export-fstp": cmd_export_fstp,
     }
+
 
 
     cmd_fn = cmds.get(args.command)

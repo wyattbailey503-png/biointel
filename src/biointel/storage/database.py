@@ -563,3 +563,117 @@ class Database:
         """
         with self.transaction() as cur:
             cur.execute(sql, run_dict)
+
+    # -------------------------------------------------------------------------
+    # Long-Horizon Prediction Contracts & Resolutions
+    # -------------------------------------------------------------------------
+    def insert_prediction_contract(self, contract_dict: Dict[str, Any]) -> None:
+        sql = """
+        INSERT OR REPLACE INTO prediction_contracts (
+            contract_id, technology_id, horizon_years, target_date, target_metric,
+            p10_estimate, p50_estimate, p90_estimate, unit, falsification_criteria,
+            comparator_hypothesis, status, model_provenance_seal
+        ) VALUES (
+            :contract_id, :technology_id, :horizon_years, :target_date, :target_metric,
+            :p10_estimate, :p50_estimate, :p90_estimate, :unit, :falsification_criteria,
+            :comparator_hypothesis, :status, :model_provenance_seal
+        );
+        """
+        with self.transaction() as cur:
+            cur.execute(sql, contract_dict)
+
+    def get_prediction_contracts(
+        self, tech_id: Optional[str] = None, status: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM prediction_contracts WHERE 1=1"
+        params: List[Any] = []
+        if tech_id:
+            query += " AND technology_id = ?"
+            params.append(tech_id)
+        if status:
+            query += " AND status = ?"
+            params.append(status)
+        query += " ORDER BY target_date ASC, created_at ASC"
+        with self.get_connection() as conn:
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
+
+    def get_prediction_contract(self, contract_id: str) -> Optional[Dict[str, Any]]:
+        with self.get_connection() as conn:
+            row = conn.execute("SELECT * FROM prediction_contracts WHERE contract_id = ?", (contract_id,)).fetchone()
+            return dict(row) if row else None
+
+    def insert_prediction_resolution(self, res_dict: Dict[str, Any]) -> None:
+        sql = """
+        INSERT OR REPLACE INTO prediction_resolutions (
+            resolution_id, contract_id, resolved_date, empirical_value, primary_source_doi,
+            residual_error, relative_error_pct, brier_score, outcome_status,
+            parameter_attribution_json, resolution_notes
+        ) VALUES (
+            :resolution_id, :contract_id, :resolved_date, :empirical_value, :primary_source_doi,
+            :residual_error, :relative_error_pct, :brier_score, :outcome_status,
+            :parameter_attribution_json, :resolution_notes
+        );
+        """
+        with self.transaction() as cur:
+            cur.execute(sql, res_dict)
+            cur.execute(
+                "UPDATE prediction_contracts SET status = :status WHERE contract_id = :contract_id",
+                {"status": res_dict.get("outcome_status", "RESOLVED"), "contract_id": res_dict["contract_id"]},
+            )
+
+    def get_prediction_resolutions(self) -> List[Dict[str, Any]]:
+        query = """
+        SELECT pr.*, pc.technology_id, pc.target_metric, pc.target_date, pc.p50_estimate
+        FROM prediction_resolutions pr
+        JOIN prediction_contracts pc ON pr.contract_id = pc.contract_id
+        ORDER BY pr.resolved_date ASC
+        """
+        with self.get_connection() as conn:
+            rows = conn.execute(query).fetchall()
+            return [dict(r) for r in rows]
+
+    # -------------------------------------------------------------------------
+    # Technology Graveyard & Dead-End Autopsies
+    # -------------------------------------------------------------------------
+    def insert_graveyard_entry(self, entry_dict: Dict[str, Any]) -> None:
+        sql = """
+        INSERT OR REPLACE INTO technology_graveyard (
+            graveyard_id, technology_id, platform_name, domain, failure_mode,
+            fatal_flaw_summary, terminal_doi, terminal_year, capital_consumed_usd,
+            autopsy_markdown
+        ) VALUES (
+            :graveyard_id, :technology_id, :platform_name, :domain, :failure_mode,
+            :fatal_flaw_summary, :terminal_doi, :terminal_year, :capital_consumed_usd,
+            :autopsy_markdown
+        );
+        """
+        with self.transaction() as cur:
+            cur.execute(sql, entry_dict)
+
+    def get_graveyard_entries(self, domain: Optional[str] = None) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM technology_graveyard WHERE 1=1"
+        params: List[Any] = []
+        if domain:
+            query += " AND domain = ?"
+            params.append(domain)
+        query += " ORDER BY terminal_year DESC, capital_consumed_usd DESC"
+        with self.get_connection() as conn:
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
+
+    def search_graveyard(self, query_str: str) -> List[Dict[str, Any]]:
+        pattern = f"%{query_str.lower()}%"
+        sql = """
+        SELECT * FROM technology_graveyard
+        WHERE LOWER(technology_id) LIKE ?
+           OR LOWER(platform_name) LIKE ?
+           OR LOWER(fatal_flaw_summary) LIKE ?
+           OR LOWER(failure_mode) LIKE ?
+           OR LOWER(domain) LIKE ?
+        ORDER BY terminal_year DESC
+        """
+        with self.get_connection() as conn:
+            rows = conn.execute(sql, (pattern, pattern, pattern, pattern, pattern)).fetchall()
+            return [dict(r) for r in rows]
+

@@ -1,0 +1,38 @@
+{
+  "technology_id": "fast_petase_depolymerase",
+  "domain": "industrial_biotechnology",
+  "category": "enzymatic_plastics_recycling",
+  "as_of_date": "2026-11-02",
+  "scale_mt_pet_per_year": 50000.0,
+  "thermodynamic_cost_floor_usd_per_kg": 0.76,
+  "cost_stack_usd_per_kg": {
+    "feedstock_baled_pet": 0.35,
+    "extrusion_preprocessing": 0.1904,
+    "bmed_salt_splitting_net": -0.2201,
+    "capex_depreciation": 0.28,
+    "labor_and_plant_overhead": 0.16
+  },
+  "physical_bottlenecks": {
+    "limiting_regime": "INTRAPARTICLE_PORE_DIFFUSION",
+    "thiele_modulus": 4.12,
+    "effectiveness_factor": 0.38,
+    "substance_crystallinity_limit_pct": 15.0,
+    "aspect_ratio_shape_factor": 2.45,
+    "final_conversion_pct": 66.12
+  },
+  "utility_targets": {
+    "minimum_hot_utility_steam_kw": 522.0,
+    "maximum_internal_heat_recovery_kw": 2217.0,
+    "pinch_heat_recovery_fraction": 0.809,
+    "pinch_temperature_hot_c": 45.0,
+    "pinch_temperature_cold_c": 35.0
+  },
+  "fstp_integration_metadata": {
+    "confidence_tier": 2,
+    "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
+    "recommended_wrights_law_asymptote_usd_kg": 0.76,
+    "incumbent_market_clearing_parity_ratio": 0.66,
+    "substitution_barrier": "Requires pre-extrusion amorphization when feedstock crystallinity > 15%"
+  },
+  "model_provenance_seal": "SEAL_FSTP_38278A30E656F142"
+}
