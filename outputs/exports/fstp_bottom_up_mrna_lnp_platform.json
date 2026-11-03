@@ -28,6 +28,119 @@
     "ethanol_residual_pct": 0.25,
     "cleanroom_air_exchanges_per_hour": 25.0
   },
+  "regional_cost_matrix_usd": {
+    "US_GULF_COAST": {
+      "region_id": "US_GULF_COAST",
+      "region_name": "United States (Gulf Coast Industrial Hub)",
+      "unit_cost_usd": 0.1226,
+      "cost_delta_vs_us_pct": -83.7,
+      "electricity_contribution_usd": 0.0016,
+      "labor_contribution_usd": 0.035,
+      "capex_contribution_usd": 0.086,
+      "feedstock_contribution_usd": 0.0,
+      "commercial_viability_verdict": "HIGHLY_COMPETITIVE"
+    },
+    "WESTERN_EUROPE": {
+      "region_id": "WESTERN_EUROPE",
+      "region_name": "Western Europe (Antwerp / Rhine Cluster)",
+      "unit_cost_usd": 0.1312,
+      "cost_delta_vs_us_pct": -82.6,
+      "electricity_contribution_usd": 0.0032,
+      "labor_contribution_usd": 0.0312,
+      "capex_contribution_usd": 0.0967,
+      "feedstock_contribution_usd": 0.0,
+      "commercial_viability_verdict": "HIGHLY_COMPETITIVE"
+    },
+    "EAST_ASIA": {
+      "region_id": "EAST_ASIA",
+      "region_name": "East Asia (Coastal China / Southeast Asia)",
+      "unit_cost_usd": 0.0725,
+      "cost_delta_vs_us_pct": -90.4,
+      "electricity_contribution_usd": 0.001,
+      "labor_contribution_usd": 0.0112,
+      "capex_contribution_usd": 0.0602,
+      "feedstock_contribution_usd": 0.0,
+      "commercial_viability_verdict": "HIGHLY_COMPETITIVE"
+    }
+  },
+  "scale_elasticity": {
+    "technology_id": "mrna_lnp_platform",
+    "scale_unit": "doses_per_year",
+    "reference_scale": 100000000.0,
+    "scaling_exponent_alpha": 0.75,
+    "variable_cost_floor_usd": 0.4136,
+    "fixed_capex_cost_ref_usd": 0.3384,
+    "curve_points": [
+      {
+        "scale_value": 5000000.0,
+        "scale_unit": "doses_per_year",
+        "unit_cost_usd": 1.1292,
+        "capex_contribution_usd": 0.7156,
+        "variable_cost_usd": 0.4136,
+        "scale_label": "PILOT"
+      },
+      {
+        "scale_value": 20000000.0,
+        "scale_unit": "doses_per_year",
+        "unit_cost_usd": 0.9196,
+        "capex_contribution_usd": 0.506,
+        "variable_cost_usd": 0.4136,
+        "scale_label": "DEMONSTRATION"
+      },
+      {
+        "scale_value": 100000000.0,
+        "scale_unit": "doses_per_year",
+        "unit_cost_usd": 0.752,
+        "capex_contribution_usd": 0.3384,
+        "variable_cost_usd": 0.4136,
+        "scale_label": "COMMERCIAL_REFERENCE"
+      },
+      {
+        "scale_value": 300000000.0,
+        "scale_unit": "doses_per_year",
+        "unit_cost_usd": 0.6707,
+        "capex_contribution_usd": 0.2571,
+        "variable_cost_usd": 0.4136,
+        "scale_label": "WORLD_SCALE"
+      }
+    ]
+  },
+  "operational_derating": {
+    "year_1_commissioning": {
+      "year": 1,
+      "operational_stage": "YEAR_1_COMMISSIONING",
+      "effective_capacity_factor_pct": 45.0,
+      "steady_state_cost_usd": 0.752,
+      "fixed_overhead_inflation_multiplier": 2.044,
+      "batch_contamination_loss_pct": 8.0,
+      "fto_licensing_royalty_pct": 8.0,
+      "physical_cost_floor_usd": 1.1939,
+      "commercial_clearing_cost_usd": 1.2894
+    },
+    "year_2_ramp_up": {
+      "year": 2,
+      "operational_stage": "YEAR_2_RAMP_UP",
+      "effective_capacity_factor_pct": 75.0,
+      "steady_state_cost_usd": 0.752,
+      "fixed_overhead_inflation_multiplier": 1.227,
+      "batch_contamination_loss_pct": 5.0,
+      "fto_licensing_royalty_pct": 8.0,
+      "physical_cost_floor_usd": 0.8701,
+      "commercial_clearing_cost_usd": 0.9398
+    },
+    "year_3_mature": {
+      "year": 3,
+      "operational_stage": "MATURE_STEADY_STATE",
+      "effective_capacity_factor_pct": 92.0,
+      "steady_state_cost_usd": 0.752,
+      "fixed_overhead_inflation_multiplier": 1.0,
+      "batch_contamination_loss_pct": 3.0,
+      "fto_licensing_royalty_pct": 8.0,
+      "physical_cost_floor_usd": 0.7746,
+      "commercial_clearing_cost_usd": 0.8365
+    }
+  },
+  "fto_royalty_drag_pct": 8.0,
   "fstp_integration_metadata": {
     "confidence_tier": 2,
     "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
@@ -46,5 +159,5 @@
     "capex_amortization": 0.086,
     "qc_release_testing": 0.08
   },
-  "model_provenance_seal": "SEAL_FSTP_87872CC7C8B50CBD"
+  "model_provenance_seal": "SEAL_FSTP_C0F3CE2264989885"
 }

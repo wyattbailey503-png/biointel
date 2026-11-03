@@ -51,9 +51,21 @@
       "minimum": 0,
       "description": "Asymptotic first-principles cost floor C_floor in USD per scale_unit."
     },
+    "thermodynamic_cost_floor_usd_per_kg": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Backwards compatibility alias for per-kg commodities."
+    },
     "cost_stack_usd_per_unit": {
       "type": "object",
       "description": "Disaggregated unit-operation cost breakdown.",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "cost_stack_usd_per_kg": {
+      "type": "object",
+      "description": "Backwards compatibility alias for per-kg commodities.",
       "additionalProperties": {
         "type": "number"
       }
@@ -129,6 +141,78 @@
         }
       },
       "additionalProperties": true
+    },
+    "regional_cost_matrix_usd": {
+      "type": "object",
+      "description": "Multi-regional cost benchmark matrix (US, Western Europe, East Asia) mitigating western baseline bias.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "region_id": { "type": "string" },
+          "region_name": { "type": "string" },
+          "unit_cost_usd": { "type": "number" },
+          "cost_delta_vs_us_pct": { "type": "number" },
+          "electricity_contribution_usd": { "type": "number" },
+          "labor_contribution_usd": { "type": "number" },
+          "capex_contribution_usd": { "type": "number" },
+          "feedstock_contribution_usd": { "type": "number" },
+          "commercial_viability_verdict": { "type": "string" }
+        },
+        "required": ["region_id", "unit_cost_usd", "cost_delta_vs_us_pct"]
+      }
+    },
+    "scale_elasticity": {
+      "type": "object",
+      "description": "Continuous unit-operation power-law scaling curve mitigating point-scale bias.",
+      "properties": {
+        "technology_id": { "type": "string" },
+        "scale_unit": { "type": "string" },
+        "reference_scale": { "type": "number" },
+        "scaling_exponent_alpha": { "type": "number" },
+        "variable_cost_floor_usd": { "type": "number" },
+        "fixed_capex_cost_ref_usd": { "type": "number" },
+        "curve_points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scale_value": { "type": "number" },
+              "scale_unit": { "type": "string" },
+              "unit_cost_usd": { "type": "number" },
+              "capex_contribution_usd": { "type": "number" },
+              "variable_cost_usd": { "type": "number" },
+              "scale_label": { "type": "string" }
+            },
+            "required": ["scale_value", "unit_cost_usd", "scale_label"]
+          }
+        }
+      },
+      "required": ["technology_id", "scaling_exponent_alpha", "curve_points"]
+    },
+    "operational_derating": {
+      "type": "object",
+      "description": "Operational commissioning ramp-up schedule and batch scrap loss mitigating steady-state bias.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "year": { "type": "integer" },
+          "operational_stage": { "type": "string" },
+          "effective_capacity_factor_pct": { "type": "number" },
+          "steady_state_cost_usd": { "type": "number" },
+          "fixed_overhead_inflation_multiplier": { "type": "number" },
+          "batch_contamination_loss_pct": { "type": "number" },
+          "fto_licensing_royalty_pct": { "type": "number" },
+          "physical_cost_floor_usd": { "type": "number" },
+          "commercial_clearing_cost_usd": { "type": "number" }
+        },
+        "required": ["year", "operational_stage", "effective_capacity_factor_pct", "commercial_clearing_cost_usd"]
+      }
+    },
+    "fto_royalty_drag_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 50,
+      "description": "Freedom-to-Operate patent royalty stack drag mitigating IP blindspot bias."
     },
     "model_provenance_seal": {
       "type": "string",

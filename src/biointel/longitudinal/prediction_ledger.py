@@ -126,6 +126,15 @@ class PredictionLedger:
                 "description": f"Tracked technology platform: {clean_tech}",
             })
 
+        # Adversarial Counter-Hypothesis Enforcement (Bias Mitigation against Confirmation/File-Drawer Bias)
+        if not comparator_hypothesis or not comparator_hypothesis.strip():
+            paired_comparator = (
+                f"Adversarial Null: {clean_tech} fails to breach commercial parity or progress beyond p10 bound "
+                f"due to biophysical, scale-up, or cost-floor constraints."
+            )
+        else:
+            paired_comparator = comparator_hypothesis.strip()
+
         record = {
             "contract_id": contract_id,
             "technology_id": clean_tech,
@@ -137,7 +146,7 @@ class PredictionLedger:
             "p90_estimate": float(p90),
             "unit": unit.strip(),
             "falsification_criteria": falsification_criteria.strip(),
-            "comparator_hypothesis": comparator_hypothesis.strip() if comparator_hypothesis else None,
+            "comparator_hypothesis": paired_comparator,
             "status": "PENDING",
             "model_provenance_seal": seal,
         }

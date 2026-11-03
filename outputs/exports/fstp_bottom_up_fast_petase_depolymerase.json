@@ -28,6 +28,119 @@
     "pinch_temperature_hot_c": 45.0,
     "pinch_temperature_cold_c": 35.0
   },
+  "regional_cost_matrix_usd": {
+    "US_GULF_COAST": {
+      "region_id": "US_GULF_COAST",
+      "region_name": "United States (Gulf Coast Industrial Hub)",
+      "unit_cost_usd": 0.9705,
+      "cost_delta_vs_us_pct": 27.7,
+      "electricity_contribution_usd": 0.148,
+      "labor_contribution_usd": 0.14,
+      "capex_contribution_usd": 0.28,
+      "feedstock_contribution_usd": 0.4025,
+      "commercial_viability_verdict": "COST_PREMIUM_BURDEN"
+    },
+    "WESTERN_EUROPE": {
+      "region_id": "WESTERN_EUROPE",
+      "region_name": "Western Europe (Antwerp / Rhine Cluster)",
+      "unit_cost_usd": 1.2535,
+      "cost_delta_vs_us_pct": 64.9,
+      "electricity_contribution_usd": 0.296,
+      "labor_contribution_usd": 0.125,
+      "capex_contribution_usd": 0.315,
+      "feedstock_contribution_usd": 0.5175,
+      "commercial_viability_verdict": "COST_PREMIUM_BURDEN"
+    },
+    "EAST_ASIA": {
+      "region_id": "EAST_ASIA",
+      "region_name": "East Asia (Coastal China / Southeast Asia)",
+      "unit_cost_usd": 0.5865,
+      "cost_delta_vs_us_pct": -22.8,
+      "electricity_contribution_usd": 0.0925,
+      "labor_contribution_usd": 0.045,
+      "capex_contribution_usd": 0.196,
+      "feedstock_contribution_usd": 0.253,
+      "commercial_viability_verdict": "HIGHLY_COMPETITIVE"
+    }
+  },
+  "scale_elasticity": {
+    "technology_id": "fast_petase_depolymerase",
+    "scale_unit": "MT_per_year",
+    "reference_scale": 50000.0,
+    "scaling_exponent_alpha": 0.65,
+    "variable_cost_floor_usd": 0.342,
+    "fixed_capex_cost_ref_usd": 0.418,
+    "curve_points": [
+      {
+        "scale_value": 2500.0,
+        "scale_unit": "MT_per_year",
+        "unit_cost_usd": 1.5347,
+        "capex_contribution_usd": 1.1927,
+        "variable_cost_usd": 0.342,
+        "scale_label": "PILOT"
+      },
+      {
+        "scale_value": 10000.0,
+        "scale_unit": "MT_per_year",
+        "unit_cost_usd": 1.0762,
+        "capex_contribution_usd": 0.7342,
+        "variable_cost_usd": 0.342,
+        "scale_label": "DEMONSTRATION"
+      },
+      {
+        "scale_value": 50000.0,
+        "scale_unit": "MT_per_year",
+        "unit_cost_usd": 0.76,
+        "capex_contribution_usd": 0.418,
+        "variable_cost_usd": 0.342,
+        "scale_label": "COMMERCIAL_REFERENCE"
+      },
+      {
+        "scale_value": 150000.0,
+        "scale_unit": "MT_per_year",
+        "unit_cost_usd": 0.6266,
+        "capex_contribution_usd": 0.2846,
+        "variable_cost_usd": 0.342,
+        "scale_label": "WORLD_SCALE"
+      }
+    ]
+  },
+  "operational_derating": {
+    "year_1_commissioning": {
+      "year": 1,
+      "operational_stage": "YEAR_1_COMMISSIONING",
+      "effective_capacity_factor_pct": 45.0,
+      "steady_state_cost_usd": 0.76,
+      "fixed_overhead_inflation_multiplier": 2.044,
+      "batch_contamination_loss_pct": 8.0,
+      "fto_licensing_royalty_pct": 5.0,
+      "physical_cost_floor_usd": 1.2923,
+      "commercial_clearing_cost_usd": 1.3569
+    },
+    "year_2_ramp_up": {
+      "year": 2,
+      "operational_stage": "YEAR_2_RAMP_UP",
+      "effective_capacity_factor_pct": 75.0,
+      "steady_state_cost_usd": 0.76,
+      "fixed_overhead_inflation_multiplier": 1.227,
+      "batch_contamination_loss_pct": 5.0,
+      "fto_licensing_royalty_pct": 5.0,
+      "physical_cost_floor_usd": 0.8975,
+      "commercial_clearing_cost_usd": 0.9424
+    },
+    "year_3_mature": {
+      "year": 3,
+      "operational_stage": "MATURE_STEADY_STATE",
+      "effective_capacity_factor_pct": 92.0,
+      "steady_state_cost_usd": 0.76,
+      "fixed_overhead_inflation_multiplier": 1.0,
+      "batch_contamination_loss_pct": 3.0,
+      "fto_licensing_royalty_pct": 5.0,
+      "physical_cost_floor_usd": 0.7828,
+      "commercial_clearing_cost_usd": 0.8219
+    }
+  },
+  "fto_royalty_drag_pct": 5.0,
   "fstp_integration_metadata": {
     "confidence_tier": 2,
     "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
@@ -44,5 +157,5 @@
     "capex_depreciation": 0.28,
     "labor_and_plant_overhead": 0.16
   },
-  "model_provenance_seal": "SEAL_FSTP_53A11A1AD108D4D4"
+  "model_provenance_seal": "SEAL_FSTP_E22DA488C6354AA7"
 }

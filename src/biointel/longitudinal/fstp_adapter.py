@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -18,6 +19,9 @@ from biointel.economics.pinch_analysis import ThermalPinchAnalyzer
 from biointel.economics.bmed import BipolarElectrodialysisModel
 from biointel.kinetics.interfacial import InterfacialPolymerKineticsModel
 from biointel.economics.mrna_lnp import MRNALNPTechnoEconomicModel
+from biointel.economics.scaling import ScaleElasticityEngine
+from biointel.economics.regional import RegionalCostEngine
+from biointel.economics.derating import OperationalDeratingEngine
 
 
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schemas" / "fstp_bottom_up_spec.v1.schema.json"
@@ -78,6 +82,49 @@ class FSTPBottomUpAdapter:
             feedstock_cost + extrusion_cost + capex_deprec + labor_overhead - bmed_net_benefit, 2
         )
 
+        # Scale Elasticity Engine (Bias Mitigation: Point-Scale Bias)
+        scale_engine = ScaleElasticityEngine.build_scale_profile(
+            technology_id="fast_petase_depolymerase",
+            scale_unit="MT_per_year",
+            reference_scale=scale_mt_pet_year,
+            unit_cost_ref=tpa_cost_floor,
+            fixed_cost_fraction=0.55,
+            scaling_exponent_alpha=0.65,
+        )
+
+        # Multi-Regional Matrix Engine (Bias Mitigation: Geographic / Western Baseline Bias)
+        regional_raw = RegionalCostEngine.evaluate_regional_matrix(
+            base_us_cost=tpa_cost_floor,
+            power_intensity_kwh_per_unit=1.85,
+            labor_hours_per_unit=0.002,
+            feedstock_kg_per_unit=1.15,
+            base_capex_per_unit=capex_deprec,
+        )
+        regional_matrix = {k: asdict(v) for k, v in regional_raw.items()}
+
+        # Operational Commissioning & FTO Derating (Bias Mitigation: Steady-State & Patent Drag Bias)
+        fto_drag_pct = 5.0
+        derating_schedule = {
+            "year_1_commissioning": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=tpa_cost_floor,
+                fixed_cost_fraction=0.55,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=1,
+            )),
+            "year_2_ramp_up": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=tpa_cost_floor,
+                fixed_cost_fraction=0.55,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=2,
+            )),
+            "year_3_mature": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=tpa_cost_floor,
+                fixed_cost_fraction=0.55,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=3,
+            )),
+        }
+
         return {
             "technology_id": "fast_petase_depolymerase",
             "domain": "industrial_biotechnology",
@@ -108,6 +155,10 @@ class FSTPBottomUpAdapter:
                 "pinch_temperature_hot_c": round(pinch.pinch_temperature_hot_c, 2),
                 "pinch_temperature_cold_c": round(pinch.pinch_temperature_cold_c, 2),
             },
+            "regional_cost_matrix_usd": regional_matrix,
+            "scale_elasticity": scale_engine.to_dict(),
+            "operational_derating": derating_schedule,
+            "fto_royalty_drag_pct": fto_drag_pct,
             "fstp_integration_metadata": {
                 "confidence_tier": 2,
                 "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
@@ -127,6 +178,49 @@ class FSTPBottomUpAdapter:
             annual_doses=annual_doses,
             dose_mrna_micrograms=dose_mrna_ug,
         )
+
+        # Scale Elasticity Engine (Bias Mitigation: Point-Scale Bias)
+        scale_engine = ScaleElasticityEngine.build_scale_profile(
+            technology_id="mrna_lnp_platform",
+            scale_unit="doses_per_year",
+            reference_scale=annual_doses,
+            unit_cost_ref=lnp.total_cost_usd_per_dose,
+            fixed_cost_fraction=0.45,
+            scaling_exponent_alpha=0.75,
+        )
+
+        # Multi-Regional Matrix Engine (Bias Mitigation: Geographic / Western Baseline Bias)
+        regional_raw = RegionalCostEngine.evaluate_regional_matrix(
+            base_us_cost=lnp.total_cost_usd_per_dose,
+            power_intensity_kwh_per_unit=0.02,
+            labor_hours_per_unit=0.0005,
+            feedstock_kg_per_unit=0.0001,
+            base_capex_per_unit=lnp.capex_amortization_usd_per_dose,
+        )
+        regional_matrix = {k: asdict(v) for k, v in regional_raw.items()}
+
+        # Operational Commissioning & FTO Derating (Bias Mitigation: Steady-State & Patent Drag Bias)
+        fto_drag_pct = 8.0  # CleanCap and lipid patent thicket royalty drag
+        derating_schedule = {
+            "year_1_commissioning": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=lnp.total_cost_usd_per_dose,
+                fixed_cost_fraction=0.45,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=1,
+            )),
+            "year_2_ramp_up": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=lnp.total_cost_usd_per_dose,
+                fixed_cost_fraction=0.45,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=2,
+            )),
+            "year_3_mature": asdict(OperationalDeratingEngine.evaluate_derated_costs(
+                steady_state_unit_cost_usd=lnp.total_cost_usd_per_dose,
+                fixed_cost_fraction=0.45,
+                fto_licensing_royalty_pct=fto_drag_pct,
+                reference_year=3,
+            )),
+        }
 
         return {
             "technology_id": "mrna_lnp_platform",
@@ -158,6 +252,10 @@ class FSTPBottomUpAdapter:
                 "ethanol_residual_pct": lnp.ethanol_residual_pct,
                 "cleanroom_air_exchanges_per_hour": 25.0,
             },
+            "regional_cost_matrix_usd": regional_matrix,
+            "scale_elasticity": scale_engine.to_dict(),
+            "operational_derating": derating_schedule,
+            "fto_royalty_drag_pct": fto_drag_pct,
             "fstp_integration_metadata": {
                 "confidence_tier": 2,
                 "confidence_label": "Tier 2: Empirical / First-Principles Engineering Fit",
