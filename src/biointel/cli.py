@@ -429,6 +429,40 @@ def cmd_verify_certificates(args: argparse.Namespace) -> None:
         print("\n[+] ALL CRYPTOGRAPHIC COMPUTATION SEALS VERIFIED DETERMINISTICALLY.")
 
 
+def cmd_replay(args: argparse.Namespace) -> None:
+    from biointel.evidence.longitudinal import LongitudinalReplayEngine
+    db = get_db()
+    engine = LongitudinalReplayEngine(db)
+    engine.seed_historical_trajectory()
+
+    print("=================================================================")
+    print("   BIOINTEL: LONGITUDINAL TECHNOLOGY HISTORICAL REPLAY          ")
+    print("=================================================================\n")
+    print(f"Technology: {args.technology}\n")
+
+    cutoffs = [
+        ("2016-04-01", "Initial Discovery (Yoshida et al. 2016)"),
+        ("2018-05-01", "Active-Site Engineering (Austin et al. 2018)"),
+        ("2020-05-01", "Thermophilic Cutinase Breakthrough (Tournier et al. 2020)"),
+        ("2022-06-01", "Machine-Learning Directed Evolution (Lu et al. 2022)"),
+        ("2026-11-01", "BioIntel Thermodynamic & Economic Reconciliation Audit"),
+    ]
+
+    for date_str, label in cutoffs:
+        snap = engine.generate_snapshot(args.technology, date_str, label)
+        print(f"--- Snapshot as of {snap.as_of_date} [{snap.snapshot_label}] ---")
+        print(f"  • Cumulative Publications: {snap.publications_count}")
+        print(f"  • Eligible Public Structures: {', '.join(snap.structures) if snap.structures else 'None publicly released yet'}")
+        print(f"  • Demonstrated Capabilities: {'; '.join(snap.demonstrated_capabilities)}")
+        print(f"  • Physical Boundaries: {'; '.join(snap.established_physical_boundaries)}")
+        feas = snap.commercial_feasibility
+        print(f"  • Economic Verdict: {feas.get('readiness_verdict', 'N/A')}")
+        if feas.get("estimated_tpa_production_cost_usd_per_kg"):
+            print(f"  • Modeled TPA Cost: ${feas['estimated_tpa_production_cost_usd_per_kg']:.2f}/kg ({feas.get('cost_competitiveness', 'N/A')})")
+        print(f"  • Snapshot SHA-256 Hash: {snap.snapshot_hash[:16]}...")
+        print()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="biointel",
@@ -505,6 +539,10 @@ def main() -> None:
     # verify-certificates
     subparsers.add_parser("verify-certificates", help="Audit all cryptographic reproducibility certificates across studies and memos")
 
+    # replay
+    p_rep = subparsers.add_parser("replay", help="Replay historical evidence trajectory for a technology across chronological cutoffs")
+    p_rep.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -526,6 +564,7 @@ def main() -> None:
         "pinch": cmd_pinch,
         "certify": cmd_certify,
         "verify-certificates": cmd_verify_certificates,
+        "replay": cmd_replay,
     }
 
     cmd_fn = cmds.get(args.command)
