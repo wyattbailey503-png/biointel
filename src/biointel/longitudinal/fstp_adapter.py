@@ -120,14 +120,28 @@ class FSTPBottomUpAdapter:
 
         return spec_payload
 
+    DEFAULT_FSTP_DIR = Path("/Users/wyattbailey/Desktop/Personal Projects/fstp-main/data/bottom_up_specs")
+
     def export_fstp_spec(
         self,
         technology_id: str = "fast_petase_depolymerase",
         output_path: Optional[str | Path] = None,
+        sync_to_fstp: bool = True,
     ) -> Path:
-        """Export the FSTP bottom-up specification to a versioned JSON file."""
-        spec = self.generate_bottom_up_spec(technology_id)
-        out_file = Path(output_path) if output_path else Path("outputs") / "exports" / f"fstp_bottom_up_{technology_id}.json"
+        """Export the FSTP bottom-up specification to a versioned JSON file and mirror to FSTP."""
+        clean_tech = technology_id.strip().lower()
+        spec = self.generate_bottom_up_spec(clean_tech)
+        out_file = Path(output_path) if output_path else Path("outputs") / "exports" / f"fstp_bottom_up_{clean_tech}.json"
         out_file.parent.mkdir(parents=True, exist_ok=True)
-        out_file.write_text(json.dumps(spec, indent=2), encoding="utf-8")
+        content = json.dumps(spec, indent=2)
+        out_file.write_text(content, encoding="utf-8")
+
+        # File Bridge: If FSTP repository is detected, mirror specification
+        if sync_to_fstp and self.DEFAULT_FSTP_DIR.exists():
+            fstp_target = self.DEFAULT_FSTP_DIR / f"fstp_bottom_up_{clean_tech}.json"
+            try:
+                fstp_target.write_text(content, encoding="utf-8")
+            except Exception:
+                pass
+
         return out_file

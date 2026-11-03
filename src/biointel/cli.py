@@ -742,7 +742,10 @@ def cmd_export_fstp(args: argparse.Namespace) -> None:
     print(f"   FSTP BOTTOM-UP MODEL SPECIFICATION EXPORT                     ")
     print("=================================================================\n")
     print(f"[+] Technology: {args.technology}")
-    print(f"[+] Exported FSTP Bottom-Up Spec: {out_path}")
+    print(f"[+] Local Export Spec: {out_path}")
+    fstp_target = adapter.DEFAULT_FSTP_DIR / f"fstp_bottom_up_{args.technology.strip().lower()}.json"
+    if fstp_target.exists():
+        print(f"[+] File Bridge Synced: {fstp_target}")
     spec = adapter.generate_bottom_up_spec(args.technology)
     print(f"    Thermodynamic Cost Floor: ${spec['thermodynamic_cost_floor_usd_per_kg']:.2f}/kg TPA")
     print(f"    Confidence Tier: {spec['fstp_integration_metadata']['confidence_tier']} ({spec['fstp_integration_metadata']['confidence_label']})")
