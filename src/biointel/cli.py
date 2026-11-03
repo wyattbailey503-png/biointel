@@ -459,11 +459,147 @@ def cmd_replay(args: argparse.Namespace) -> None:
         print(f"  • Economic Verdict: {feas.get('readiness_verdict', 'N/A')}")
         if feas.get("estimated_tpa_production_cost_usd_per_kg"):
             print(f"  • Modeled TPA Cost: ${feas['estimated_tpa_production_cost_usd_per_kg']:.2f}/kg ({feas.get('cost_competitiveness', 'N/A')})")
-        print(f"  • Snapshot SHA-256 Hash: {snap.snapshot_hash[:16]}...")
-        print()
+def cmd_track(args: argparse.Namespace) -> None:
+    from biointel.longitudinal.tracker import TechnologyTrajectoryTracker
+    tracker = TechnologyTrajectoryTracker(get_db())
+
+    if not getattr(args, "track_action", None):
+        print("Please specify a tracking action: add, milestone, timeline, snapshot, diff, list")
+        return
+
+    if args.track_action == "add":
+        entity = tracker.register_technology(
+            tech_id=args.id,
+            name=args.name,
+            domain=args.domain,
+            category=args.category,
+            maturity_stage=args.stage,
+            description=args.description or "",
+        )
+        print(f"[+] Successfully registered technology: {entity.name} [{entity.tech_id}]")
+        print(f"    Domain: {entity.domain} | Category: {entity.category} | Stage: {entity.maturity_stage}")
+
+    elif args.track_action == "milestone":
+        structs = [s.strip() for s in args.structures.split(",")] if args.structures else []
+        lims = [l.strip() for l in args.limits.split(",")] if args.limits else []
+        ms = tracker.log_milestone(
+            tech_id=args.tech,
+            milestone_date=args.date,
+            title=args.title,
+            doi=args.doi,
+            milestone_type=args.type,
+            previous_state=args.prev or "",
+            new_state=args.new or "",
+            scientific_significance=args.significance or "",
+            commercial_implication=args.implication or "",
+            structures=structs,
+            limitations=lims,
+        )
+        print(f"[+] Logged milestone for {args.tech} as of {ms.milestone_date}:")
+        print(f"    Title: {ms.title}")
+        print(f"    Type: {ms.milestone_type} | ID: {ms.milestone_id}")
+        if ms.structures:
+            print(f"    Structures: {', '.join(ms.structures)}")
+
+    elif args.track_action == "timeline":
+        tech_id = args.technology
+        tech = tracker.get_technology(tech_id)
+        name = tech.name if tech else tech_id
+        milestones = tracker.get_timeline(tech_id)
+        print("=================================================================")
+        print(f"   LONGITUDINAL TECHNOLOGY TIMELINE: {name.upper()}")
+        print("=================================================================\n")
+        if not milestones:
+            print(f"No milestones logged for '{tech_id}'.")
+            return
+        for i, m in enumerate(milestones, 1):
+            print(f"{i}. [{m.milestone_date}] {m.title}")
+            print(f"   Type: {m.milestone_type} | DOI: {m.doi or 'N/A'}")
+            if m.previous_state:
+                print(f"   Previous State: {m.previous_state}")
+            if m.new_state:
+                print(f"   New State: {m.new_state}")
+            if m.scientific_significance:
+                print(f"   Significance: {m.scientific_significance}")
+            if m.commercial_implication:
+                print(f"   Commercial Implication: {m.commercial_implication}")
+            if m.structures:
+                print(f"   Eligible Structures: {', '.join(m.structures)}")
+            if m.limitations:
+                print(f"   Boundaries / Limitations: {'; '.join(m.limitations)}")
+            print()
+
+    elif args.track_action == "snapshot":
+        snap = tracker.generate_snapshot(args.technology, args.as_of, label=args.label)
+        print("=================================================================")
+        print(f"   HISTORICAL TIME-TRAVEL SNAPSHOT: {snap.technology_name}")
+        print("=================================================================\n")
+        print(f"Cutoff Date: {snap.as_of_date} [{snap.snapshot_label}]")
+        print(f"Maturity Stage: {snap.maturity_stage.upper()}")
+        print(f"Cumulative Milestones: {snap.milestones_count}")
+        print(f"Public Structures Available: {', '.join(snap.eligible_structures) if snap.eligible_structures else 'None publicly released yet'}")
+        print("\nDemonstrated Capabilities:")
+        if snap.demonstrated_capabilities:
+            for cap in snap.demonstrated_capabilities:
+                print(f"  • {cap}")
+        else:
+            print("  • None prior to this cutoff")
+        print("\nEmpirical Boundaries / Limitations:")
+        if snap.physical_boundaries:
+            for b in snap.physical_boundaries:
+                print(f"  • {b}")
+        else:
+            print("  • None documented")
+        print(f"\nCommercial Verdict: {snap.commercial_feasibility.get('commercial_verdict', 'N/A')}")
+        print(f"Provenance Seal: {snap.provenance_seal} (Hash: {snap.snapshot_hash[:16]}...)")
+
+    elif args.track_action == "diff":
+        diff = tracker.compare_snapshots(args.technology, args.from_date, args.to_date)
+        print("=================================================================")
+        print(f"   LONGITUDINAL DIFFERENTIAL AUDIT: {diff.technology_name}")
+        print("=================================================================\n")
+        print(f"Baseline Date: {diff.date_a} ({diff.maturity_stage_a.upper()})")
+        print(f"Target Date:   {diff.date_b} ({diff.maturity_stage_b.upper()})")
+        print(f"Milestones Added: {diff.milestones_added_count}")
+        print(f"New Structures Unlocked: {', '.join(diff.new_structures) if diff.new_structures else 'None'}")
+        if diff.new_capabilities:
+            print("\nNew Capabilities Gained:")
+            for c in diff.new_capabilities:
+                print(f"  [+] {c}")
+        if diff.new_physical_boundaries:
+            print("\nNew Physical Boundaries Identified:")
+            for b in diff.new_physical_boundaries:
+                print(f"  [!] {b}")
+        if diff.metrics_deltas:
+            print("\nKey Metric Shifts:")
+            for k, delta in diff.metrics_deltas.items():
+                if delta.get("new"):
+                    print(f"  • {k}: {delta['to']} (Newly measured)")
+                elif "delta" in delta:
+                    print(f"  • {k}: {delta['from']} -> {delta['to']} (delta: {delta['delta']:+}, {delta.get('percent_change', 'N/A')}%)")
+                else:
+                    print(f"  • {k}: {delta['from']} -> {delta['to']}")
+        print(f"\nFeasibility Assessment: {diff.feasibility_shift}")
+        print(f"\nNarrative Summary:\n{diff.narrative_summary}")
+        print(f"\nDiff Audit SHA-256: {diff.diff_hash}")
+
+    elif args.track_action == "list":
+        techs = tracker.list_technologies()
+        print("=================================================================")
+        print("   TRACKED BIOTECHNOLOGY PLATFORMS                               ")
+        print("=================================================================\n")
+        for t in techs:
+            print(f"• {t.name} [{t.tech_id}]")
+            print(f"  Domain: {t.domain} | Category: {t.category} | Stage: {t.maturity_stage}")
+            if t.description:
+                print(f"  Description: {t.description}")
+            print()
+    else:
+        print("Unknown track action. Choose from: add, milestone, timeline, snapshot, diff, list")
 
 
 def main() -> None:
+
     parser = argparse.ArgumentParser(
         prog="biointel",
         description="BioIntel: Autonomous Biotechnology Intelligence & Commercialization Research Engine",
@@ -543,6 +679,52 @@ def main() -> None:
     p_rep = subparsers.add_parser("replay", help="Replay historical evidence trajectory for a technology across chronological cutoffs")
     p_rep.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
 
+    # track
+    p_track = subparsers.add_parser("track", help="Track, log milestones, and audit technology evolution over time")
+    p_track_subs = p_track.add_subparsers(dest="track_action", help="Tracking action")
+
+    # track add
+    p_tr_add = p_track_subs.add_parser("add", help="Register a new biotechnology platform")
+    p_tr_add.add_argument("--id", required=True, help="Unique technology identifier")
+    p_tr_add.add_argument("--name", required=True, help="Full human-readable technology name")
+    p_tr_add.add_argument("--domain", default="biotechnology", help="Domain (e.g. industrial_biotechnology, precision_medicine)")
+    p_tr_add.add_argument("--category", default="general", help="Category (e.g. biocatalysis, genome_editing)")
+    p_tr_add.add_argument("--stage", default="discovery", help="Maturity stage (e.g. discovery, lead_optimization, preclinical, pilot_scale, commercial)")
+    p_tr_add.add_argument("--description", default="", help="Baseline description of technology")
+
+    # track milestone
+    p_tr_ms = p_track_subs.add_parser("milestone", help="Log a verified chronological milestone")
+    p_tr_ms.add_argument("--tech", required=True, help="Technology identifier")
+    p_tr_ms.add_argument("--date", required=True, help="Calendar date of public release (YYYY-MM-DD)")
+    p_tr_ms.add_argument("--title", required=True, help="Milestone title")
+    p_tr_ms.add_argument("--doi", default=None, help="Peer-reviewed DOI or source identifier")
+    p_tr_ms.add_argument("--type", default="MILESTONE", help="Milestone classification")
+    p_tr_ms.add_argument("--prev", default="", help="Previous state of knowledge")
+    p_tr_ms.add_argument("--new", default="", help="New demonstrated state")
+    p_tr_ms.add_argument("--significance", default="", help="Scientific significance")
+    p_tr_ms.add_argument("--implication", default="", help="Commercial implication")
+    p_tr_ms.add_argument("--structures", default="", help="Comma-separated PDB IDs (e.g. 5XJH,6EQE)")
+    p_tr_ms.add_argument("--limits", default="", help="Comma-separated limitations or empirical boundaries")
+
+    # track timeline
+    p_tr_tl = p_track_subs.add_parser("timeline", help="View full chronological milestone timeline")
+    p_tr_tl.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
+
+    # track snapshot
+    p_tr_snap = p_track_subs.add_parser("snapshot", help="Reconstruct state of knowledge at historical cutoff")
+    p_tr_snap.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
+    p_tr_snap.add_argument("--as-of", required=True, help="Historical cutoff date (YYYY-MM-DD)")
+    p_tr_snap.add_argument("--label", default=None, help="Optional snapshot label")
+
+    # track diff
+    p_tr_diff = p_track_subs.add_parser("diff", help="Differential comparison between two points in history")
+    p_tr_diff.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
+    p_tr_diff.add_argument("--from-date", required=True, help="Baseline historical date (YYYY-MM-DD)")
+    p_tr_diff.add_argument("--to-date", required=True, help="Comparison target date (YYYY-MM-DD)")
+
+    # track list
+    p_track_subs.add_parser("list", help="List all registered biotechnology platforms")
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -565,7 +747,9 @@ def main() -> None:
         "certify": cmd_certify,
         "verify-certificates": cmd_verify_certificates,
         "replay": cmd_replay,
+        "track": cmd_track,
     }
+
 
     cmd_fn = cmds.get(args.command)
     if cmd_fn:

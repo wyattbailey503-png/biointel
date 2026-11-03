@@ -345,3 +345,24 @@ CREATE INDEX IF NOT EXISTS idx_evidence_rel_src ON evidence_relationships(source
 CREATE INDEX IF NOT EXISTS idx_evidence_rel_tgt ON evidence_relationships(target_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_rel_type ON evidence_relationships(relation_type);
 
+-- 17. Technology Trajectory Milestones (Longitudinal Tracking)
+CREATE TABLE IF NOT EXISTS technology_milestones (
+    milestone_id TEXT PRIMARY KEY,
+    technology_id TEXT NOT NULL,
+    milestone_date TEXT NOT NULL,
+    title TEXT NOT NULL,
+    milestone_type TEXT NOT NULL,
+    doi TEXT,
+    primary_source TEXT,
+    previous_state TEXT,
+    new_state TEXT,
+    scientific_significance TEXT,
+    commercial_implication TEXT,
+    structures_json TEXT,
+    limitations_json TEXT,
+    metrics_json TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (technology_id) REFERENCES technologies(tech_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_milestones_tech_date ON technology_milestones(technology_id, milestone_date);

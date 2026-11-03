@@ -208,19 +208,38 @@ class Database:
     # Technologies
     # -------------------------------------------------------------------------
     def upsert_technology(self, tech_dict: Dict[str, Any]) -> None:
-        sql = """
-        INSERT INTO technologies (tech_id, name, canonical_name, domain, category, maturity_stage, description)
-        VALUES (:tech_id, :name, :canonical_name, :domain, :category, :maturity_stage, :description)
-        ON CONFLICT(canonical_name) DO UPDATE SET
-            name = excluded.name,
-            domain = excluded.domain,
-            category = excluded.category,
-            maturity_stage = excluded.maturity_stage,
-            description = excluded.description,
-            updated_at = CURRENT_TIMESTAMP;
-        """
+        c_name = tech_dict.get("canonical_name") or tech_dict["tech_id"]
+        payload = dict(tech_dict)
+        payload["canonical_name"] = c_name
         with self.transaction() as cur:
-            cur.execute(sql, tech_dict)
+            row = cur.execute(
+                "SELECT tech_id FROM technologies WHERE tech_id = ? OR canonical_name = ?",
+                (payload["tech_id"], c_name),
+            ).fetchone()
+            if row:
+                cur.execute(
+                    """
+                    UPDATE technologies
+                    SET name = :name,
+                        canonical_name = :canonical_name,
+                        domain = :domain,
+                        category = :category,
+                        maturity_stage = :maturity_stage,
+                        description = :description,
+                        updated_at = CURRENT_TIMESTAMP
+                    WHERE tech_id = :existing_id
+                    """,
+                    {**payload, "existing_id": row[0]},
+                )
+            else:
+                cur.execute(
+                    """
+                    INSERT INTO technologies (tech_id, name, canonical_name, domain, category, maturity_stage, description)
+                    VALUES (:tech_id, :name, :canonical_name, :domain, :category, :maturity_stage, :description)
+                    """,
+                    payload,
+                )
+
 
     def get_technology(self, tech_id: str) -> Optional[Dict[str, Any]]:
         with self.get_connection() as conn:
@@ -467,8 +486,39 @@ class Database:
                 rows = conn.execute("SELECT * FROM scientific_changes ORDER BY created_at DESC").fetchall()
             return [dict(r) for r in rows]
 
+    def insert_technology_milestone(self, milestone_dict: Dict[str, Any]) -> None:
+        sql = """
+        INSERT OR REPLACE INTO technology_milestones (
+            milestone_id, technology_id, milestone_date, title, milestone_type,
+            doi, primary_source, previous_state, new_state,
+            scientific_significance, commercial_implication,
+            structures_json, limitations_json, metrics_json
+        ) VALUES (
+            :milestone_id, :technology_id, :milestone_date, :title, :milestone_type,
+            :doi, :primary_source, :previous_state, :new_state,
+            :scientific_significance, :commercial_implication,
+            :structures_json, :limitations_json, :metrics_json
+        );
+        """
+        with self.transaction() as cur:
+            cur.execute(sql, milestone_dict)
+
+    def get_technology_milestones(
+        self, tech_id: str, as_of_date: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        query = "SELECT * FROM technology_milestones WHERE technology_id = ?"
+        params: List[Any] = [tech_id]
+        if as_of_date:
+            query += " AND milestone_date <= ?"
+            params.append(as_of_date)
+        query += " ORDER BY milestone_date ASC, created_at ASC"
+        with self.get_connection() as conn:
+            rows = conn.execute(query, params).fetchall()
+            return [dict(r) for r in rows]
+
     # -------------------------------------------------------------------------
     # Techno-Economics & Reports
+
     # -------------------------------------------------------------------------
     def insert_economic_scenario(self, scenario_dict: Dict[str, Any]) -> None:
         sql = """
