@@ -125,7 +125,7 @@
     "certificate_id": "CERT-STUDY_03-5735ed08b386",
     "model_name": "study_03_lactoferrin_fermentation_scaleup",
     "model_version": "v2.0.0_phd_hardened",
-    "created_at_utc": "2026-11-03T03:29:48.237471+00:00",
+    "created_at_utc": "2026-11-03T03:31:14.881884+00:00",
     "python_version": "3.11.15",
     "host_platform": "Darwin-arm64",
     "random_seed": null,
