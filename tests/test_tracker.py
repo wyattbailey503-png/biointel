@@ -240,7 +240,7 @@ def test_cli_track_integration(temp_db: Database) -> None:
             new="Designed 100 bp synthetic enhancers with >50-fold hepatocyte selectivity.",
             significance="First computational GAN design of mammalian tissue-specific promoters.",
             implication="Reduces off-target toxicity in AAV and LNP gene therapies.",
-            structures="8ABC",
+            structures="7K38",
             limits="Chromatin context in primary human cells remains variable",
         )
         cmd_track(args_ms)

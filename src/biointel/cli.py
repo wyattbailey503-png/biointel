@@ -753,6 +753,69 @@ def cmd_export_fstp(args: argparse.Namespace) -> None:
     print(f"    Cryptographic Seal: {spec['model_provenance_seal']}")
 
 
+def cmd_claims(args: argparse.Namespace) -> None:
+    from biointel.evidence.benchmarks import build_standard_corroborated_claims
+    from biointel.evidence.claim_ranking import ClaimRankingEngine
+
+    claims = build_standard_corroborated_claims()
+    ranked = ClaimRankingEngine.rank_claims(claims)
+
+    print("=================================================================")
+    print("   BIOINTEL EVIDENCE OBSERVATORY: BIAS-WEIGHTED CLAIM RANKINGS   ")
+    print("=================================================================\n")
+    print("Ranking scientific claims by Effective Unbiased Corroboration Depth:")
+    print("S = sum( (1 - Bias_i) * Indep_i ) - 1.5 * sum( (1 - Bias_contra_j) )\n")
+
+    for r in ranked:
+        tier_symbol = "★ GOLD" if "GOLD" in r.evidence_tier else ("◆ SILVER" if "SILVER" in r.evidence_tier else ("▲ BRONZE" if "BRONZE" in r.evidence_tier else "✖ CONTESTED"))
+        print(f"[{r.rank}] {tier_symbol} | Score: {r.effective_unbiased_score:+.2f} | Consensus: {r.consensus_ratio_pct}%")
+        print(f"    Claim ID: {r.claim_id} [{r.technology_id}]")
+        print(f"    Statement: \"{r.claim_statement}\"")
+        print(f"    Corroboration: {r.supporting_sources_count} source(s) across {r.independent_groups_count} independent group(s) | {r.contradicting_sources_count} contradiction(s)")
+        print(f"    Mean Source Bias: {r.mean_source_bias_score:.3f} | Tier: {r.evidence_tier}")
+        print(f"    Rationale: {r.ranking_rationale}")
+        print("    Sources:")
+        for s in r.corroboration_summary.supporting_sources:
+            doi_str = f" | DOI: {s.doi}" if s.doi else ""
+            print(f"      [✓ SUPPORTS] {s.citation}{doi_str} (Bias: {s.bias_evaluation.composite_bias_score:.2f}, Category: {s.bias_evaluation.bias_category})")
+        for c in r.corroboration_summary.contradicting_sources:
+            doi_str = f" | DOI: {c.doi}" if c.doi else ""
+            print(f"      [✗ CONTRADICTS] {c.citation}{doi_str} (Bias: {c.bias_evaluation.composite_bias_score:.2f}, Category: {c.bias_evaluation.bias_category})")
+        print("-" * 65)
+
+
+def cmd_evidence(args: argparse.Namespace) -> None:
+    from biointel.evidence.benchmarks import (
+        get_verified_fast_petase_sources,
+        get_verified_prime_editing_sources,
+        get_verified_mrna_pseudouridine_sources,
+        get_contested_lactoferrin_sources,
+    )
+    all_sources = (
+        get_verified_fast_petase_sources()
+        + get_verified_prime_editing_sources()
+        + get_verified_mrna_pseudouridine_sources()
+        + get_contested_lactoferrin_sources()
+    )
+
+    print("=================================================================")
+    print("   BIOINTEL SOURCE REGISTRY: SYSTEMATIC BIAS AUDIT               ")
+    print("=================================================================\n")
+    print(f"Auditing {len(all_sources)} registered sources across commercial, study design, circularity, and reporting bias:\n")
+
+    for s in all_sources:
+        b = s.bias_evaluation
+        doi_display = f"DOI: {s.doi}" if s.doi else "NO_DOI (UNVERIFIED / PROMOTIONAL)"
+        print(f"• Source: {s.citation} [{doi_display}]")
+        print(f"  Composite Bias: {b.composite_bias_score:.3f} -> Category: {b.bias_category}")
+        print(f"  Breakdown: Commercial={b.commercial_bias_score:.2f} | Method={b.methodology_bias_score:.2f} | Circularity={b.circularity_bias_score:.2f} | Reporting={b.reporting_bias_score:.2f}")
+        print(f"  Audit Verdict: {b.audit_rationale}")
+        if b.identified_bias_flags:
+            for f in b.identified_bias_flags:
+                print(f"    [!] Flag: {f}")
+        print()
+
+
 def main() -> None:
 
 
@@ -932,6 +995,16 @@ def main() -> None:
     p_fstp.add_argument("technology", nargs="?", default="fast_petase_depolymerase", help="Technology identifier")
     p_fstp.add_argument("--out", default=None, help="Custom output JSON path")
 
+    # claims
+    p_claims = subparsers.add_parser("claims", help="Rank scientific claims by bias-weighted multi-source corroboration depth")
+    p_claims_subs = p_claims.add_subparsers(dest="claims_action", help="Claims action")
+    p_claims_subs.add_parser("rank", help="Rank all claims by unbiased corroboration score and evidence tier")
+
+    # evidence
+    p_ev = subparsers.add_parser("evidence", help="Audit scientific evidence sources across systematic bias dimensions")
+    p_ev_subs = p_ev.add_subparsers(dest="evidence_action", help="Evidence action")
+    p_ev_subs.add_parser("audit-sources", help="Audit literature source registry for bias and provenance")
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -958,6 +1031,8 @@ def main() -> None:
         "contract": cmd_contract,
         "graveyard": cmd_graveyard,
         "export-fstp": cmd_export_fstp,
+        "claims": cmd_claims,
+        "evidence": cmd_evidence,
     }
 
 
