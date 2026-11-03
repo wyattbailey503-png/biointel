@@ -407,6 +407,27 @@ def cmd_certify(args: argparse.Namespace) -> None:
     print(f"[+] Cryptographic Integrity Check: {cert.verify_integrity(inputs, outputs)}")
 
 
+def cmd_verify_certificates(args: argparse.Namespace) -> None:
+    from biointel.provenance.ci_verifier import AutomatedCertificateVerifier
+    print("[*] Running automated cryptographic reproducibility certificate audit across all studies and memos...")
+    res = AutomatedCertificateVerifier.verify_all_study_packages()
+    print("\n=== CRYPTOGRAPHIC REPRODUCIBILITY AUDIT REPORT ===")
+    print(f"Total Items Inspected: {res.total_certificates_checked}")
+    print(f"Certificates Verified: {res.successful_count} / {res.total_certificates_checked}")
+    print(f"Tamper Evidence / Failures: {res.failure_count}")
+    for item in res.details:
+        status_icon = "[PASS]" if item.is_valid else "[FAIL]"
+        print(f"  {status_icon} {item.item_id} ({item.certificate_id})")
+        print(f"         Path: {item.target_path}")
+        print(f"         Seal: {item.computed_seal[:16]}... (Verified SHA-256)")
+        if item.error:
+            print(f"         ERROR: {item.error}")
+    if not res.all_valid:
+        print("\n[!] CRITICAL: Cryptographic verification failed! Tamper detected.")
+        sys.exit(1)
+    else:
+        print("\n[+] ALL CRYPTOGRAPHIC COMPUTATION SEALS VERIFIED DETERMINISTICALLY.")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -481,6 +502,9 @@ def main() -> None:
     p_cert.add_argument("--model-name", default="TEA_Biocatalysis_Enzymatic_Recycling", help="Model name identifier")
     p_cert.add_argument("--seed", type=int, default=42, help="Deterministic random seed")
 
+    # verify-certificates
+    subparsers.add_parser("verify-certificates", help="Audit all cryptographic reproducibility certificates across studies and memos")
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -501,6 +525,7 @@ def main() -> None:
         "superposition": cmd_superposition,
         "pinch": cmd_pinch,
         "certify": cmd_certify,
+        "verify-certificates": cmd_verify_certificates,
     }
 
     cmd_fn = cmds.get(args.command)

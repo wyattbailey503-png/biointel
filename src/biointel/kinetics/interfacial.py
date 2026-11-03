@@ -146,3 +146,39 @@ class InterfacialPolymerKineticsModel:
             time_to_complete_dissolution_hours=round(tau_complete_hours, 2),
             conversion_trajectory=trajectory,
         )
+
+    @classmethod
+    def evaluate_anisotropic_hydrolysis(
+        cls,
+        length_microns: float = 250.0,
+        thickness_microns: float = 20.0,
+        solids_concentration_g_l: float = 50.0,
+        enzyme_loading_um: float = 2.5,
+        crystallinity_pct: float = 12.0,
+        duration_hours: float = 48.0,
+    ):
+        """Couples Langmuir 2D surface adsorption with 3D anisotropic flake morphology."""
+        from biointel.kinetics.morphology import AnisotropicFlakeMorphologyModel
+
+        # Baseline isotropic rate
+        iso = cls.evaluate_interfacial_hydrolysis(
+            particle_radius_microns=min(length_microns, thickness_microns * 5.0) / 2.0,
+            solids_concentration_g_l=solids_concentration_g_l,
+            enzyme_loading_um=enzyme_loading_um,
+            crystallinity_pct=crystallinity_pct,
+            duration_hours=duration_hours,
+        )
+
+        # Linear erosion velocity (um / hr)
+        # 1 umol / m^2 / s = 1e-6 mol / m^2 / s
+        # Mol density = 7181.1 mol / m^3 = 7.1811e-6 mol / (m^2 * um)
+        v_um_hr = (iso.surface_reaction_rate_umol_per_m2_s / (cls.MOLAR_DENSITY_MOL_M3 * 1e-6)) * 3600.0
+
+        return AnisotropicFlakeMorphologyModel.evaluate_flake_dissolution(
+            initial_length_microns=length_microns,
+            initial_thickness_microns=thickness_microns,
+            crystallinity_pct=crystallinity_pct,
+            base_cleavage_velocity_um_per_hr=v_um_hr,
+            total_time_hours=duration_hours,
+        )
+
