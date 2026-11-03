@@ -1,6 +1,6 @@
 {
   "archive_version": "test_v1",
-  "export_timestamp": "2026-11-03T04:36:02.706891+00:00",
+  "export_timestamp": "2026-11-03T04:58:29.408639+00:00",
   "system": "BioIntel Autonomous Biotechnology Intelligence Engine",
   "telemetry": {
     "total_sources": 5,
@@ -24,14 +24,14 @@
         "adapter_type": "europe_pmc",
         "api_version": null,
         "rate_limit_per_min": 60,
-        "last_successful_retrieval": "2026-11-03T04:36:02.703114+00:00",
-        "last_attempt": "2026-11-03T04:36:02.703114+00:00",
+        "last_successful_retrieval": "2026-11-03T04:58:29.400290+00:00",
+        "last_attempt": "2026-11-03T04:58:29.400290+00:00",
         "licensing": "Open Access / CC-BY / Open Research",
         "retry_state": "healthy",
         "priority": 1,
         "monitoring_frequency_hours": 24,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-03 04:36:02"
+        "updated_at": "2026-11-03 04:58:29"
       },
       {
         "source_id": "pubmed_ncbi",
@@ -49,7 +49,7 @@
         "priority": 2,
         "monitoring_frequency_hours": 24,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-03 04:36:02"
+        "updated_at": "2026-11-03 04:58:29"
       },
       {
         "source_id": "rcsb_pdb",
@@ -61,13 +61,13 @@
         "api_version": null,
         "rate_limit_per_min": 120,
         "last_successful_retrieval": "2026-11-02T22:37:20.667743+00:00",
-        "last_attempt": "2026-11-03T04:36:02.692368+00:00",
+        "last_attempt": "2026-11-03T04:58:29.387933+00:00",
         "licensing": "CC0 1.0 Universal",
         "retry_state": "degraded",
         "priority": 1,
         "monitoring_frequency_hours": 48,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-03 04:36:02"
+        "updated_at": "2026-11-03 04:58:29"
       },
       {
         "source_id": "uniprot",
@@ -85,7 +85,7 @@
         "priority": 2,
         "monitoring_frequency_hours": 72,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-03 04:36:02"
+        "updated_at": "2026-11-03 04:58:29"
       },
       {
         "source_id": "clinicaltrials_gov",
@@ -103,7 +103,7 @@
         "priority": 3,
         "monitoring_frequency_hours": 168,
         "created_at": "2026-11-02 07:07:14",
-        "updated_at": "2026-11-03 04:36:02"
+        "updated_at": "2026-11-03 04:58:29"
       }
     ],
     "publications": [
@@ -1141,7 +1141,7 @@
         "comparison_matrix": "{\"dimensions\": [{\"metric\": \"Targeting Mechanism\", \"technology_a\": \"sgRNA: 20-nt spacer targeting 5'-NGG PAM on SpCas9\", \"technology_b\": \"pegRNA: Guide sequence + Primer Binding Site (PBS) + Reverse Transcriptase (RT) template\", \"context_a\": \"Direct DNA sequence pairing\", \"context_b\": \"Dual pairing: guide targeting + 3'-flap hybridisation\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Editing Modality\", \"technology_a\": \"Double-Strand Break (DSB) inducing non-homologous end joining (NHEJ) or HDR\", \"technology_b\": \"Single-strand nick with search-and-replace reverse transcription (no DSB required)\", \"context_a\": \"Endogenous error-prone repair pathways\", \"context_b\": \"Engineered M-MLV RT template incorporation\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Reported On-Target Editing Efficiency\", \"technology_a\": \"40% \\u2013 85% indel knockout efficiency\", \"technology_b\": \"15% \\u2013 55% precise installation (bi-PE improves to 40% \\u2013 60%)\", \"context_a\": \"HEK293T plasmid transfection (standard gene disruption)\", \"context_b\": \"HEK293T plasmid/RNP with engineered dual-prime guides (precise transversion/insertion)\", \"compatible\": false, \"warning\": \"INCOMPATIBLE COMPARISON (CONDITION MISMATCH, 1 incompatibilities detected): ASSAY_RESOLUTION_MISMATCH: Enzymatic mismatch cleavage (T7E1/TIDE) lacks sensitivity of high-throughput deep sequencing (HTS).\"}, {\"metric\": \"Off-Target Cleavage & Indels\", \"technology_a\": \"Moderate to High (1% \\u2013 10% genome-wide off-target cleavage at homologous sites)\", \"technology_b\": \"Low (< 0.5% unintended indel rate; minimal off-target nicking)\", \"context_a\": \"GUIDE-seq / CIRCLE-seq across mismatched genomic targets\", \"context_b\": \"High-throughput sequencing at predicted Cas9 off-target loci\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Cell-Type Compatibility\", \"technology_a\": \"High in dividing cells; HDR severely restricted in non-dividing / post-mitotic cells\", \"technology_b\": \"Broadly active in both dividing and post-mitotic cells (does not depend on G2/M phase HDR)\", \"context_a\": \"Dependent on cell cycle machinery for precise editing\", \"context_b\": \"Operates independently of donor template and HDR machinery\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Delivery Packaging Constraints\", \"technology_a\": \"Single AAV packaging viable with compact Cas9 or split Cas9 (~4.2 kb payload)\", \"technology_b\": \"Requires dual AAV or Lipid Nanoparticle (LNP) mRNA (>6.0 kb total editor size)\", \"context_a\": \"Cas9 (1,368 aa) fits standard AAV packaging ceiling (<4.7 kb)\", \"context_b\": \"Cas9 nickase + M-MLV RT + pegRNA exceeds single AAV capsid capacity\", \"compatible\": true, \"warning\": null}, {\"metric\": \"Clinical / Commercial Stage\", \"technology_a\": \"Commercial / FDA Approved (Exa-cel / Casgevy for sickle cell disease)\", \"technology_b\": \"Phase 1 Clinical Development (Prime Medicine PM359 for chronic granulomatous disease)\", \"context_a\": \"Approved ex vivo autologous HSPC therapy\", \"context_b\": \"Ex vivo early clinical trial; in vivo preclinical pipeline\", \"compatible\": true, \"warning\": null}]}",
         "incompatibility_warnings": "[\"INCOMPATIBLE COMPARISON (CONDITION MISMATCH, 1 incompatibilities detected): ASSAY_RESOLUTION_MISMATCH: Enzymatic mismatch cleavage (T7E1/TIDE) lacks sensitivity of high-throughput deep sequencing (HTS).\"]",
         "strategic_takeaway": "SpCas9 remains the standard for gene disruption and ex vivo knockout where high indel rates are acceptable. Prime Editing significantly expands therapeutic scope by enabling all 12 base conversions, insertions up to 100 bp, and deletions without double-strand breaks or donor DNA, but faces in vivo delivery bottlenecks due to protein size (>6 kb).",
-        "created_at": "2026-11-03 04:36:02"
+        "created_at": "2026-11-03 04:58:29"
       }
     ],
     "scientific_changes": [

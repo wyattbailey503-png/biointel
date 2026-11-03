@@ -90,7 +90,7 @@
     "certificate_id": "CERT-STUDY_02-195ad8344a15",
     "model_name": "study_02_prime_vs_base_editing_diligence",
     "model_version": "v2.0.0_phd_hardened",
-    "created_at_utc": "2026-11-03T04:36:03.036081+00:00",
+    "created_at_utc": "2026-11-03T04:58:30.235635+00:00",
     "python_version": "3.11.15",
     "host_platform": "Darwin-arm64",
     "random_seed": null,
